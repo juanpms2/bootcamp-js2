@@ -7,8 +7,5 @@ junit.xml
 *.log
 *.orig
 yarn.lock
-.npmrc
-.cache
-.env
-.env.local
-package-lock.json
+.awcache
+public

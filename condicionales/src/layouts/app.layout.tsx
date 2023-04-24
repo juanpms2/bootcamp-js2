@@ -6,6 +6,7 @@ export const AppLayout: React.FunctionComponent = (props) => {
 
   return (
     <div className={innerClasses.root}>
+      <h1>Juego de las 7 y media</h1>
       {children}
     </div>
   );

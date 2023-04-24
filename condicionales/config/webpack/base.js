@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
-const helpers = require('./webpack-helpers');
+const helpers = require('./helpers');
 
 module.exports = merge(
   {},
@@ -8,9 +8,10 @@ module.exports = merge(
     context: helpers.resolveFromRootPath('src'),
     resolve: {
       alias: {
-        '@material-ui/core': '@material-ui/core/es',
+        assets: helpers.resolveFromRootPath('src/assets'),
         common: helpers.resolveFromRootPath('src/common'),
         core: helpers.resolveFromRootPath('src/core'),
+        frames: helpers.resolveFromRootPath('src/frames'),
         layouts: helpers.resolveFromRootPath('src/layouts'),
         pods: helpers.resolveFromRootPath('src/pods'),
         scenes: helpers.resolveFromRootPath('src/scenes'),
@@ -19,29 +20,19 @@ module.exports = merge(
       extensions: ['.js', '.ts', '.tsx'],
     },
     entry: {
-      app: ['regenerator-runtime/runtime', './index.tsx'],
+      app: ['./index.tsx'],
+    },
+    output: {
+      path: helpers.resolveFromRootPath('dist'),
     },
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: /\.(png|jpg|gif|svg)$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
+          type: 'asset/resource',
         },
       ],
-    },
-    optimization: {
-      runtimeChunk: 'single',
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
-            chunks: 'all',
-            name: 'vendor',
-            test: /[\\/]node_modules[\\/]/,
-            enforce: true,
-          },
-        },
-      },
     },
     plugins: [
       new HtmlWebpackPlugin({

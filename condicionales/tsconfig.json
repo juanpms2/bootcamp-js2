@@ -1,27 +1,29 @@
 {
-	"compilerOptions": {
-		"target": "es6",
-		"module": "es6",
-		"moduleResolution": "node",
-		"declaration": false,
-		"noImplicitAny": false,
-		"sourceMap": true,
-		"jsx": "react",
-		"noLib": false,
-		"allowJs": true,
-		"suppressImplicitAnyIndexErrors": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"baseUrl": "./src/",
-		"paths": {
-			"common": ["common"],
-			"core": ["core"],
-			"layouts": ["layouts"],
-			"pods": ["pods"],
-			"scenes": ["scenes"],
-			"common-app": ["common-app"]
-			// "frames": ["frames"]
-		}
-	},
-	"include": ["./src/**/*", "./config/test/setup.ts", "./global.types.d.ts"]
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "es6",
+    "moduleResolution": "node",
+    "declaration": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "jsx": "react-jsx",
+    "noLib": false,
+    "allowJs": true,
+    "ignoreDeprecations": "5.0",
+    "suppressImplicitAnyIndexErrors": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "baseUrl": "./src/",
+    "paths": {
+      "common": ["common"],
+      "core": ["core"],
+      "frames": ["frames"],
+      "layouts": ["layouts"],
+      "pods": ["pods"],
+      "scenes": ["scenes"],
+      "common-app": ["common-app"]
+    },
+    "types": ["@emotion/react/types/css-prop"]
+  },
+  "include": ["./src/**/*", "./config/test/setup.ts", "./global.types.d.ts"]
 }

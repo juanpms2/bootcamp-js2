@@ -1,2 +1,1 @@
-export * from './login.scene';
-export * from './sand-box.scene';
+export * from './home.scene';
