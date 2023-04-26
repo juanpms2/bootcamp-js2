@@ -43,6 +43,7 @@ h1 {
 	gap: 1rem;
 	width: 100%;
 	max-width: 1280px;
+	padding: 0px 16px 32px;
 }
 
 button {
@@ -78,11 +79,14 @@ button:focus-visible {
 }
 
 .players-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	flex-grow: 1;
 	gap: 2rem;
 	width: 100%;
+	padding: 8px;
+	overflow: hidden;
+	border: 1px solid red;
 }
 
 .player {
@@ -92,11 +96,23 @@ button:focus-visible {
 	gap: 8px;
 }
 
+.card {
+	height: 175px;
+}
+
 .player h2,
 .player h3 {
 	line-height: 0;
 }
 
-.card {
-	height: 200px;
+.player-score {
+}
+
+.cards-container {
+	display: flex;
+	width: 100%;
+}
+
+.player-card:not(:first-child) {
+	margin-left: -80px;
 }

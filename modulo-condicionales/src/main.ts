@@ -20,10 +20,22 @@ enum paloEnum {
   BASTOS = 4,
 };
 
+interface PlayerData {
+  htmlScoreElement: Element;
+  htmlCardsElement: Element;
+  score: string;
+  cards: string[];
+}
+
 let playerScoreOne: number = 0;
-const playerOne = document.querySelector('#player-score-one')!
 const orderCardButton = document.querySelector('#order-card')!
-const orderedCards = document.querySelector('#ordered-cards')!
+
+const playerOneData: PlayerData = {
+  htmlScoreElement: document.querySelector('#player-score-one')!,
+  htmlCardsElement: document.querySelector('#ordered-cards')!,
+  score: '',
+  cards: [],
+};
 
 
 const getRandomInt = (min: number, max: number) => {
@@ -36,21 +48,25 @@ const getRandomInt = (min: number, max: number) => {
 const getRandomCard = () => {
   const palo: paloEnum = getRandomInt(1, 4);
   const card: figureCardEnum = getRandomInt(1, 10);
-  playerScoreOne = playerScoreOne + card;
-  showScore(playerScoreOne, palo, card);
-  return card;
+  playerScoreOne = card < 8 ? playerScoreOne + card : playerScoreOne + 0.5;
+  showScore(playerScoreOne);
+  addCard(palo, card);
+
+  if (playerScoreOne > 7.5) {
+    orderCardButton.setAttribute('disabled', 'true');
+  }
 };
 
 
-const showScore = (puntuacion: number, palo: paloEnum, figureCard: figureCardEnum) => {
-  if (puntuacion > 7.5) {
-    playerOne.innerHTML = `${puntuacion} Has perdido`;
-    orderedCards.innerHTML = `<img class="card" src="/assets/${paloEnum[palo].toLowerCase()}/${figureCard}.svg" alt="ordered card" />`;
-  } else {
-    playerOne.innerHTML = puntuacion.toString();
-    orderedCards.innerHTML = `<img class="card" src="/assets/${paloEnum[palo].toLowerCase()}/${figureCard}.svg" alt="ordered card" />`;
-  }
-  return playerScoreOne;
+
+const showScore = (puntuacion: number) => {
+  playerOneData.htmlScoreElement.innerHTML = puntuacion > 7.5 ? `${puntuacion.toString()} Has perdido` : puntuacion.toString();
+
+};
+
+const addCard = (palo: paloEnum, figureCard: figureCardEnum) => {
+  playerOneData.cards.push(`<img class="card player-card" src="/assets/${paloEnum[palo].toLowerCase()}/${figureCard}.svg" alt="ordered card" />`);
+  playerOneData.htmlCardsElement.innerHTML = playerOneData.cards.map((card) => card).join('');
 };
 
 const orderCard = () => {
