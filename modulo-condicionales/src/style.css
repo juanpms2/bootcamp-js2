@@ -60,6 +60,11 @@ button {
 button:hover {
 	border-color: #646cff;
 }
+button:disabled {
+	opacity: 0.5;
+	cursor: default;
+	border: none;
+}
 button:focus,
 button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;
@@ -105,9 +110,6 @@ button:focus-visible {
 	line-height: 0;
 }
 
-.player-score {
-}
-
 .cards-container {
 	display: flex;
 	width: 100%;
@@ -115,4 +117,72 @@ button:focus-visible {
 
 .player-card:not(:first-child) {
 	margin-left: -80px;
+}
+
+.buttons-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	gap: 4rem;
+	border: 1px solid red;
+}
+.restart-button {
+	background-color: #ff6464;
+	color: #fff;
+}
+.restart-button:hover {
+	background-color: #ff5353;
+}
+
+.stop-ordering-button {
+	background-color: #646cff;
+	color: #fff;
+}
+
+.stop-ordering-button:hover {
+	background-color: #535bf2;
+}
+
+.stop-ordering-button:disabled {
+	background-color: #646cff;
+	opacity: 0.5;
+	cursor: default;
+}
+
+/* Modal css */
+
+.hidden {
+	display: none;
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: none;
+}
+
+.modal-content {
+	width: 50%;
+	height: 45%;
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.modal-content h2 {
+	font-size: 2rem;
+	text-align: center;
+	letter-spacing: 8px;
+	color: #1a1a1a;
 }
