@@ -29,6 +29,8 @@ body {
 	min-width: 320px;
 	height: 100vh;
 	overflow: hidden;
+	background-image: url(/assets/background.png);
+	background-size: cover;
 }
 
 h1 {
@@ -91,7 +93,6 @@ button:focus-visible {
 	width: 100%;
 	padding: 8px;
 	overflow: hidden;
-	border: 1px solid red;
 }
 
 .player {
@@ -124,7 +125,6 @@ button:focus-visible {
 	display: flex;
 	justify-content: center;
 	gap: 4rem;
-	border: 1px solid red;
 }
 .restart-button {
 	background-color: #ff6464;
@@ -151,10 +151,6 @@ button:focus-visible {
 
 /* Modal css */
 
-.hidden {
-	display: none;
-}
-
 .modal {
 	position: fixed;
 	top: 0;
@@ -165,7 +161,7 @@ button:focus-visible {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	display: none;
+	display: flex;
 }
 
 .modal-content {
@@ -180,9 +176,16 @@ button:focus-visible {
 	align-items: center;
 }
 
-.modal-content h2 {
+.modal-content > #message {
 	font-size: 2rem;
 	text-align: center;
-	letter-spacing: 8px;
 	color: #1a1a1a;
+}
+
+.modal-content h2 {
+	letter-spacing: 8px;
+}
+
+.hidden {
+	display: none;
 }

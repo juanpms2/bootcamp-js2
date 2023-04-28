@@ -1,6 +1,5 @@
-import { cardsData, Card } from './data';
+import { openModal, getRandomCard, restartGameCards, orderCardButton, orderOneMore, stopOrdering, stopOrderingButton } from './helpers';
 import "./style.css";
-
 
 interface PlayerData {
   htmlScoreElement: Element;
@@ -9,11 +8,9 @@ interface PlayerData {
   cards: string[];
 }
 
-let gameCards: Card[] = [...cardsData];
 let playerScoreOne: number = 0;
-const orderCardButton = document.querySelector('#order-card')!
 const restartButton = document.querySelector('#restart-game')!
-const stopOrderingButton = document.querySelector('#stop-ordering')!
+
 
 const playerOneData: PlayerData = {
   htmlScoreElement: document.querySelector('#player-score-one')!,
@@ -23,32 +20,14 @@ const playerOneData: PlayerData = {
 };
 
 
-const getRandomNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-
-const getRandomCard = () => {
-  const randomNumber = getRandomNumber(0, 39);
-  const card = gameCards[randomNumber];
-  playerScoreOne = playerScoreOne + card.value;
-  gameCards.splice(randomNumber, 1);
-  showScore(playerScoreOne);
-  addCard(card.url);
-
-  if (playerScoreOne >= 7.5) {
-    orderCardButton.setAttribute('disabled', 'true');
-    stopOrderingButton.setAttribute('disabled', 'true');
-  }
-};
-
-
 
 const showScore = (puntuacion: number) => {
   if (puntuacion > 7.5) {
     playerOneData.htmlScoreElement.innerHTML = `${puntuacion.toString()} <span style="color:red"> You louse </span>`;
+    openModal('You louse!!');
   } else if (puntuacion === 7.5) {
     playerOneData.htmlScoreElement.innerHTML = `${puntuacion.toString()} <span style="color:green"> You win</span>`;
+    openModal('You win!!');
   } else {
     playerOneData.htmlScoreElement.innerHTML = `${puntuacion.toString()}`;
   }
@@ -61,30 +40,47 @@ const addCard = (url: string) => {
 
 const orderCard = () => {
   const card = getRandomCard();
-  return card;
-};
+  playerScoreOne = playerScoreOne + card.value;
+  showScore(playerScoreOne);
+  addCard(card.url);
+
+  if (playerScoreOne >= 7.5) {
+    orderCardButton.setAttribute('disabled', 'true');
+    stopOrderingButton.setAttribute('disabled', 'true');
+  }
+}
 
 orderCardButton.addEventListener('click', () => orderCard());
 
 
 
 const restartGame = () => {
-  gameCards = [...cardsData];
+  restartGameCards();
   playerScoreOne = 0;
   playerOneData.htmlScoreElement.innerHTML = '';
   playerOneData.htmlCardsElement.innerHTML = '';
   playerOneData.cards = [];
+  orderOneMore.classList.add('hidden');
+  orderCardButton.classList.remove('hidden');
   orderCardButton.removeAttribute('disabled');
   stopOrderingButton.removeAttribute('disabled');
 }
 
 restartButton.addEventListener('click', () => restartGame());
 
-const stopOrdering = () => {
-  if (playerScoreOne >= 0.5) {
-    orderCardButton.setAttribute('disabled', 'true');
-  }
+const handleStopOrdering = () => {
+  stopOrdering(playerScoreOne);
+  orderCardButton.classList.add('hidden');
+  orderOneMore.classList.remove('hidden');
 }
 
-stopOrderingButton.addEventListener('click', () => stopOrdering());
+stopOrderingButton.addEventListener('click', () => handleStopOrdering());
+
+const handleOrderOneMore = () => {
+  orderCard();
+  orderOneMore.setAttribute('disabled', 'true');
+}
+
+orderOneMore.addEventListener('click', () => handleOrderOneMore());
+
 
