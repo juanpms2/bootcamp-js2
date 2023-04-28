@@ -1,5 +1,5 @@
 import { cardsData, Card } from '../core/data';
-import { openModal } from './modal.helpers';
+import { openModal } from './modal';
 
 let gameCards: Card[] = [...cardsData];
 export const orderCardButton = document.querySelector('#order-card')!
