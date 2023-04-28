@@ -1,6 +1,6 @@
 # 7 y Media Game
 
-This is a simple game of 7 and a half, where the player plays against the computer.
+This is a simple game of 7 and a half.
 
 ## Rules
 
