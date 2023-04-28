@@ -1,11 +1,7 @@
-# typescript-sandbox
+# 7 y Media Game
 
-Para la parte de cada módulo en la que te planteamos ejercicios con JavaScript puedes usar este sandbox.
+This is a simple game of 7 and a half, where the player plays against the computer.
 
-Pasos:
+## Rules
 
-- Clonate el proyecto.
-- Instala las dependencias con `npm install`.
-- Ejecuta el sandbox con `npm run dev`.
-- Abre el navegador en `http://localhost:5173/` (si ese puerto no te funciona, mira en la consola donde has hecho el build, puede que este ocupado y se haya abierto en otro puerto).
-- Puedes empezar a meter tu código en el fichero:
+The rules are simple, the player can ask for more cards until he reaches 7 and a half or decides to stop, if he exceeds 7 and a half he loses. The player who gets closer to 7 and a half wins.
