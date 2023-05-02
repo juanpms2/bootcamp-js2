@@ -1,53 +1,34 @@
-import { getRandomCard, restartGameCards, orderCardButton, orderOneMore, stopOrdering, stopOrderingButton, playerData, showScore, addCard } from './components';
+import { modalButton, orderCardButton, orderOneMore, restartButton, stopOrderingButton } from './core/constants';
+import { restartGame, restartGameCards, restartPlayerData } from './core/core';
+import { closeModal, orderCard, stopOrdering } from './core/ui';
 import "./style.css";
 
-const restartButton = document.querySelector('#restart-game')!
 
-
-
-const orderCard = () => {
-  const card = getRandomCard();
-  playerData.score = playerData.score + card.value;
-  showScore();
-  addCard(card.url);
-
-  if (playerData.score >= 7.5) {
-    orderCardButton.setAttribute('disabled', 'true');
-    stopOrderingButton.setAttribute('disabled', 'true');
+document.addEventListener('DOMContentLoaded', () => {
+  const handleRestartGame = () => {
+    restartGameCards();
+    restartGame();
+    restartPlayerData();
   }
-}
-
-orderCardButton.addEventListener('click', () => orderCard());
 
 
-const restartGame = () => {
-  restartGameCards();
-  playerData.htmlScoreElement.innerHTML = '';
-  playerData.htmlCardsElement.innerHTML = '';
-  playerData.cards = [];
-  playerData.score = 0;
-  orderOneMore.classList.add('hidden');
-  orderCardButton.classList.remove('hidden');
-  orderCardButton.removeAttribute('disabled');
-  stopOrderingButton.removeAttribute('disabled');
-}
 
-restartButton.addEventListener('click', () => restartGame());
+  const handleOrderOneMore = () => {
+    orderCard();
+    orderOneMore?.setAttribute('disabled', 'true');
+  }
 
-const handleStopOrdering = () => {
-  stopOrdering(playerData.score);
-  orderCardButton.classList.add('hidden');
-  orderOneMore.classList.remove('hidden');
-}
-
-stopOrderingButton.addEventListener('click', () => handleStopOrdering());
+  orderOneMore?.addEventListener('click', () => handleOrderOneMore());
+  orderCardButton?.addEventListener('click', () => orderCard());
+  modalButton?.addEventListener('click', () => closeModal());
+  restartButton?.addEventListener('click', () => restartGame());
+  stopOrderingButton?.addEventListener('click', () => stopOrdering());
+  restartButton?.addEventListener('click', () => handleRestartGame());
+});
 
 
-const handleOrderOneMore = () => {
-  orderCard();
-  orderOneMore.setAttribute('disabled', 'true');
-}
 
-orderOneMore.addEventListener('click', () => handleOrderOneMore());
+
+
 
 
