@@ -1,5 +1,6 @@
-import { cardsData, Card } from './data';
-import { playerData, orderCardButton, stopOrderingButton, orderOneMore } from './constants';
+import { cardsData } from './data';
+import { Card, PlayerData } from './model';
+import { orderCardButton, stopOrderingButton, orderOneMore } from './constants';
 
 let gameCards: Card[] = [...cardsData];
 
@@ -28,6 +29,21 @@ export const restartGame = () => {
   orderCardButton?.removeAttribute('disabled');
   stopOrderingButton?.removeAttribute('disabled');
 }
+
+export const playerData: PlayerData = {
+  htmlScoreElement: document.querySelector('#player-score-one')!,
+  htmlCardsElement: document.querySelector('#ordered-cards')!,
+  score: 0,
+  cards: [],
+};
+
+export const setPlayerScore = (score: number) => {
+  playerData.score = playerData.score + score;
+};
+
+export const setPlayerCards = (url: string) => {
+  playerData.cards = [...playerData.cards, `<img class="card player-card" src="${url}" alt="ordered card" />`];
+};
 
 export const restartPlayerData = () => {
   playerData.htmlScoreElement.innerHTML = '';

@@ -1,9 +1,4 @@
-export interface Card {
-  suit: string;
-  figure: string;
-  value: number;
-  url: string;
-}
+import { Card } from './model';
 
 export const cardsData: Card[] = [
   {

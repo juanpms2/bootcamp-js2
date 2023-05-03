@@ -3,21 +3,19 @@ import { restartGame, restartGameCards, restartPlayerData } from './core/core';
 import { closeModal, orderCard, stopOrdering } from './core/ui';
 import "./style.css";
 
+const handleRestartGame = () => {
+  restartGameCards();
+  restartGame();
+  restartPlayerData();
+}
+
+const handleOrderOneMore = () => {
+  orderCard();
+  orderOneMore?.setAttribute('disabled', 'true');
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  const handleRestartGame = () => {
-    restartGameCards();
-    restartGame();
-    restartPlayerData();
-  }
-
-
-
-  const handleOrderOneMore = () => {
-    orderCard();
-    orderOneMore?.setAttribute('disabled', 'true');
-  }
-
   orderOneMore?.addEventListener('click', () => handleOrderOneMore());
   orderCardButton?.addEventListener('click', () => orderCard());
   modalButton?.addEventListener('click', () => closeModal());

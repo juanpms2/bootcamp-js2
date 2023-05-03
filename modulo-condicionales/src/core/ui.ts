@@ -1,5 +1,5 @@
-import { getRandomCard } from './core';
-import { playerData, winningScore, modal, modalContent, orderCardButton, stopOrderingButton, orderOneMore } from "./constants";
+import { getRandomCard, playerData, setPlayerCards, setPlayerScore } from './core';
+import { winningScore, modal, modalContent, orderCardButton, stopOrderingButton, orderOneMore } from './constants';
 
 
 export const closeModal = () => {
@@ -36,13 +36,13 @@ export const showScore = () => {
 };
 
 export const addCard = (url: string) => {
-  playerData.cards.push(`<img class="card player-card" src="${url}" alt="ordered card" />`);
+  setPlayerCards(url);
   playerData.htmlCardsElement.innerHTML = playerData.cards.map((card) => card).join('');
 };
 
 export const orderCard = () => {
   const card = getRandomCard();
-  playerData.score = playerData.score + card.value;
+  setPlayerScore(card.value);
   showScore();
   addCard(card.url);
 

@@ -1,10 +1,3 @@
-interface PlayerData {
-  htmlScoreElement: HTMLElement;
-  htmlCardsElement: HTMLElement;
-  score: number;
-  cards: string[];
-}
-
 export const winningScore: number = 7.5;
 
 export const restartButton = document.querySelector('#restart-game');
@@ -14,14 +7,6 @@ export const modalButton = document.querySelector('#modal button');
 export const orderCardButton = document.querySelector('#order-card');
 export const stopOrderingButton = document.querySelector('#stop-ordering');
 export const orderOneMore = document.querySelector('#order-one-more');
-
-
-export const playerData: PlayerData = {
-  htmlScoreElement: document.querySelector('#player-score-one')!,
-  htmlCardsElement: document.querySelector('#ordered-cards')!,
-  score: 0,
-  cards: [],
-};
 
 
 
