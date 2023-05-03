@@ -1,5 +1,5 @@
 import { cardsData } from './data';
-import { Card, PlayerData } from './model';
+import { Card, PlayerData } from './models';
 import { orderCardButton, stopOrderingButton, orderOneMore } from './constants';
 
 let gameCards: Card[] = [...cardsData];
