@@ -1,19 +1,18 @@
 import { modalButton, orderCardButton, orderOneMore, restartButton, stopOrderingButton } from './core/constants';
 import { restartGame, restartGameCards, restartPlayerData } from './core/core';
 import { closeModal, orderCard, stopOrdering } from './core/ui';
-import "./style.css";
+import './style.css';
 
 const handleRestartGame = () => {
   restartGameCards();
   restartGame();
   restartPlayerData();
-}
+};
 
 const handleOrderOneMore = () => {
   orderCard();
   orderOneMore?.setAttribute('disabled', 'true');
-}
-
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   orderOneMore?.addEventListener('click', () => handleOrderOneMore());
@@ -23,10 +22,3 @@ document.addEventListener('DOMContentLoaded', () => {
   stopOrderingButton?.addEventListener('click', () => stopOrdering());
   restartButton?.addEventListener('click', () => handleRestartGame());
 });
-
-
-
-
-
-
-

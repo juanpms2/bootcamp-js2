@@ -4,11 +4,9 @@ import { orderCardButton, stopOrderingButton, orderOneMore } from './constants';
 
 let gameCards: Card[] = [...cardsData];
 
-
 const getRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-
 
 export const getRandomCard = () => {
   const randomNumber = getRandomNumber(0, 39);
@@ -22,13 +20,12 @@ export const restartGameCards = () => {
   gameCards = [...cardsData];
 };
 
-
 export const restartGame = () => {
   orderOneMore?.classList.add('hidden');
   orderCardButton?.classList.remove('hidden');
   orderCardButton?.removeAttribute('disabled');
   stopOrderingButton?.removeAttribute('disabled');
-}
+};
 
 export const playerData: PlayerData = {
   htmlScoreElement: document.querySelector('#player-score-one')!,
@@ -50,4 +47,4 @@ export const restartPlayerData = () => {
   playerData.htmlCardsElement.innerHTML = '';
   playerData.cards = [];
   playerData.score = 0;
-}
+};

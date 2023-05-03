@@ -1,27 +1,23 @@
 import { getRandomCard, playerData, setPlayerCards, setPlayerScore } from './core';
 import { winningScore, modal, modalContent, orderCardButton, stopOrderingButton, orderOneMore } from './constants';
 
-
 export const closeModal = () => {
   modal?.classList.remove('modal');
   modal?.classList.add('hidden');
-}
+};
 
 export const openModal = (message: string, isComment?: boolean) => {
   if (modalContent && modalContent instanceof HTMLDivElement) {
     isComment
-      ?
-      modalContent.innerHTML = `<h3>${message}</h3>`
-      :
-      modalContent.innerHTML = `<h2>GAME OVER <br />${message}</h2>`;
-
+      ? (modalContent.innerHTML = `<h3>${message}</h3>`)
+      : (modalContent.innerHTML = `<h2>GAME OVER <br />${message}</h2>`);
   }
 
   if (modal && modal instanceof HTMLDivElement) {
     modal.classList.remove('hidden');
     modal.classList.add('modal');
   }
-}
+};
 
 export const showScore = () => {
   if (playerData.score > winningScore) {
@@ -37,7 +33,7 @@ export const showScore = () => {
 
 export const addCard = (url: string) => {
   setPlayerCards(url);
-  playerData.htmlCardsElement.innerHTML = playerData.cards.map((card) => card).join('');
+  playerData.htmlCardsElement.innerHTML = playerData.cards.map(card => card).join('');
 };
 
 export const orderCard = () => {
@@ -50,13 +46,12 @@ export const orderCard = () => {
     orderCardButton?.setAttribute('disabled', 'true');
     stopOrderingButton?.setAttribute('disabled', 'true');
   }
-}
+};
 
 const updateButtonStatus = () => {
   orderCardButton?.setAttribute('disabled', 'true');
   stopOrderingButton?.setAttribute('disabled', 'true');
-}
-
+};
 
 export const stopOrdering = () => {
   orderCardButton?.classList.add('hidden');
@@ -84,5 +79,3 @@ export const stopOrdering = () => {
       break;
   }
 };
-
-
