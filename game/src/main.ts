@@ -1,5 +1,5 @@
 import { modalButton, orderCardButton, orderOneMore, restartButton, stopOrderingButton } from './core/constants';
-import { restartGame, restartGameCards, restartPlayerData } from './core/core';
+import { restartGame, restartGameCards, restartPlayerData } from './core/motor';
 import { closeModal, orderCard, stopOrdering } from './core/ui';
 import './style.css';
 

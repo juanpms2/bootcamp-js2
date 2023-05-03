@@ -1,4 +1,4 @@
-import { getRandomCard, playerData, setPlayerCards, setPlayerScore } from './core';
+import { getRandomCard, playerData, setPlayerCards, setPlayerScore } from './motor';
 import { winningScore, modal, modalContent, orderCardButton, stopOrderingButton, orderOneMore } from './constants';
 
 export const closeModal = () => {
