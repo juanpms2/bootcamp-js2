@@ -7,3 +7,5 @@ export const modalButton = document.querySelector('#modal button');
 export const orderCardButton = document.querySelector('#order-card');
 export const stopOrderingButton = document.querySelector('#stop-ordering');
 export const orderOneMore = document.querySelector('#order-one-more');
+export const playerScore = document.querySelector('#score');
+export const playerCard = document.querySelector('#card');
