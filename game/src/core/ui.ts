@@ -10,7 +10,13 @@ import {
 } from './constants';
 import { getValue } from './motor';
 
-let score: number = 0;
+const player = {
+  score: 0,
+};
+
+const setPlayer = (newScore: number) => {
+  player.score = player.score + newScore;
+};
 
 const getCard = (randomNumber: number): string => {
   switch (randomNumber) {
@@ -57,14 +63,14 @@ export const openModal = (message: string, isComment?: boolean) => {
 
 const showScore = () => {
   if (playerScore && playerScore instanceof HTMLElement) {
-    if (score > winningScore) {
-      playerScore.innerHTML = `${score} <span style="color:red"> You lose!!</span>`;
+    if (player.score > winningScore) {
+      playerScore.innerHTML = `${player.score} <span style="color:red"> You lose!!</span>`;
       openModal('You lose!!');
-    } else if (score === winningScore) {
-      playerScore.innerHTML = `${score} <span style="color:green"> You win!!</span>`;
+    } else if (player.score === winningScore) {
+      playerScore.innerHTML = `${player.score} <span style="color:green"> You win!!</span>`;
       openModal('You win!!');
     } else {
-      playerScore.innerHTML = `${score}`;
+      playerScore.innerHTML = `${player.score}`;
     }
   }
 };
@@ -75,18 +81,14 @@ const addCard = (card: string) => {
   }
 };
 
-const setPlayerScore = (newScore: number) => {
-  score = score + newScore;
-};
-
 export const orderCard = (cardNumber: number) => {
   const card = getCard(cardNumber);
   const value = getValue(cardNumber + 1);
-  setPlayerScore(value);
+  setPlayer(value);
   showScore();
   addCard(card);
 
-  if (score >= winningScore) {
+  if (player.score >= winningScore) {
     orderCardButton?.setAttribute('disabled', 'true');
     stopOrderingButton?.setAttribute('disabled', 'true');
   }
@@ -102,20 +104,20 @@ export const stopOrdering = () => {
   orderOneMore?.classList.remove('hidden');
 
   switch (true) {
-    case score < 0.5:
+    case player.score < 0.5:
       openModal('Al menos juega una carta cagón', true);
       orderCardButton?.classList.remove('hidden');
       orderOneMore?.classList.add('hidden');
       break;
-    case score < 4:
+    case player.score < 4:
       openModal('Has sido muy conservador', true);
       updateButtonStatus();
       break;
-    case score < 6:
+    case player.score < 6:
       openModal('Te ha entrado el canguelo eh?', true);
       updateButtonStatus();
       break;
-    case score <= 7:
+    case player.score <= 7:
       openModal('Casi casi...', true);
       updateButtonStatus();
       break;
@@ -131,7 +133,7 @@ export const restartPlayerData = () => {
   if (playerCard && playerCard instanceof HTMLElement) {
     playerCard.innerHTML = '<img class="card" src="/assets/back.svg" alt="card" />';
   }
-  score = 0;
+  setPlayer(0);
 };
 
 export const restartGame = () => {
