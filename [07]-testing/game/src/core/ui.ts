@@ -18,7 +18,12 @@ const setPlayer = (newScore: number) => {
   player.score = player.score + newScore;
 };
 
-const getCard = (randomNumber: number): string => {
+const updateButtonStatus = () => {
+  orderCardButton?.setAttribute('disabled', 'true');
+  stopOrderingButton?.setAttribute('disabled', 'true');
+};
+
+export const getCard = (randomNumber: number): string => {
   switch (randomNumber) {
     case 0:
       return '<img class="card" src="/assets/copas/1.svg" alt="card" />';
@@ -61,7 +66,7 @@ export const openModal = (message: string, isComment?: boolean) => {
   modal?.classList.add('modal');
 };
 
-const showScore = () => {
+export const showScore = () => {
   if (playerScore && playerScore instanceof HTMLElement) {
     if (player.score > winningScore) {
       playerScore.innerHTML = `${player.score} <span style="color:red"> You lose!!</span>`;
@@ -89,14 +94,8 @@ export const orderCard = (cardNumber: number) => {
   addCard(card);
 
   if (player.score >= winningScore) {
-    orderCardButton?.setAttribute('disabled', 'true');
-    stopOrderingButton?.setAttribute('disabled', 'true');
+    updateButtonStatus();
   }
-};
-
-const updateButtonStatus = () => {
-  orderCardButton?.setAttribute('disabled', 'true');
-  stopOrderingButton?.setAttribute('disabled', 'true');
 };
 
 export const stopOrdering = () => {
