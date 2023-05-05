@@ -24,6 +24,11 @@ const setPlayer = (newScore: number) => {
   player.score = player.score + newScore;
 };
 
+const updateButtonStatus = () => {
+  orderCardButton?.setAttribute('disabled', 'true');
+  stopOrderingButton?.setAttribute('disabled', 'true');
+};
+
 const getCard = (randomNumber: number): string => {
   switch (randomNumber) {
     case 0:
@@ -95,14 +100,8 @@ const orderCard = (cardNumber: number) => {
   addCard(card);
 
   if (player.score >= winningScore) {
-    orderCardButton?.setAttribute('disabled', 'true');
-    stopOrderingButton?.setAttribute('disabled', 'true');
+    updateButtonStatus();
   }
-};
-
-const updateButtonStatus = () => {
-  orderCardButton?.setAttribute('disabled', 'true');
-  stopOrderingButton?.setAttribute('disabled', 'true');
 };
 
 const stopOrdering = () => {
