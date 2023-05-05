@@ -1,11 +1,11 @@
 export const winningScore: number = 7.5;
 
-export const restartButton = document.querySelector('#restart-game');
-export const modal = document.querySelector('#modal');
-export const modalContent = document.querySelector('#modal-content #message');
-export const modalButton = document.querySelector('#modal button');
-export const orderCardButton = document.querySelector('#order-card');
-export const stopOrderingButton = document.querySelector('#stop-ordering');
-export const orderOneMore = document.querySelector('#order-one-more');
-export const playerScore = document.querySelector('#score');
-export const playerCard = document.querySelector('#card');
+export const restartButton = document.getElementById('restart-game');
+export const modal = document.getElementById('modal');
+export const modalContent = document.getElementById('message');
+export const modalButton = document.getElementById('modal-button');
+export const orderCardButton = document.getElementById('order-card');
+export const stopOrderingButton = document.getElementById('stop-ordering');
+export const orderOneMore = document.getElementById('order-one-more');
+export const playerScore = document.getElementById('score');
+export const playerCard = document.getElementById('card');
