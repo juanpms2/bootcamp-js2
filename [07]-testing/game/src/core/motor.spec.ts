@@ -1,4 +1,4 @@
-import { getRandomNumber, getValue } from './motor';
+import { getRandomNumber, getCardValue } from './motor';
 
 describe('motor specs', () => {
   describe('getRandomNumber specs', () => {
@@ -33,7 +33,7 @@ describe('motor specs', () => {
       const value = 6;
 
       // Act
-      const result = getValue(value);
+      const result = getCardValue(value);
 
       // Assert
       expect(result).toBe(value);
@@ -44,7 +44,7 @@ describe('motor specs', () => {
       const value = 8;
 
       // Act
-      const result = getValue(value);
+      const result = getCardValue(value);
 
       // Assert
       expect(result).toBe(0.5);
