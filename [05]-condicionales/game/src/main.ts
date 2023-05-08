@@ -139,6 +139,7 @@ const restartPlayerData = () => {
 const restartGame = () => {
   restartPlayerData();
   orderOneMore?.classList.add('hidden');
+  orderOneMore?.removeAttribute('disabled');
   orderCardButton?.classList.remove('hidden');
   orderCardButton?.removeAttribute('disabled');
   stopOrderingButton?.removeAttribute('disabled');
