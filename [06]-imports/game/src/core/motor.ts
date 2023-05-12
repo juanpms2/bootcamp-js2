@@ -1,5 +1,5 @@
-import { GameStatus, winningScore, Game, CardValue } from './model';
-import { cardImages } from './constants';
+import { GameStatus, Game, CardValue } from './model';
+import { cardImages, winningScore } from './constants';
 
 export const game: Game = {
   status: 'inProgress',
