@@ -1,5 +1,4 @@
 import {
-  winningScore,
   modal,
   modalContent,
   orderCardButton,
@@ -10,41 +9,12 @@ import {
   modalButton,
   restartButton,
 } from './constants';
-import { getCardValue, getRandomNumber } from './motor';
+import { game, generateRandomCard, resetGame, stopOrderingCards } from './motor';
 
 export const createGame = () => {
-  let score = 0;
-
   const updateButtonStatus = () => {
     orderCardButton?.setAttribute('disabled', 'true');
     stopOrderingButton?.setAttribute('disabled', 'true');
-  };
-
-  const getCard = (randomNumber: number): string => {
-    switch (randomNumber) {
-      case 1:
-        return '<img class="card" src="/assets/copas/1.svg" alt="card" />';
-      case 2:
-        return '<img class="card" src="/assets/copas/2.svg" alt="card" />';
-      case 3:
-        return '<img class="card" src="/assets/copas/3.svg" alt="card" />';
-      case 4:
-        return '<img class="card" src="/assets/copas/4.svg" alt="card" />';
-      case 5:
-        return '<img class="card" src="/assets/copas/5.svg" alt="card" />';
-      case 6:
-        return '<img class="card" src="/assets/copas/6.svg" alt="card" />';
-      case 7:
-        return '<img class="card" src="/assets/copas/7.svg" alt="card" />';
-      case 8:
-        return '<img class="card" src="/assets/copas/10.svg" alt="card" />';
-      case 9:
-        return '<img class="card" src="/assets/copas/11.svg" alt="card" />';
-      case 10:
-        return '<img class="card" src="/assets/copas/12.svg" alt="card" />';
-      default:
-        return '<img class="card" src="/assets/back.svg" alt="card" />';
-    }
   };
 
   const closeModal = () => {
@@ -65,61 +35,51 @@ export const createGame = () => {
 
   const showScore = () => {
     if (playerScore && playerScore instanceof HTMLElement) {
-      if (score > winningScore) {
-        playerScore.innerHTML = `${score} <span style="color:red"> You lose!!</span>`;
-        openModal('You lose!!');
-      } else if (score === winningScore) {
-        playerScore.innerHTML = `${score} <span style="color:green"> You win!!</span>`;
-        openModal('You win!!');
-      } else {
-        playerScore.innerHTML = `${score}`;
+      playerScore.innerHTML = '';
+      switch (game.status) {
+        case 'lose':
+          playerScore.innerHTML = `${game.playerScore} <span style="color:red"> You lose!!</span>`;
+          openModal('You lose!!');
+          break;
+        case 'win':
+          playerScore.innerHTML = `${game.playerScore} <span style="color:green"> You win!!</span>`;
+          openModal('You win!!');
+          break;
+        default:
+          playerScore.innerHTML = `${game.playerScore}`;
+          break;
       }
     }
   };
 
-  const addCard = (card: string) => {
+  const addCard = () => {
     if (playerCard && playerCard instanceof HTMLElement) {
-      playerCard.innerHTML = card;
+      playerCard.innerHTML = `<img class="card" src="${game.card.image}" alt="card" />`;
     }
   };
 
   const orderCard = () => {
-    const cardNumber = getRandomNumber(1, 10);
-    const card = getCard(cardNumber);
-    const value = getCardValue(cardNumber);
-    score = score + value;
+    generateRandomCard();
     showScore();
-    addCard(card);
+    addCard();
 
-    if (score >= winningScore) {
+    if (game.status === 'lose' || game.status === 'win') {
       updateButtonStatus();
     }
   };
 
   const stopOrdering = () => {
+    stopOrderingCards();
     orderCardButton?.classList.add('hidden');
     orderOneMore?.classList.remove('hidden');
 
-    switch (true) {
-      case score < 0.5:
-        openModal('Al menos juega una carta cagón', true);
-        orderCardButton?.classList.remove('hidden');
-        orderOneMore?.classList.add('hidden');
-        break;
-      case score < 4:
-        openModal('Has sido muy conservador', true);
-        updateButtonStatus();
-        break;
-      case score < 6:
-        openModal('Te ha entrado el canguelo eh?', true);
-        updateButtonStatus();
-        break;
-      case score <= 7:
-        openModal('Casi casi...', true);
-        updateButtonStatus();
-        break;
-      default:
-        break;
+    if (game.message === 'Al menos juega una carta cagón') {
+      openModal('Al menos juega una carta cagón', true);
+      orderCardButton?.classList.remove('hidden');
+      orderOneMore?.classList.add('hidden');
+    } else {
+      openModal(game.message, true);
+      updateButtonStatus();
     }
   };
 
@@ -130,10 +90,10 @@ export const createGame = () => {
     if (playerCard && playerCard instanceof HTMLElement) {
       playerCard.innerHTML = '<img class="card" src="/assets/back.svg" alt="card" />';
     }
-    score = 0;
   };
 
   const restartGame = () => {
+    resetGame();
     restartPlayerData();
     orderOneMore?.classList.add('hidden');
     orderOneMore?.removeAttribute('disabled');
