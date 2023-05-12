@@ -17,12 +17,23 @@ export const cardImages: CardImages = {
   },
 };
 
-export const restartButton = document.getElementById('restart-game');
-export const modal = document.getElementById('modal');
-export const modalContent = document.getElementById('message');
-export const modalButton = document.getElementById('modal-button');
-export const orderCardButton = document.getElementById('order-card');
-export const stopOrderingButton = document.getElementById('stop-ordering');
-export const orderOneMore = document.getElementById('order-one-more');
-export const playerScore = document.getElementById('player-score');
-export const playerCard = document.getElementById('card');
+const elementInDOM = (id: string) => document.getElementById(id);
+
+const elementReady = (id: string) => {
+  const element = elementInDOM(id);
+  if (element && element instanceof HTMLElement) {
+    return element;
+  }
+  console.log(new Error(`Element with id ${id} not found in DOM`));
+  return null;
+};
+
+export const restartButton = elementReady('restart-game');
+export const modal = elementReady('modal');
+export const modalContent = elementReady('message');
+export const modalButton = elementReady('modal-button');
+export const orderCardButton = elementReady('order-card');
+export const stopOrderingButton = elementReady('stop-ordering');
+export const orderOneMore = elementReady('order-one-more');
+export const playerScore = elementReady('player-score');
+export const playerCard = elementReady('card');

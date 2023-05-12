@@ -1,6 +1,4 @@
 import {
-  modal,
-  modalContent,
   orderCardButton,
   stopOrderingButton,
   orderOneMore,
@@ -10,6 +8,7 @@ import {
   restartButton,
 } from './constants';
 import { game, generateRandomCard, resetGame, stopOrderingCards } from './motor';
+import { openModal, closeModal } from './modal';
 
 export const createGame = () => {
   const updateButtonStatus = () => {
@@ -17,33 +16,17 @@ export const createGame = () => {
     stopOrderingButton?.setAttribute('disabled', 'true');
   };
 
-  const closeModal = () => {
-    modal?.classList.remove('modal');
-    modal?.classList.add('hidden');
-  };
-
-  const openModal = (message: string, isComment?: boolean) => {
-    if (modalContent && modalContent instanceof HTMLElement) {
-      isComment
-        ? (modalContent.innerHTML = `<h3>${message}</h3>`)
-        : (modalContent.innerHTML = `<h2>GAME OVER <br />${message}</h2>`);
-    }
-
-    modal?.classList.remove('hidden');
-    modal?.classList.add('modal');
-  };
-
   const showScore = () => {
-    if (playerScore && playerScore instanceof HTMLElement) {
+    if (playerScore) {
       playerScore.innerHTML = '';
       switch (game.status) {
         case 'lose':
           playerScore.innerHTML = `${game.playerScore} <span style="color:red"> You lose!!</span>`;
-          openModal('You lose!!');
+          openModal('You lose!!', game.status);
           break;
         case 'win':
           playerScore.innerHTML = `${game.playerScore} <span style="color:green"> You win!!</span>`;
-          openModal('You win!!');
+          openModal('You win!!', game.status);
           break;
         default:
           playerScore.innerHTML = `${game.playerScore}`;
@@ -53,7 +36,7 @@ export const createGame = () => {
   };
 
   const addCard = () => {
-    if (playerCard && playerCard instanceof HTMLElement) {
+    if (playerCard) {
       playerCard.innerHTML = `<img class="card" src="${game.card.image}" alt="card" />`;
     }
   };
@@ -74,20 +57,20 @@ export const createGame = () => {
     orderOneMore?.classList.remove('hidden');
 
     if (game.message === 'Al menos juega una carta cagón') {
-      openModal('Al menos juega una carta cagón', true);
+      openModal('Al menos juega una carta cagón', game.status);
       orderCardButton?.classList.remove('hidden');
       orderOneMore?.classList.add('hidden');
     } else {
-      openModal(game.message, true);
+      openModal(game.message, game.status);
       updateButtonStatus();
     }
   };
 
   const restartPlayerData = () => {
-    if (playerScore && playerScore instanceof HTMLElement) {
+    if (playerScore) {
       playerScore.innerHTML = '0';
     }
-    if (playerCard && playerCard instanceof HTMLElement) {
+    if (playerCard) {
       playerCard.innerHTML = '<img class="card" src="/assets/back.svg" alt="card" />';
     }
   };
