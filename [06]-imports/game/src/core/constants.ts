@@ -1,6 +1,9 @@
 import { CardImages } from './model';
 
 export const winningScore: number = 7.5;
+export const maxCardValue: number = 7;
+export const figureCardValue: number = 0.5;
+export const sumForFigureCard: number = 2;
 
 export const cardImages: CardImages = {
   copas: {

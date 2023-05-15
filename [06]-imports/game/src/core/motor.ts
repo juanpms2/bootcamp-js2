@@ -1,5 +1,5 @@
 import { GameStatus, Game, CardValue } from './model';
-import { cardImages, winningScore } from './constants';
+import { cardImages, winningScore, maxCardValue, figureCardValue, sumForFigureCard } from './constants';
 
 export const game: Game = {
   status: 'inProgress',
@@ -11,7 +11,8 @@ export const game: Game = {
   },
 };
 
-const mapCardToCardValue = (value: number): CardValue => (value > 7 ? 0.5 : (value as CardValue));
+const mapCardToCardValue = (value: number): CardValue =>
+  value > maxCardValue ? (figureCardValue as CardValue) : (value as CardValue);
 
 const generateRandomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -19,7 +20,7 @@ export const generateRandomCard = () => {
   const randomNumber = generateRandomNumber(1, 10);
 
   if (randomNumber > 7) {
-    const numberCard = randomNumber + 2;
+    const numberCard = randomNumber + sumForFigureCard;
 
     game.card.value = mapCardToCardValue(numberCard);
     game.card.image = cardImages.copas[numberCard];
