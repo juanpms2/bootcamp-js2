@@ -11,7 +11,18 @@ export const game: Game = {
   },
 };
 
-const mapCardToCardValue = (value: number): CardValue =>
+const elementInDOM = (id: string) => document.getElementById(id);
+
+export const elementReady = (id: string) => {
+  const element = elementInDOM(id);
+  if (element && element instanceof HTMLElement) {
+    return element;
+  }
+  console.log(new Error(`Element with id ${id} not found in DOM`));
+  return null;
+};
+
+export const mapCardToCardValue = (value: number): CardValue =>
   value > maxCardValue ? (figureCardValue as CardValue) : (value as CardValue);
 
 const generateRandomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;

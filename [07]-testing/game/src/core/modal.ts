@@ -1,5 +1,9 @@
-import { modal, modalContent } from './constants';
 import { GameStatus } from './model';
+import { elementReady } from './motor';
+
+const modal = elementReady('modal');
+const modalContent = elementReady('message');
+const modalButton = elementReady('modal-button');
 
 export const closeModal = () => {
   modal?.classList.remove('modal');
@@ -7,6 +11,8 @@ export const closeModal = () => {
 };
 
 export const openModal = (message: string, gameStatus: GameStatus) => {
+  modalButton?.addEventListener('click', () => closeModal());
+
   if (modalContent) {
     gameStatus === 'inProgress'
       ? (modalContent.innerHTML = `<h3>${message}</h3>`)

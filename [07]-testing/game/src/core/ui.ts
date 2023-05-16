@@ -1,14 +1,12 @@
-import {
-  orderCardButton,
-  stopOrderingButton,
-  orderOneMore,
-  playerScore,
-  playerCard,
-  modalButton,
-  restartButton,
-} from './constants';
-import { game, generateRandomCard, resetGame, stopOrderingCards } from './motor';
-import { openModal, closeModal } from './modal';
+import { elementReady, game, generateRandomCard, resetGame, stopOrderingCards } from './motor';
+import { openModal } from './modal';
+
+const restartButton = elementReady('restart-game');
+const orderCardButton = elementReady('order-card');
+const stopOrderingButton = elementReady('stop-ordering');
+const orderOneMore = elementReady('order-one-more');
+const playerScore = elementReady('player-score');
+const playerCard = elementReady('card');
 
 export const createGame = () => {
   const updateButtonStatus = () => {
@@ -92,7 +90,6 @@ export const createGame = () => {
 
   orderOneMore?.addEventListener('click', () => handleOrderOneMore());
   orderCardButton?.addEventListener('click', () => orderCard());
-  modalButton?.addEventListener('click', () => closeModal());
   restartButton?.addEventListener('click', () => restartGame());
   stopOrderingButton?.addEventListener('click', () => stopOrdering());
 };
