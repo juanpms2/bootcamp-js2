@@ -1,53 +1,29 @@
-import { getRandomNumber, getCardValue } from './motor';
+import { mapCardToCardValue } from './motor';
 
 describe('motor specs', () => {
-  describe('getRandomNumber specs', () => {
-    it('Should return a number between min and max values', () => {
+  describe('mapCardToCardValue specs', () => {
+    it('Should return card value if card is not a figure', () => {
       // Arrange
-      const min = 0;
-      const max = 10;
+      const card = 1;
+      const expectedValue = 1;
 
       // Act
-      const result = getRandomNumber(min, max);
+      const result = mapCardToCardValue(card);
 
       // Assert
-      expect(result).toBeGreaterThanOrEqual(min);
-      expect(result).toBeLessThanOrEqual(max);
+      expect(result).toEqual(expectedValue);
     });
 
-    it('Should return 1 if min and max are 1', () => {
+    it('Should return figure value if card is a figure', () => {
       // Arrange
-      const min = 1;
-      const max = 1;
+      const card = 10;
+      const expectedValue = 0.5;
 
       // Act
-      const result = getRandomNumber(min, max);
+      const result = mapCardToCardValue(card);
 
       // Assert
-      expect(result).toBe(1);
-    });
-  });
-  describe('getValue specs', () => {
-    it('Should return value if value is less than 7', () => {
-      // Arrange
-      const value = 6;
-
-      // Act
-      const result = getCardValue(value);
-
-      // Assert
-      expect(result).toBe(value);
-    });
-
-    it('Should return 0.5 if value is greater than 7', () => {
-      // Arrange
-      const value = 8;
-
-      // Act
-      const result = getCardValue(value);
-
-      // Assert
-      expect(result).toBe(0.5);
+      expect(result).toEqual(expectedValue);
     });
   });
 });
