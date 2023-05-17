@@ -1,9 +1,5 @@
 import { GameStatus } from './model';
-import { elementReady } from './motor';
-
-const modal = elementReady('modal');
-const modalContent = elementReady('message');
-const modalButton = elementReady('modal-button');
+import { modal, modalButton, modalContent } from './constants';
 
 export const closeModal = () => {
   modal?.classList.remove('modal');
