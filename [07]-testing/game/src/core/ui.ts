@@ -1,6 +1,13 @@
-import { orderCardButton, orderOneMore, playerCard, playerScore, restartButton, stopOrderingButton } from './constants';
 import { game, generateRandomCard, resetGame, stopOrderingCards } from './motor';
 import { openModal } from './modal';
+import { elementReady } from './helpers';
+
+const restartButton = elementReady('restart-game');
+const orderCardButton = elementReady('order-card');
+const stopOrderingButton = elementReady('stop-ordering');
+const orderOneMore = elementReady('order-one-more');
+const playerScore = elementReady('player-score');
+const playerCard = elementReady('card');
 
 export const createGame = () => {
   const updateButtonStatus = () => {
