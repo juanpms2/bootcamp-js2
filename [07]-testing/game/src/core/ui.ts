@@ -1,6 +1,21 @@
-import { orderCardButton, orderOneMore, playerCard, playerScore, restartButton, stopOrderingButton } from './constants';
-import { game, generateRandomCard, resetGame, stopOrderingCards } from './motor';
+import {
+  checkGameResult,
+  game,
+  generateRandomNumber,
+  getCardValue,
+  resetGame,
+  stopOrderingCards,
+  updateGameStatus,
+} from './motor';
 import { openModal } from './modal';
+import { elementReady } from './helpers';
+
+const restartButton = elementReady('restart-game');
+const orderCardButton = elementReady('order-card');
+const stopOrderingButton = elementReady('stop-ordering');
+const orderOneMore = elementReady('order-one-more');
+const playerScore = elementReady('player-score');
+const playerCard = elementReady('card');
 
 export const createGame = () => {
   const updateButtonStatus = () => {
@@ -34,9 +49,21 @@ export const createGame = () => {
   };
 
   const orderCard = () => {
-    generateRandomCard();
-    showScore();
-    addCard();
+    const indexCard = generateRandomNumber(1, 10);
+    const cardValue = getCardValue(indexCard);
+    updateGameStatus(cardValue, indexCard);
+
+    if (game.playerScore) {
+      checkGameResult();
+    }
+
+    if (game.playerScore) {
+      showScore();
+    }
+
+    if (game.card.value) {
+      addCard();
+    }
 
     if (game.status === 'lose' || game.status === 'win') {
       updateButtonStatus();
@@ -45,6 +72,7 @@ export const createGame = () => {
 
   const stopOrdering = () => {
     stopOrderingCards();
+    checkGameResult();
     orderCardButton?.classList.add('hidden');
     orderOneMore?.classList.remove('hidden');
 

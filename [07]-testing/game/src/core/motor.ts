@@ -17,22 +17,7 @@ export const mapCardToCardValue = (value: number): CardValue =>
 export const generateRandomNumber = (min: number, max: number): number =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-export const generateRandomCard = () => {
-  const randomNumber = generateRandomNumber(1, 10);
-
-  if (randomNumber > 7) {
-    const numberCard = randomNumber + sumForFigureCard;
-
-    game.card.value = mapCardToCardValue(numberCard);
-    game.card.image = cardImages.copas[numberCard];
-  } else {
-    game.card.value = mapCardToCardValue(randomNumber);
-    game.card.image = cardImages.copas[randomNumber];
-  }
-  calculateScore(game.card.value);
-};
-
-const checkGameResult = (): GameStatus => {
+export const checkGameResult = (): GameStatus => {
   if (game.playerScore === winningScore) {
     return (game.status = 'win');
   }
@@ -42,9 +27,19 @@ const checkGameResult = (): GameStatus => {
   return 'inProgress';
 };
 
-export const calculateScore = (cardValue: number) => {
+export const getCardValue = (randomNumber: number): CardValue => {
+  const cardValue =
+    randomNumber > maxCardValue
+      ? mapCardToCardValue(randomNumber + sumForFigureCard)
+      : mapCardToCardValue(randomNumber);
+
+  return cardValue;
+};
+
+export const updateGameStatus = (cardValue: CardValue, indexCard: number) => {
   game.playerScore = game.playerScore + cardValue;
-  checkGameResult();
+  game.card.value = cardValue;
+  game.card.image = cardImages.copas[indexCard];
 };
 
 export const stopOrderingCards = () => {
@@ -64,7 +59,6 @@ export const stopOrderingCards = () => {
     default:
       break;
   }
-  checkGameResult();
 };
 
 export const resetGame = () => {
