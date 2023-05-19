@@ -1,5 +1,7 @@
 import { CardImages } from './model';
 
+export const min = 1;
+export const max = 10;
 export const winningScore: number = 7.5;
 export const maxCardValue: number = 7;
 export const figureCardValue: number = 0.5;

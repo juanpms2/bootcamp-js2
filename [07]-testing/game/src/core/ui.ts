@@ -9,6 +9,7 @@ import {
 } from './motor';
 import { openModal } from './modal';
 import { elementReady } from './helpers';
+import { min, max } from './constants';
 
 const restartButton = elementReady('restart-game');
 const orderCardButton = elementReady('order-card');
@@ -49,7 +50,7 @@ export const createGame = () => {
   };
 
   const orderCard = () => {
-    const indexCard = generateRandomNumber(1, 10);
+    const indexCard = generateRandomNumber(min, max);
     const cardValue = getCardValue(indexCard);
     updateGameStatus(cardValue, indexCard);
 
