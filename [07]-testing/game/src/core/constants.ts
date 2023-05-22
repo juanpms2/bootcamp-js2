@@ -7,7 +7,7 @@ export const maxCardValue: number = 7;
 export const figureCardValue: number = 0.5;
 export const sumForFigureCard: number = 2;
 
-export const cardImages: CardImages = {
+export const urlCardImages: CardImages = {
   copas: {
     1: '/assets/copas/1.svg',
     2: '/assets/copas/2.svg',

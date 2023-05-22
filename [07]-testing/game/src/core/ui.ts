@@ -3,6 +3,7 @@ import {
   game,
   generateRandomNumber,
   getCardValue,
+  getUrlCardImage,
   resetGame,
   stopOrderingCards,
   updateGameStatus,
@@ -50,9 +51,11 @@ export const createGame = () => {
   };
 
   const orderCard = () => {
-    const indexCard = generateRandomNumber(min, max);
-    const cardValue = getCardValue(indexCard);
-    updateGameStatus(cardValue, indexCard);
+    const randomNumber = generateRandomNumber(min, max);
+    const cardValue = getCardValue(randomNumber);
+    const urlCardImage = getUrlCardImage(randomNumber);
+
+    updateGameStatus(cardValue, urlCardImage);
 
     if (game.playerScore) {
       checkGameResult();

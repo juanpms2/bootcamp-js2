@@ -1,4 +1,4 @@
-import { cardImages } from './constants';
+import { urlCardImages } from './constants';
 import {
   mapCardToCardValue,
   checkGameResult,
@@ -124,14 +124,14 @@ describe('motor specs', () => {
       game.card.image = '';
 
       const cardValue = 0.5;
-      const indexCard = 8;
+      const urlCardImage = urlCardImages.copas[10];
 
       // Act
-      updateGameStatus(cardValue, indexCard);
+      updateGameStatus(cardValue, urlCardImage);
 
       // Assert
       expect(game.card.value).toEqual(cardValue);
-      expect(game.card.image).toEqual(cardImages.copas[indexCard]);
+      expect(game.card.image).toEqual(urlCardImage);
       expect(game.playerScore).toEqual(cardValue);
     });
   });
