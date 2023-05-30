@@ -161,7 +161,7 @@ button:focus-visible {
 .alert__text {
   font-size: 2em;
   font-weight: 500;
-  color: #e60303;
+  color: orange;
 }
 
 .buttons-container {
