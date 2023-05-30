@@ -144,10 +144,30 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 1em;
 }
 
-.card .card__body .card__text {
+.card__text {
   font-size: 1.2em;
   font-weight: 500;
+}
+
+.message {
+  color: orange;
+  display: block;
+}
+
+.alert__text {
+  font-size: 2em;
+  font-weight: 500;
+  color: #e60303;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
 }
