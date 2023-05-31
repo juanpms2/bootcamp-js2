@@ -66,9 +66,7 @@ export const loadApp = () => {
 		clearCards();
 		const pacientesPediatria = obtenPacientesAsignadosAPediatria(pacientes);
 
-		for (let i = 0; i < pacientesPediatria.length; i++) {
-			createCard(pacientesPediatria[i]);
-		}
+		pacientesPediatria.forEach((paciente) => createCard(paciente));
 
 		obtenerPediatria?.setAttribute("disabled", "true");
 		obtenerPediatriaYMenorDeDiezAnios?.removeAttribute("disabled");
@@ -83,9 +81,7 @@ export const loadApp = () => {
 		const pacientesPediatria =
 			obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes);
 
-		for (let i = 0; i < pacientesPediatria.length; i++) {
-			createCard(pacientesPediatria[i]);
-		}
+		pacientesPediatria.forEach((paciente) => createCard(paciente));
 
 		obtenerPediatriaYMenorDeDiezAnios?.setAttribute("disabled", "true");
 		obtenerPediatria?.removeAttribute("disabled");
@@ -117,9 +113,7 @@ export const loadApp = () => {
 		clearCards();
 		const pacientesReasignados = reasignaPacientesAMedicoFamilia(pacientes);
 
-		for (let i = 0; i < pacientesReasignados.length; i++) {
-			createCard(pacientesReasignados[i], true);
-		}
+		pacientesReasignados.forEach((paciente) => createCard(paciente, true));
 
 		reasignaPacientes?.setAttribute("disabled", "true");
 		activarProtocolo?.removeAttribute("disabled");
