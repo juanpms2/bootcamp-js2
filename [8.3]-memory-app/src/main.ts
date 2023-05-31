@@ -1,3 +1,2 @@
+import "./pruebas-de-concepto/01-barajar-cartas/index.ts";
 import "./style.css";
-
-console.log("Hello Typescript!");
