@@ -1,6 +1,4 @@
-console.log("Hello mostrar-grid!");
-
-const addElements = () => {
+const createGrid = () => {
 	const root = document.querySelector("#app");
 	const container = document.createElement("div");
 	container.setAttribute("id", "grid-container");
@@ -13,4 +11,4 @@ const addElements = () => {
 	}
 };
 
-addElements();
+createGrid();

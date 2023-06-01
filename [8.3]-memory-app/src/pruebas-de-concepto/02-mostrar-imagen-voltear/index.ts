@@ -1,15 +1,10 @@
-console.log("Hello mostrar-imagen-voltear!");
-
-const createCard = (id: string, imgUrl: string) => {
+export const createCard = (id: string, imgUrl: string) => {
 	const root = document.querySelector("#app");
-	const container = document.createElement("div");
-	container.setAttribute("class", "container");
-	root?.appendChild(container);
 
 	const flipContainer: HTMLDivElement = document.createElement("div");
 	flipContainer.setAttribute("class", "flip-container");
 	flipContainer.setAttribute("id", id);
-	container?.appendChild(flipContainer);
+	root?.appendChild(flipContainer);
 
 	const flipper: HTMLDivElement = document.createElement("div");
 	flipper.setAttribute("class", "flipper");
@@ -31,7 +26,7 @@ const createCard = (id: string, imgUrl: string) => {
 		document.querySelector(`#${id}`)?.classList.add("flip");
 		setTimeout(() => {
 			document.querySelector(`#${id}`)?.classList.remove("flip");
-		}, 5000);
+		}, 2000);
 	});
 
 	return flipContainer;

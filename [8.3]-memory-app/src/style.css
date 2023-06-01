@@ -68,6 +68,7 @@ h1 {
 }
 
 .flip-container, .front, .back {
+	cursor: pointer;
 	width: 200px;
 	height: 200px;
 	border-radius: 8px;

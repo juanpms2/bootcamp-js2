@@ -1,5 +1,3 @@
-console.log("Hello barajar-cartas!");
-
 const cards = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
 const shuffleCards = (cards: string[]): string[] => {
