@@ -1,11 +1,11 @@
 console.log("Hello mostrar-imagen-voltear!");
 
-const root = document.querySelector("#app");
-const container = document.createElement("div");
-container.setAttribute("class", "container");
-root?.appendChild(container);
-
 const createCard = (id: string, imgUrl: string) => {
+	const root = document.querySelector("#app");
+	const container = document.createElement("div");
+	container.setAttribute("class", "container");
+	root?.appendChild(container);
+
 	const flipContainer: HTMLDivElement = document.createElement("div");
 	flipContainer.setAttribute("class", "flip-container");
 	flipContainer.setAttribute("id", id);
