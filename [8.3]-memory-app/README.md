@@ -1,11 +1,7 @@
-# typescript-sandbox
+# How to run the app
 
-Para la parte de cada módulo en la que te planteamos ejercicios con JavaScript puedes usar este sandbox.
-
-Pasos:
-
-- Clonate el proyecto.
-- Instala las dependencias con `npm install`.
-- Ejecuta el sandbox con `npm run dev`.
-- Abre el navegador en `http://localhost:5173/` (si ese puerto no te funciona, mira en la consola donde has hecho el build, puede que este ocupado y se haya abierto en otro puerto).
-- Puedes empezar a meter tu código en el fichero:
+- Clone the repo
+- Run `npm install` in the root folder module
+- Run `npm run dev` in the root folder module
+- Open `http://localhost:[port-number]/pruebas-concepto.html` in your browser for watching the tests running (default port is 5173)
+- Open `http://localhost:[port-number]/` in your browser for watching the app running (default port is 5173)

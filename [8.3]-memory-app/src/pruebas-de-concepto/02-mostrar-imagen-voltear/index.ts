@@ -1,3 +1,8 @@
+const root = document.querySelector("#app");
+const title = document.createElement("h2");
+title.innerHTML = "02 Mostrar imagen y voltear";
+root?.appendChild(title);
+
 export const createCard = (id: string, imgUrl: string) => {
 	const root = document.querySelector("#app");
 

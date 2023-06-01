@@ -37,6 +37,13 @@ h1 {
 	max-width: 1280px;
 }
 
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+}
+
 #grid-container {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
