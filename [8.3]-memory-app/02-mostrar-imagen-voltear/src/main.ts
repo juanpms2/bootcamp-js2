@@ -2,12 +2,12 @@ import "./style.css";
 import { cardList } from "./data";
 import { Card } from "./model";
 
-export const createCard = (index: number) => {
-	const root = document.querySelector("#app");
-	const container = document.createElement("div");
-	container.className = "container";
-	root?.appendChild(container);
+const root = document.querySelector("#app");
+const container = document.createElement("div");
+container.className = "container";
+root?.appendChild(container);
 
+export const createCard = (index: number) => {
 	const card: Card = cardList[index];
 	const id = `card-${card.id}`;
 

@@ -43,8 +43,6 @@ export const createCard = (index: number) => {
 	return flipContainer;
 };
 
-const firstCard = createCard(1);
-const secondCard = createCard(2);
-
-container.appendChild(firstCard);
-container.appendChild(secondCard);
+for (let i = 0; i < cardList.length; i++) {
+	container?.appendChild(createCard(i));
+}
