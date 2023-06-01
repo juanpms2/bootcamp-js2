@@ -1,12 +1,12 @@
-import { cardList } from "../../data";
-import { Card } from "../../model";
-const root = document.querySelector("#app");
-const title = document.createElement("h2");
-title.innerHTML = "02 Mostrar imagen y voltear";
-root?.appendChild(title);
+import "./style.css";
+import { cardList } from "./data";
+import { Card } from "./model";
 
 export const createCard = (index: number) => {
 	const root = document.querySelector("#app");
+	const container = document.createElement("div");
+	container.className = "container";
+	root?.appendChild(container);
 
 	const card: Card = cardList[index];
 	const id = `card-${card.id}`;
@@ -15,7 +15,7 @@ export const createCard = (index: number) => {
 	flipContainer.setAttribute("class", "flip-container");
 	flipContainer.setAttribute("id", id);
 	flipContainer.setAttribute("data-index-id", index.toString());
-	root?.appendChild(flipContainer);
+	container?.appendChild(flipContainer);
 
 	const flipper: HTMLDivElement = document.createElement("div");
 	flipper.setAttribute("class", "flipper");
