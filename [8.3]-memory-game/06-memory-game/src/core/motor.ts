@@ -1,4 +1,4 @@
-import { Board, Card, createDefaultBoard } from "./model";
+import { Board, Card, board } from "./model";
 
 export const shuffleCards = (cards: Card[]): Card[] => {
 	// Fisher-Yates shuffle
@@ -12,11 +12,25 @@ export const shuffleCards = (cards: Card[]): Card[] => {
 	return cards;
 };
 
-export const canBeFlipped = (index: number): boolean => (index ? true : false);
+export const canBeFlipped = (board: Board, index: number): boolean => {
+	if (board.cardList[index].isFlipped) {
+		return false;
+	}
+	if (board.statusGame === "CeroCartasLevantadas") {
+		return true;
+	}
+	if (board.statusGame === "UnaCartaLevantada") {
+		return true;
+	}
+	return false;
+};
 
 export const flippedCard = (board: Board, index: number): void => {
 	board.cardList[index].isFlipped = true;
 };
+
+export const areMatch = (indexA: number, indexB: number): boolean =>
+	board.cardList[indexA].card.id === board.cardList[indexB].card.id;
 
 export const matchFound = (
 	board: Board,
@@ -41,7 +55,6 @@ export const gameFinished = (board: Board): boolean => {
 };
 
 export const startGame = (): void => {
-	const board = createDefaultBoard();
 	board.cardList = shuffleCards(board.cardList);
-	board.estadoPartida = "CeroCartasLevantadas";
+	board.statusGame = "CeroCartasLevantadas";
 };

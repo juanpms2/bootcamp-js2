@@ -1,4 +1,4 @@
-import { cardList } from "./data";
+import { cardListData } from "./data";
 export interface CardInfo {
 	id: number;
 	imageUrl: string;
@@ -21,7 +21,7 @@ export const createDefaultCardList = (cardList: CardInfo[]): Card[] => {
 	return [...listOne, ...listTwo];
 };
 
-// export let cartas: Carta[] = crearColeccionDeCartasInicial(infoCartas);
+export let cardList: Card[] = createDefaultCardList(cardListData);
 
 /*
   Aquí definimos el tipo de estado de la partida, la idea es que cuando empiece la partida todas las cartas estén boca abajo y si se hacen click sobre ellas no se volteen.
@@ -37,14 +37,14 @@ type statusGame =
 
 export interface Board {
 	cardList: Card[];
-	estadoPartida: statusGame;
-	indiceCartaVolteadaA?: number;
-	indiceCartaVolteadaB?: number;
+	statusGame: statusGame;
+	indexCardFlipA?: number;
+	indexCardFlipB?: number;
 }
 
 export const createDefaultBoard = (): Board => ({
-	cardList: createDefaultCardList(cardList),
-	estadoPartida: "PartidaNoIniciada",
+	cardList: cardList,
+	statusGame: "PartidaNoIniciada",
 });
 
-// export let tablero: Board = createDefaultBoard();
+export let board: Board = createDefaultBoard();

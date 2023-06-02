@@ -1,6 +1,6 @@
 import { CardInfo } from "./model";
 
-export const cardList: CardInfo[] = [
+export const cardListData: CardInfo[] = [
 	{
 		id: 1,
 		imageUrl:
