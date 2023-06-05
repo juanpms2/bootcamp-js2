@@ -4,14 +4,18 @@ import {
 	areMatch,
 	canBeFlipped,
 	flippedCard,
+	gameFinished,
 	matchFound,
 	matchNotFound,
 	startGame,
 } from "./motor";
 
 const startGameButton = elementReady("start-game");
+const restartGameButton = elementReady("restart-game");
 
 export const loadApp = () => {
+	restartGameButton?.setAttribute("disabled", "true");
+
 	const createCard = (index: number) => {
 		const item: Card = board.cardList[index];
 		const id = `card-${index}`;
@@ -61,11 +65,15 @@ export const loadApp = () => {
 			if (board.statusGame === "UnaCartaLevantada") {
 				board.statusGame = "DosCartasLevantadas";
 				board.indexCardFlipB = index;
-				const match = areMatch(board.indexCardFlipA, index);
+				const match = areMatch(board.indexCardFlipA, board.indexCardFlipB);
 				if (match) {
-					console.log(board);
-					matchFound(board, board.indexCardFlipA, index);
-					return;
+					matchFound(board, board.indexCardFlipA, board.indexCardFlipB);
+					const gameFinishedBool = gameFinished(board);
+					if (gameFinishedBool) {
+						board.statusGame = "PartidaCompleta";
+					} else {
+						board.statusGame = "CeroCartasLevantadas";
+					}
 				} else {
 					matchNotFound(board, board.indexCardFlipA, board.indexCardFlipB);
 					setTimeout(() => {
@@ -79,6 +87,8 @@ export const loadApp = () => {
 					}, 1000);
 				}
 			}
+		} else {
+			alert("No puedes voltear esta carta");
 		}
 	};
 
@@ -97,11 +107,23 @@ export const loadApp = () => {
 
 	const onStartGame = () => {
 		startGame();
-		startGameButton?.classList.add("hidden");
+		createGrid();
+		startGameButton?.setAttribute("disabled", "true");
+		restartGameButton?.removeAttribute("disabled");
 	};
-	createGrid();
+
+	const restartGame = () => {
+		const root = document.querySelector("#game");
+		const container = document.querySelector("#grid-container");
+		root?.removeChild(container!);
+		onStartGame();
+	};
 
 	startGameButton?.addEventListener("click", () => {
 		onStartGame();
+	});
+
+	restartGameButton?.addEventListener("click", () => {
+		restartGame();
 	});
 };

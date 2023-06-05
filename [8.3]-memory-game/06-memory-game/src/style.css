@@ -35,6 +35,12 @@ h1 {
 	justify-content: center;
 }
 
+.buttons-container {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+
 button {
   align-items: center;
   background-color: initial;
@@ -69,6 +75,14 @@ button {
 button:hover {
   box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
   opacity: .85;
+}
+
+button:disabled {
+	background-color: #464d55;
+	box-shadow: none;
+	color: #8c8c8c;
+	cursor: default;
+	opacity: .5;
 }
 
 
@@ -106,6 +120,16 @@ button:hover {
 	gap: 1rem;
 	padding: 1rem;
 	background-color: cadetblue;
+	animation: fade-in 3s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 768px) {
@@ -118,10 +142,29 @@ button:hover {
 
 /* *************** Card styles *********************** */
 
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
 /* entire container, keeps perspective */
 .flip-container {
 	perspective: 1000px;
 }
+
 /* flip the pane when hovered */
 .flip-container.flip .flipper {
 	transform: rotateY(-180deg);
@@ -159,6 +202,11 @@ button:hover {
 	background-image: url('./back.png');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
+}
+
+.front:hover {
+	animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
 }
 
 /* back, initially hidden pane */
