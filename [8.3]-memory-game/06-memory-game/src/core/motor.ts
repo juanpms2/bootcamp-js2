@@ -1,4 +1,4 @@
-import { Board, Card, board } from "./model";
+import { Card, board } from "./model";
 
 export const shuffleCards = (cards: Card[]): Card[] => {
 	// Fisher-Yates shuffle
@@ -12,45 +12,65 @@ export const shuffleCards = (cards: Card[]): Card[] => {
 	return cards;
 };
 
-export const canBeFlipped = (board: Board, index: number): boolean => {
+export const canBeFlipped = (index: number): boolean => {
 	if (board.cardList[index].isFlipped) {
 		return false;
 	}
-	if (board.statusGame === "CeroCartasLevantadas") {
-		return true;
+	switch (board.statusGame) {
+		case "CeroCartasLevantadas":
+			flippedCard(index);
+			board.statusGame = "UnaCartaLevantada";
+			board.indexCardFlipA = index;
+			return true;
+
+		case "UnaCartaLevantada":
+			flippedCard(index);
+			board.statusGame = "DosCartasLevantadas";
+			board.indexCardFlipB = index;
+
+			return true;
+
+		default:
+			return false;
 	}
-	if (board.statusGame === "UnaCartaLevantada") {
-		return true;
-	}
-	return false;
 };
 
-export const flippedCard = (board: Board, index: number): void => {
+export const flippedCard = (index: number): void => {
 	board.cardList[index].isFlipped = true;
 };
 
-export const areMatch = (indexA: number, indexB: number): boolean =>
-	board.cardList[indexA].card.id === board.cardList[indexB].card.id;
-
-export const matchFound = (
-	board: Board,
-	indexA: number,
-	indexB: number
-): void => {
-	board.cardList[indexA].isFound = true;
-	board.cardList[indexB].isFound = true;
+export const unFlippedCard = (): void => {
+	board.statusGame = "CeroCartasLevantadas";
+	board.indexCardFlipA = null;
+	board.indexCardFlipB = null;
 };
 
-export const matchNotFound = (
-	board: Board,
-	indexA: number,
-	indexB: number
-): void => {
-	board.cardList[indexA].isFlipped = false;
-	board.cardList[indexB].isFlipped = false;
+export const checkMatch = (index: number): boolean =>
+	board.cardList[board.indexCardFlipA]?.card.id ===
+	board.cardList[index]?.card.id
+		? matchFound(index)
+		: matchNotFound(index);
+
+export const matchFound = (index: number): boolean => {
+	board.cardList[board.indexCardFlipA].isFound = true;
+	board.cardList[index].isFound = true;
+
+	const isFinished = gameFinished();
+	isFinished
+		? (board.statusGame = "PartidaCompleta")
+		: (board.statusGame = "CeroCartasLevantadas");
+
+	return true;
 };
 
-export const gameFinished = (board: Board): boolean => {
+export const matchNotFound = (index: number): boolean => {
+	board.cardList[board.indexCardFlipA].isFlipped = false;
+	board.cardList[index].isFlipped = false;
+
+	return false;
+};
+
+export const gameFinished = (): boolean => {
 	return board.cardList.every((card) => card.isFound);
 };
 

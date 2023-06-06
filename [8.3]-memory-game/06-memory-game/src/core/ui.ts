@@ -1,14 +1,6 @@
 import { elementReady } from "./helpers";
 import { Card, board } from "./model";
-import {
-	areMatch,
-	canBeFlipped,
-	flippedCard,
-	gameFinished,
-	matchFound,
-	matchNotFound,
-	startGame,
-} from "./motor";
+import { canBeFlipped, checkMatch, startGame, unFlippedCard } from "./motor";
 
 const startGameButton = elementReady("start-game");
 const restartGameButton = elementReady("restart-game");
@@ -49,46 +41,34 @@ export const loadApp = () => {
 		return flipContainer;
 	};
 
+	const handleCheckMatch = (index: number) => {
+		const isMatch = checkMatch(index);
+		console.log(isMatch, board.statusGame);
+		if (!isMatch) {
+			setTimeout(() => {
+				document
+					.querySelector(`[data-index-array="${board.indexCardFlipA}"]`)
+					?.classList.remove("flip");
+				document
+					.querySelector(`[data-index-array="${board.indexCardFlipB}"]`)
+					?.classList.remove("flip");
+				unFlippedCard();
+			}, 1000);
+		}
+	};
+
 	const handleFlip = (index: number) => {
-		const flip = canBeFlipped(board, index);
+		const flip = canBeFlipped(index);
 
 		if (flip) {
-			flippedCard(board, index);
 			document
 				.querySelector(`[data-index-array="${index}"]`)
 				?.classList.add("flip");
-			if (board.statusGame === "CeroCartasLevantadas") {
-				board.statusGame = "UnaCartaLevantada";
-				board.indexCardFlipA = index;
-				return;
-			}
-			if (board.statusGame === "UnaCartaLevantada") {
-				board.statusGame = "DosCartasLevantadas";
-				board.indexCardFlipB = index;
-				const match = areMatch(board.indexCardFlipA, board.indexCardFlipB);
-				if (match) {
-					matchFound(board, board.indexCardFlipA, board.indexCardFlipB);
-					const gameFinishedBool = gameFinished(board);
-					if (gameFinishedBool) {
-						board.statusGame = "PartidaCompleta";
-					} else {
-						board.statusGame = "CeroCartasLevantadas";
-					}
-				} else {
-					matchNotFound(board, board.indexCardFlipA, board.indexCardFlipB);
-					setTimeout(() => {
-						document
-							.querySelector(`[data-index-array="${board.indexCardFlipA}"]`)
-							?.classList.remove("flip");
-						document
-							.querySelector(`[data-index-array="${board.indexCardFlipB}"]`)
-							?.classList.remove("flip");
-						board.statusGame = "CeroCartasLevantadas";
-					}, 1000);
-				}
+			if (board.statusGame === "DosCartasLevantadas") {
+				handleCheckMatch(index);
 			}
 		} else {
-			alert("No puedes voltear esta carta");
+			alert("No se puede voltear la carta");
 		}
 	};
 
