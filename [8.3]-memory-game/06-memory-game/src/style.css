@@ -1,4 +1,5 @@
-@import url(./components/card-component/card.styles.css);
+@import url(./components/card/card.styles.css);
+@import url(./components/tooltip/tooltip.styles.css);
 
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -100,6 +101,7 @@ button:disabled {
 }
 
 #board-container {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;

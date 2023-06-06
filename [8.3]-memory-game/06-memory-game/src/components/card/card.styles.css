@@ -21,6 +21,7 @@
 /* entire container, keeps perspective */
 .flip-container {
 	perspective: 1000px;
+	position: relative;
 }
 
 /* flip the pane when click */

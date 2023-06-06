@@ -1,6 +1,6 @@
 import { elementReady } from "./helpers";
 import { board } from "./model";
-import { CardComponent } from "../components/card-component/card.component";
+import { CardComponent } from "../components/card/card.component";
 import {
 	canBeFlipped,
 	checkMatch,
@@ -8,7 +8,8 @@ import {
 	resetToContinue,
 	restartGame,
 } from "./motor";
-import { defaultScoreboard, textScoreboard } from "./constans";
+import { defaultScoreboard, textCardTooltip, textScoreboard } from "./constans";
+import { TooltipComponent } from "../components/tooltip/tooltip.componet";
 
 const startGameButton = elementReady("start-game");
 const restartGameButton = elementReady("restart-game");
@@ -35,7 +36,8 @@ export const loadApp = () => {
 	};
 
 	let counterValue = 0;
-	const handleFlip = (index: number) => {
+
+	const handleFlip = (card: HTMLElement, index: number) => {
 		const flip = canBeFlipped(index);
 
 		if (flip) {
@@ -51,11 +53,21 @@ export const loadApp = () => {
 				board.cardList[index].isFlipped &&
 				board.statusGame !== "PartidaCompleta"
 			) {
-				alert("No se puede voltear la carta");
+				const tooltip = TooltipComponent(textCardTooltip);
+				card?.appendChild(tooltip);
+				setTimeout(() => {
+					card?.removeChild(tooltip);
+				}, 1000);
 			}
-			if (board.statusGame === "PartidaCompleta") {
-				alert("La partida ha terminado");
-			}
+		}
+		if (board.statusGame === "PartidaCompleta") {
+			const txt = `<h1>¡Has ganado!</h1> <p>Has completado el juego en ${counterValue} movimientos</p>`;
+			const tooltip = TooltipComponent(txt);
+			tooltip.classList.add("tooltip-win");
+			boardContainer?.appendChild(tooltip);
+			setTimeout(() => {
+				boardContainer?.removeChild(tooltip);
+			}, 5000);
 		}
 	};
 
@@ -69,7 +81,7 @@ export const loadApp = () => {
 			const imageUrl = board.cardList[index].card.imageUrl;
 			const cardElement = CardComponent({ imageUrl, index });
 			cardElement.addEventListener("click", () => {
-				handleFlip(index);
+				handleFlip(cardElement, index);
 			});
 			gridContainer?.appendChild(cardElement);
 		});
