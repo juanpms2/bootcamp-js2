@@ -1,6 +1,2 @@
-export const flipContainer: HTMLDivElement = document.createElement("div");
-export const flipper: HTMLDivElement = document.createElement("div");
-export const front: HTMLDivElement = document.createElement("div");
-export const back: HTMLDivElement = document.createElement("div");
-export const backImage: HTMLImageElement = document.createElement("img");
-export const _gridContainer: HTMLDivElement = document.createElement("div");
+export const defaultScoreboard: string = "0 moves";
+export const textScoreboard: string = " moves";

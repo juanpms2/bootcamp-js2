@@ -1,6 +1,6 @@
 import { elementReady } from "./helpers";
 import { board } from "./model";
-import { CardComponent } from "../components/card.component";
+import { CardComponent } from "../components/card-component/card.component";
 import {
 	canBeFlipped,
 	checkMatch,
@@ -8,12 +8,13 @@ import {
 	resetToContinue,
 	restartGame,
 } from "./motor";
+import { defaultScoreboard, textScoreboard } from "./constans";
 
 const startGameButton = elementReady("start-game");
 const restartGameButton = elementReady("restart-game");
 const boardContainer = elementReady("board-container");
 const gridContainer = elementReady("grid-container");
-const counter = elementReady("scoreboard");
+const scoreboard = elementReady("scoreboard");
 
 export const loadApp = () => {
 	restartGameButton?.setAttribute("disabled", "true");
@@ -42,7 +43,7 @@ export const loadApp = () => {
 				.querySelector(`[data-index-array="${index}"]`)
 				?.classList.add("flip");
 			if (board.statusGame === "DosCartasLevantadas") {
-				counter.innerHTML = ++counterValue + " intentos";
+				scoreboard.innerHTML = ++counterValue + textScoreboard;
 				handleCheckMatch(index);
 			}
 		} else {
@@ -82,6 +83,7 @@ export const loadApp = () => {
 	};
 
 	const onRestartGame = () => {
+		scoreboard.innerHTML = defaultScoreboard;
 		boardContainer?.removeChild(gridContainer);
 		restartGame();
 		createGrid();
