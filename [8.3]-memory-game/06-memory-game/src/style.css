@@ -99,9 +99,8 @@ button:disabled {
 	padding: 2rem;
 }
 
-#game {
+#board-container {
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	flex-grow: 1;
@@ -111,7 +110,7 @@ button:disabled {
 
 
 
-#grid-container {
+.board {
 	display: grid;
 	grid-template-columns: repeat(3, 100px);
 	grid-template-rows: repeat(4, 100px);
@@ -133,7 +132,7 @@ button:disabled {
 }
 
 @media (min-width: 768px) {
-	#grid-container {
+	.board {
 		grid-template-columns: repeat(4,  minmax(100px, 150px));
 		grid-template-rows: repeat(3, minmax(100px, 150px));
 	}

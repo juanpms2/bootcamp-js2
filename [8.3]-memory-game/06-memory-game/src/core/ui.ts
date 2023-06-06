@@ -1,49 +1,25 @@
 import { elementReady } from "./helpers";
-import { Card, board } from "./model";
-import { canBeFlipped, checkMatch, startGame, unFlippedCard } from "./motor";
+import { board } from "./model";
+import { CardComponent } from "../components/card.component";
+import {
+	canBeFlipped,
+	checkMatch,
+	startGame,
+	resetToContinue,
+	restartGame,
+} from "./motor";
 
 const startGameButton = elementReady("start-game");
 const restartGameButton = elementReady("restart-game");
+const boardContainer = elementReady("board-container");
+const gridContainer = elementReady("grid-container");
+const counter = elementReady("scoreboard");
 
 export const loadApp = () => {
 	restartGameButton?.setAttribute("disabled", "true");
 
-	const createCard = (index: number) => {
-		const item: Card = board.cardList[index];
-		const id = `card-${index}`;
-
-		const flipContainer: HTMLDivElement = document.createElement("div");
-		flipContainer.setAttribute("class", "flip-container");
-		flipContainer.setAttribute("id", id);
-		flipContainer.setAttribute("data-index-array", index.toString());
-
-		const flipper: HTMLDivElement = document.createElement("div");
-		flipper.setAttribute("class", "flipper");
-		flipContainer.appendChild(flipper);
-
-		const front: HTMLDivElement = document.createElement("div");
-		front.setAttribute("class", "front");
-		flipper.appendChild(front);
-
-		const back: HTMLDivElement = document.createElement("div");
-		back.setAttribute("class", "back");
-		flipper.appendChild(back);
-
-		const backImage: HTMLImageElement = document.createElement("img");
-		backImage.setAttribute("src", item.card.imageUrl);
-		backImage.setAttribute("data-index-img", index.toString());
-		back.appendChild(backImage);
-
-		flipContainer.addEventListener("click", () => {
-			handleFlip(index);
-		});
-
-		return flipContainer;
-	};
-
 	const handleCheckMatch = (index: number) => {
 		const isMatch = checkMatch(index);
-		console.log(isMatch, board.statusGame);
 		if (!isMatch) {
 			setTimeout(() => {
 				document
@@ -52,11 +28,12 @@ export const loadApp = () => {
 				document
 					.querySelector(`[data-index-array="${board.indexCardFlipB}"]`)
 					?.classList.remove("flip");
-				unFlippedCard();
+				resetToContinue();
 			}, 1000);
 		}
 	};
 
+	let counterValue = 0;
 	const handleFlip = (index: number) => {
 		const flip = canBeFlipped(index);
 
@@ -65,23 +42,35 @@ export const loadApp = () => {
 				.querySelector(`[data-index-array="${index}"]`)
 				?.classList.add("flip");
 			if (board.statusGame === "DosCartasLevantadas") {
+				counter.innerHTML = ++counterValue + " intentos";
 				handleCheckMatch(index);
 			}
 		} else {
-			alert("No se puede voltear la carta");
+			if (
+				board.cardList[index].isFlipped &&
+				board.statusGame !== "PartidaCompleta"
+			) {
+				alert("No se puede voltear la carta");
+			}
+			if (board.statusGame === "PartidaCompleta") {
+				alert("La partida ha terminado");
+			}
 		}
 	};
 
 	const createGrid = () => {
-		const root = document.querySelector("#game");
-		const container = document.createElement("div");
-		container?.setAttribute("id", "grid-container");
-		root?.appendChild(container);
+		gridContainer?.querySelectorAll("*").forEach((element) => element.remove());
+		boardContainer?.appendChild(gridContainer);
+		gridContainer?.classList.add("board");
 
-		board.cardList.map((card) => {
-			const index = board.cardList.indexOf(card);
-			const cardElement = createCard(index);
-			container?.appendChild(cardElement);
+		board.cardList.map((item) => {
+			const index = board.cardList.indexOf(item);
+			const imageUrl = board.cardList[index].card.imageUrl;
+			const cardElement = CardComponent({ imageUrl, index });
+			cardElement.addEventListener("click", () => {
+				handleFlip(index);
+			});
+			gridContainer?.appendChild(cardElement);
 		});
 	};
 
@@ -92,11 +81,10 @@ export const loadApp = () => {
 		restartGameButton?.removeAttribute("disabled");
 	};
 
-	const restartGame = () => {
-		const root = document.querySelector("#game");
-		const container = document.querySelector("#grid-container");
-		root?.removeChild(container!);
-		onStartGame();
+	const onRestartGame = () => {
+		boardContainer?.removeChild(gridContainer);
+		restartGame();
+		createGrid();
 	};
 
 	startGameButton?.addEventListener("click", () => {
@@ -104,6 +92,6 @@ export const loadApp = () => {
 	});
 
 	restartGameButton?.addEventListener("click", () => {
-		restartGame();
+		onRestartGame();
 	});
 };

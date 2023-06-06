@@ -8,7 +8,7 @@ export const shuffleCards = (cards: Card[]): Card[] => {
 		cards[i] = cards[j];
 		cards[j] = temp;
 	}
-	console.log(cards);
+
 	return cards;
 };
 
@@ -39,7 +39,7 @@ export const flippedCard = (index: number): void => {
 	board.cardList[index].isFlipped = true;
 };
 
-export const unFlippedCard = (): void => {
+export const resetToContinue = (): void => {
 	board.statusGame = "CeroCartasLevantadas";
 	board.indexCardFlipA = null;
 	board.indexCardFlipB = null;
@@ -55,7 +55,7 @@ export const matchFound = (index: number): boolean => {
 	board.cardList[board.indexCardFlipA].isFound = true;
 	board.cardList[index].isFound = true;
 
-	const isFinished = gameFinished();
+	const isFinished = isGameFinished();
 	isFinished
 		? (board.statusGame = "PartidaCompleta")
 		: (board.statusGame = "CeroCartasLevantadas");
@@ -70,11 +70,19 @@ export const matchNotFound = (index: number): boolean => {
 	return false;
 };
 
-export const gameFinished = (): boolean => {
+export const isGameFinished = (): boolean => {
 	return board.cardList.every((card) => card.isFound);
 };
 
 export const startGame = (): void => {
 	board.cardList = shuffleCards(board.cardList);
 	board.statusGame = "CeroCartasLevantadas";
+};
+
+export const restartGame = (): void => {
+	board.cardList.map((card) => {
+		card.isFlipped = false;
+		card.isFound = false;
+	});
+	startGame();
 };

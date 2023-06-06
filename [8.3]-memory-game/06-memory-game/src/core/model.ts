@@ -23,11 +23,6 @@ export const createDefaultCardList = (cardList: CardInfo[]): Card[] => {
 
 export let cardList: Card[] = createDefaultCardList(cardListData);
 
-/*
-  Aquí definimos el tipo de estado de la partida, la idea es que cuando empiece la partida todas las cartas estén boca abajo y si se hacen click sobre ellas no se volteen.
-  EstadoPartida = "PartidaNoIniciada", una vez que se pulse Iniciar partida el estado de la partida cambiaría a "CeroCartasLevantadas" y así sucesivamente.
-*/
-
 type statusGame =
 	| "PartidaNoIniciada"
 	| "CeroCartasLevantadas"
