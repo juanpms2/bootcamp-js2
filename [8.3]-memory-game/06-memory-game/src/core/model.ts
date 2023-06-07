@@ -1,4 +1,3 @@
-import { cardListData } from "./data";
 export interface CardInfo {
 	id: number;
 	imageUrl: string;
@@ -21,8 +20,6 @@ export const createDefaultCardList = (cardList: CardInfo[]): Card[] => {
 	return [...listOne, ...listTwo];
 };
 
-export let cardList: Card[] = createDefaultCardList(cardListData);
-
 type statusGame =
 	| "PartidaNoIniciada"
 	| "CeroCartasLevantadas"
@@ -37,9 +34,7 @@ export interface Board {
 	indexCardFlipB?: number;
 }
 
-export const createDefaultBoard = (): Board => ({
-	cardList: cardList,
+export const createDefaultBoard = (cardList: CardInfo[]): Board => ({
+	cardList: createDefaultCardList(cardList),
 	statusGame: "PartidaNoIniciada",
 });
-
-export let board: Board = createDefaultBoard();

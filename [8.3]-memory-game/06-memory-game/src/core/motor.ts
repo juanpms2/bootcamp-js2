@@ -1,4 +1,7 @@
-import { Card, board } from "./model";
+import { cardListData } from "./data";
+import { Card, Board, createDefaultBoard } from "./model";
+
+export const board: Board = createDefaultBoard(cardListData);
 
 export const shuffleCards = (cards: Card[]): Card[] => {
 	// Fisher-Yates shuffle
