@@ -21,7 +21,6 @@ export const shuffleCards = (cards: Card[]): Card[] => {
 export const canBeFlipped = (index: number): boolean => {
 	const board = getBoard();
 	if (board.cardList[index].isFlipped) {
-		console.log(board);
 		return false;
 	}
 	switch (board.statusGame) {
