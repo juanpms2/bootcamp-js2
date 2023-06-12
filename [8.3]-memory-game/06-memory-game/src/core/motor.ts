@@ -1,7 +1,10 @@
 import { cardListData } from "./data";
 import { Card, Board, createDefaultBoard } from "./model";
+import { gameStateManagement } from "./helpers";
 
-export const board: Board = createDefaultBoard(cardListData);
+export const [getBoard, setBoard] = gameStateManagement<Board>(
+	createDefaultBoard(cardListData)
+);
 
 export const shuffleCards = (cards: Card[]): Card[] => {
 	// Fisher-Yates shuffle
@@ -16,21 +19,26 @@ export const shuffleCards = (cards: Card[]): Card[] => {
 };
 
 export const canBeFlipped = (index: number): boolean => {
+	const board = getBoard();
 	if (board.cardList[index].isFlipped) {
+		console.log(board);
 		return false;
 	}
 	switch (board.statusGame) {
 		case "CeroCartasLevantadas":
 			flippedCard(index);
-			board.statusGame = "UnaCartaLevantada";
-			board.indexCardFlipA = index;
+			setBoard({
+				statusGame: "UnaCartaLevantada",
+				indexCardFlipA: index,
+			});
 			return true;
 
 		case "UnaCartaLevantada":
 			flippedCard(index);
-			board.statusGame = "DosCartasLevantadas";
-			board.indexCardFlipB = index;
-
+			setBoard({
+				statusGame: "DosCartasLevantadas",
+				indexCardFlipB: index,
+			});
 			return true;
 
 		default:
@@ -39,53 +47,72 @@ export const canBeFlipped = (index: number): boolean => {
 };
 
 export const flippedCard = (index: number): void => {
-	board.cardList[index].isFlipped = true;
+	const board = getBoard();
+	setBoard({
+		cardList: board.cardList.map((card, i) =>
+			i === index ? { ...card, isFlipped: true } : card
+		),
+	});
 };
 
 export const resetToContinue = (): void => {
-	board.statusGame = "CeroCartasLevantadas";
-	board.indexCardFlipA = null;
-	board.indexCardFlipB = null;
+	setBoard({
+		statusGame: "CeroCartasLevantadas",
+		indexCardFlipA: null,
+		indexCardFlipB: null,
+	});
 };
 
-export const checkMatch = (index: number): boolean =>
-	board.cardList[board.indexCardFlipA]?.card.id ===
-	board.cardList[index]?.card.id
+export const checkMatch = (index: number): boolean => {
+	const board = getBoard();
+	return board.cardList[board.indexCardFlipA]?.card.id ===
+		board.cardList[index]?.card.id
 		? matchFound(index)
 		: matchNotFound(index);
+};
 
 export const matchFound = (index: number): boolean => {
-	board.cardList[board.indexCardFlipA].isFound = true;
-	board.cardList[index].isFound = true;
+	const board = getBoard();
+	setBoard({
+		cardList: board.cardList.map((card, i) =>
+			i === index || i === board.indexCardFlipA
+				? { ...card, isFound: true }
+				: card
+		),
+	});
 
 	const isFinished = isGameFinished();
-	isFinished
-		? (board.statusGame = "PartidaCompleta")
-		: (board.statusGame = "CeroCartasLevantadas");
+	isFinished ? setBoard({ statusGame: "PartidaCompleta" }) : resetToContinue();
 
 	return true;
 };
 
 export const matchNotFound = (index: number): boolean => {
-	board.cardList[board.indexCardFlipA].isFlipped = false;
-	board.cardList[index].isFlipped = false;
+	const board = getBoard();
+	setBoard({
+		cardList: board.cardList.map((card, i) =>
+			i === index || i === board.indexCardFlipA
+				? { ...card, isFlipped: false }
+				: card
+		),
+	});
 
 	return false;
 };
 
 export const isGameFinished = (): boolean => {
+	const board = getBoard();
 	return board.cardList.every((card) => card.isFound);
 };
 
 export const startGame = (): void => {
-	board.cardList = shuffleCards(board.cardList);
-	board.statusGame = "CeroCartasLevantadas";
+	const board = getBoard();
+	setBoard({
+		cardList: shuffleCards(board.cardList),
+		statusGame: "CeroCartasLevantadas",
+	});
 };
 
-export const restartGame = (): void => {
-	board.cardList.map((card) => {
-		card.isFlipped = false;
-		card.isFound = false;
-	});
-	startGame();
+export const resetGame = (): void => {
+	setBoard(createDefaultBoard(cardListData));
 };

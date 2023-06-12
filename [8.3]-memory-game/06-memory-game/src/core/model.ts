@@ -32,9 +32,13 @@ export interface Board {
 	statusGame: statusGame;
 	indexCardFlipA?: number;
 	indexCardFlipB?: number;
+	moves?: number;
 }
 
 export const createDefaultBoard = (cardList: CardInfo[]): Board => ({
 	cardList: createDefaultCardList(cardList),
 	statusGame: "PartidaNoIniciada",
+	indexCardFlipA: null,
+	indexCardFlipB: null,
+	moves: 0,
 });
