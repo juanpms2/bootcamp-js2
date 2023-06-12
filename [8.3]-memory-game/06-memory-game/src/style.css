@@ -29,7 +29,7 @@ body {
 	display: flex;
 	min-width: 320px;
 	min-height: 100vh;
-	background-image: linear-gradient(#464d55, #25292e);
+	background-image: linear-gradient( #25292e,#464d55);
 }
 
 h1 {
