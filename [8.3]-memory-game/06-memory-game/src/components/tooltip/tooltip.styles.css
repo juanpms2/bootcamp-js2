@@ -1,0 +1,36 @@
+.tooltip {
+  z-index: 1000;
+  padding: 8px 16px;
+  background: #242424;
+  position: absolute;
+  width: 100%;
+  border-radius: 5px;
+  text-align: center;
+  filter: drop-shadow(0 3px 5px #ccc);
+  line-height: 1.5;
+  display: block;
+  top:  -20%;
+  left: -20%;
+}
+
+.tooltip:after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  margin-left: -9px;
+  width: 18px;
+  height: 18px;
+  background: #242424;
+  transform: rotate(45deg);
+}
+
+.tooltip-win {
+  top: -10%;
+  left: 0%;
+  background: lightcoral;
+  color: black;
+}
+.tooltip-win::after {
+  background: lightcoral;
+}

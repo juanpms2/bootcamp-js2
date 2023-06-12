@@ -1,0 +1,98 @@
+:root {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #242424;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	place-items: center;
+	min-width: 320px;
+	min-height: 100vh;
+}
+
+h1 {
+	font-size: 3.2em;
+	line-height: 1.1;
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	margin: 0 auto;
+	max-width: 1280px;
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+/* *************** Card styles *********************** */
+
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+}
+/* flip the pane when hovered */
+.flip-container.flip .flipper {
+	transform: rotateY(-180deg);
+}
+
+.flip-container, .front, .back {
+	cursor: pointer;
+	width: 200px;
+	height: 200px;
+	border-radius: 8px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+	background-image: url('./back.png');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+	background-color: white;
+  background-repeat: no-repeat;
+  background-size: auto;
+	background-position: center;
+}

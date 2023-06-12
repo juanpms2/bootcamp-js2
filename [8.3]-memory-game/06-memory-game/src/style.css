@@ -1,0 +1,151 @@
+@import url(./components/card/card.styles.css);
+@import url(./components/tooltip/tooltip.styles.css);
+
+:root {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #242424;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	display: flex;
+	min-width: 320px;
+	min-height: 100vh;
+	background-image: linear-gradient(#464d55, #25292e);
+}
+
+h1 {
+	font-size: 3em;
+	line-height: 1.1;
+	display: flex;
+	justify-content: center;
+}
+
+.buttons-container {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+
+button {
+  align-items: center;
+  background-color: initial;
+  background-image: linear-gradient(#464d55, #25292e);
+  border-radius: 8px;
+  border-width: 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 18px;
+  height: 52px;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 32px;
+  text-align: center;
+  text-decoration: none;
+  transform: translate3d(0, 0, 0);
+  transition: all 150ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover {
+  box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
+  opacity: .85;
+}
+
+button:disabled {
+	background-color: #464d55;
+	box-shadow: none;
+	color: #8c8c8c;
+	cursor: default;
+	opacity: .5;
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
+	margin: 0 auto;
+	max-width: 1280px;
+	width: 100%;
+	padding: 2rem;
+}
+
+#board-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+	gap: 2rem;
+	width: 100%;
+}
+
+.board {
+	display: grid;
+	grid-template-columns: repeat(3, 100px);
+	grid-template-rows: repeat(4, 100px);
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.5rem;
+	background-color: cadetblue;
+	animation: fade-in 3s;
+	border-radius: 1rem;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 768px) {
+	.board {
+		grid-template-columns: repeat(4,  minmax(100px, 150px));
+		grid-template-rows: repeat(3, minmax(100px, 150px));
+	}
+}
+
+.hidden {
+	display: none;
+}
+
+.scoreboard {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
