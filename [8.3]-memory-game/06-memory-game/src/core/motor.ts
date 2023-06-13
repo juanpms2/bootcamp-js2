@@ -80,8 +80,7 @@ export const matchFound = (index: number): boolean => {
 		),
 	});
 
-	const isFinished = isGameFinished();
-	isFinished ? setBoard({ statusGame: "PartidaCompleta" }) : resetToContinue();
+	isGameFinished();
 
 	return true;
 };
@@ -99,9 +98,12 @@ export const matchNotFound = (index: number): boolean => {
 	return false;
 };
 
-export const isGameFinished = (): boolean => {
+export const isGameFinished = (): void => {
 	const board = getBoard();
-	return board.cardList.every((card) => card.isFound);
+
+	board.cardList.every((card) => card.isFound)
+		? setBoard({ statusGame: "PartidaCompleta" })
+		: resetToContinue();
 };
 
 export const startGame = (): void => {
