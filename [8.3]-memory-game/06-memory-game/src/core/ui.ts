@@ -18,21 +18,34 @@ const gridContainerElement = elementReady("grid-container");
 const scoreboardElement = elementReady("scoreboard");
 
 export const loadApp = () => {
-	const handleCheckMatch = (index: number) => {
-		const isMatch = checkMatch(index);
+	const restoreToCardNotFlipped = () => {
 		const board = getBoard();
 
+		setTimeout(() => {
+			document
+				.querySelector(`[data-index-array="${board.indexCardFlipA}"]`)
+				?.classList.remove("flip");
+			document
+				.querySelector(`[data-index-array="${board.indexCardFlipB}"]`)
+				?.classList.remove("flip");
+			resetToContinue();
+		}, 1000);
+	};
+	const handleCheckMatch = (index: number) => {
+		const isMatch = checkMatch(index);
+
 		if (!isMatch) {
-			setTimeout(() => {
-				document
-					.querySelector(`[data-index-array="${board.indexCardFlipA}"]`)
-					?.classList.remove("flip");
-				document
-					.querySelector(`[data-index-array="${board.indexCardFlipB}"]`)
-					?.classList.remove("flip");
-				resetToContinue();
-			}, 1000);
+			restoreToCardNotFlipped();
 		}
+	};
+
+	const displayCardTooltip = (index: number): void => {
+		const tooltip = TooltipComponent(textCardTooltip);
+		const card = document.querySelector(`[data-index-array="${index}"]`);
+		card?.appendChild(tooltip);
+		setTimeout(() => {
+			card?.removeChild(tooltip);
+		}, 2000);
 	};
 
 	const cardIsFlipped = (index: number): void => {
@@ -42,57 +55,59 @@ export const loadApp = () => {
 			board.cardList[index]?.isFlipped &&
 			board.statusGame !== "PartidaCompleta"
 		) {
-			const tooltip = TooltipComponent(textCardTooltip);
-			const card = document.querySelector(`[data-index-array="${index}"]`);
-			card?.appendChild(tooltip);
-			setTimeout(() => {
-				card?.removeChild(tooltip);
-			}, 2000);
+			displayCardTooltip(index);
 		}
+	};
+
+	const displayGameResultTooltip = (moves: number): void => {
+		const txt = `<h1>¡Has ganado!</h1> <p>Has completado el juego en ${moves.toString()} movimientos</p>`;
+		const tooltip = TooltipComponent(txt);
+		tooltip.classList.add("tooltip-win");
+		boardContainerElement?.appendChild(tooltip);
+		setTimeout(() => {
+			boardContainerElement?.removeChild(tooltip);
+		}, 5000);
+	};
+
+	const removeGameResultTooltip = (): void => {
+		const tooltipResult = document.querySelector(".tooltip-win");
+		boardContainerElement?.removeChild(tooltipResult);
 	};
 
 	const gameIsFinished = () => {
 		const board = getBoard();
 
 		if (board.statusGame === "PartidaCompleta") {
-			const txt = `<h1>¡Has ganado!</h1> <p>Has completado el juego en ${board.moves} movimientos</p>`;
-			const tooltip = TooltipComponent(txt);
-			tooltip.classList.add("tooltip-win");
-			boardContainerElement?.appendChild(tooltip);
-			setTimeout(() => {
-				boardContainerElement?.removeChild(tooltip);
-			}, 5000);
+			displayGameResultTooltip(board.moves);
+		}
+	};
+
+	const isSecondCard = (index: number): void => {
+		const board = getBoard();
+
+		if (board.statusGame === "DosCartasLevantadas") {
+			setBoard({ moves: board.moves + 1 });
+			scoreboardElement.innerHTML = board.moves + 1 + textScoreboard;
+			handleCheckMatch(index);
 		}
 	};
 
 	const handleFlip = (index: number): void => {
 		const flip = canBeFlipped(index);
-		const board = getBoard();
 
 		if (flip) {
 			document
 				.querySelector(`[data-index-array="${index}"]`)
 				?.classList.add("flip");
-			if (board.statusGame === "DosCartasLevantadas") {
-				setBoard({ moves: board.moves + 1 });
-				scoreboardElement.innerHTML = board.moves + 1 + textScoreboard;
-				handleCheckMatch(index);
-			}
+			isSecondCard(index);
 		} else {
 			cardIsFlipped(index);
 		}
 		gameIsFinished();
 	};
 
-	const createGrid = () => {
+	const createCardList = (): void => {
 		const board = getBoard();
-
-		scoreboardElement.innerHTML = defaultScoreboard;
-		gridContainerElement
-			?.querySelectorAll("*")
-			.forEach((element) => element.remove());
-		boardContainerElement?.appendChild(gridContainerElement);
-		gridContainerElement?.classList.add("board");
 
 		board.cardList?.map((item) => {
 			const index = board.cardList?.indexOf(item);
@@ -107,6 +122,17 @@ export const loadApp = () => {
 		});
 	};
 
+	const createGrid = () => {
+		scoreboardElement.innerHTML = defaultScoreboard;
+		gridContainerElement
+			?.querySelectorAll("*")
+			.forEach((element) => element.remove());
+		boardContainerElement?.appendChild(gridContainerElement);
+		gridContainerElement?.classList.add("board");
+
+		createCardList();
+	};
+
 	const onStartGame = () => {
 		startGameButtonElement?.setAttribute("disabled", "true");
 		resetGameButtonElement?.removeAttribute("disabled");
@@ -119,6 +145,7 @@ export const loadApp = () => {
 	});
 
 	resetGameButtonElement?.addEventListener("click", () => {
+		removeGameResultTooltip();
 		resetGame();
 		onStartGame();
 	});
