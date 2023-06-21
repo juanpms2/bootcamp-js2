@@ -11,14 +11,14 @@ export const updateStatusGameHelper = (
 				statusGame: "UnaCartaLevantada",
 				indexCardFlipA: cardIndex,
 			};
-			break;
+
 		case "UnaCartaLevantada":
 			return {
 				...board,
 				statusGame: "DosCartasLevantadas",
 				indexCardFlipB: cardIndex,
 			};
-			break;
+
 		case "DosCartasLevantadas":
 			return {
 				...board,
@@ -26,10 +26,9 @@ export const updateStatusGameHelper = (
 				indexCardFlipA: null,
 				indexCardFlipB: null,
 			};
-			break;
+
 		default:
 			return board;
-			break;
 	}
 };
 

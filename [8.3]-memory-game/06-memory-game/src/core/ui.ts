@@ -97,23 +97,15 @@ export const loadApp = () => {
 		const cardBindex = getCardBIndex();
 
 		if (isMatch) {
-			console.log("es match");
 			markSelectedPairCardAsMatched();
 			updateMoves();
 			updateStatusGame(cardBindex);
 			checkGameFinished(board);
 		} else {
-			console.log("no es match");
-			resetSelectedPairCardsEngine();
 			restoreToCardNotFlipped();
+			resetSelectedPairCardsEngine();
 		}
 		handleUpdateMoves(board);
-	};
-
-	const handleSecondFlip = (): void => {
-		if (getStatusGame() === "DosCartasLevantadas") {
-			handleCheckMatch();
-		}
 	};
 
 	const handleFlip = (cardIndex: number): void => {
@@ -126,7 +118,10 @@ export const loadApp = () => {
 				?.classList.add("flip");
 
 			updateStatusGame(cardIndex);
-			handleSecondFlip();
+
+			if (getStatusGame() === "DosCartasLevantadas") {
+				handleCheckMatch();
+			}
 		} else {
 			cardIsFlipped(cardIndex, isCardFlippedByIndex(cardIndex));
 		}
