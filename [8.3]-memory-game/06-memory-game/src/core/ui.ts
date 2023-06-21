@@ -1,7 +1,6 @@
 import { elementReady } from "./helpers";
 import { CardComponent, TooltipComponent } from "../components";
 import {
-  canBeFlipped,
   checkMatch,
   startGame,
   // resetToContinue,
@@ -15,6 +14,10 @@ import {
   updateStatusGame,
   updateMoves,
   resetFlippedCards,
+  getCardAIndex,
+  getStatusGame,
+  canBeFlippedByIndex,
+  isCardFlippedByIndex,
 } from "./motor";
 import { defaultScoreboard, textCardTooltip, textScoreboard } from "./constans";
 import { Board } from "./model";
@@ -74,7 +77,7 @@ export const loadApp = () => {
     const isFinished = isGameFinished(board.cardList);
 
     if (isFinished) {
-      markGameToFinished(board);
+      markGameToFinished();
       displayGameResultTooltip(board.moves);
     }
   };
@@ -85,43 +88,44 @@ export const loadApp = () => {
     }
   };
 
-  const handleCheckMatch = (indexCardB: number, board: Board): void => {
-    const isMatch = checkMatch(indexCardB, board);
+  const handleCheckMatch = (indexCardB: number): void => {
+    const isMatch = checkMatch(indexCardB);
 
     if (isMatch) {
       console.log("es match");
-      markSelectedPairCardAsMatched(indexCardB, getBoard());
-      updateMoves(getBoard());
+      markSelectedPairCardAsMatched(indexCardB);
+      updateMoves();
       checkGameFinished(getBoard());
     } else {
       console.log("no es match");
-      resetSelectedPairCardsEngine(indexCardB, getBoard());
-      restoreToCardNotFlipped(board.indexCardFlipA, indexCardB);
+      updateStatusGame(indexCardB);
+      resetSelectedPairCardsEngine(indexCardB);
+      restoreToCardNotFlipped(getCardAIndex(), indexCardB);
       resetFlippedCards(getBoard());
     }
     handleUpdateMoves(getBoard());
   };
 
-  const handleSecondFlip = (cardIndex: number, board: Board): void => {
-    console.log("handleSecondFlip", board);
-    if (board.statusGame === "DosCartasLevantadas") {
-      handleCheckMatch(cardIndex, board);
+  const handleSecondFlip = (cardIndex: number): void => {
+    console.log("handleSecondFlip");
+    if (getStatusGame() === "DosCartasLevantadas") {
+      handleCheckMatch(cardIndex);
     }
   };
 
-  const handleFlip = (cardIndex: number, board: Board): void => {
-    const flip = canBeFlipped(board.cardList[cardIndex], board.statusGame);
+  const handleFlip = (cardIndex: number): void => {
+    const flip = canBeFlippedByIndex(cardIndex);
 
     if (flip) {
-      flipCard(cardIndex, getBoard());
+      flipCard(cardIndex);
       document
         .querySelector(`[data-index-array="${cardIndex}"]`)
         ?.classList.add("flip");
 
-      updateStatusGame(cardIndex, getBoard());
-      handleSecondFlip(cardIndex, getBoard());
+      updateStatusGame(cardIndex);
+      handleSecondFlip(cardIndex);
     } else {
-      cardIsFlipped(cardIndex, board.cardList[cardIndex].isFlipped);
+      cardIsFlipped(cardIndex, isCardFlippedByIndex(cardIndex));
     }
   };
 
@@ -134,7 +138,7 @@ export const loadApp = () => {
       const cardElement = CardComponent({ imageUrl, indexCard: cardIndex });
 
       cardElement.addEventListener("click", () => {
-        handleFlip(cardIndex, board);
+        handleFlip(cardIndex);
       });
 
       gridContainerElement?.appendChild(cardElement);
