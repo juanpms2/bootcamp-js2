@@ -61,8 +61,10 @@ export const updateMoves = (): void => {
 	setBoard(updateMovesHelper(getBoard()));
 };
 
-export const isGameFinished = (cardList: Card[]): boolean =>
-	cardList.every((card) => card.isFound);
+export const isGameFinished = (): boolean => {
+	const cardList = getBoard().cardList;
+	return cardList.every((card) => card.isFound);
+};
 
 export const markGameToFinished = (): void => {
 	setBoard({ ...getBoard(), statusGame: "PartidaCompleta" });
@@ -89,6 +91,10 @@ export const resetFlippedCards = (): void => {
 	});
 };
 
+export const resetGame = (): void => {
+	setBoard(createDefaultBoard(cardListData));
+};
+
 export const isCardFlippedByIndex = (index: number): boolean =>
 	getCardAtAGivenIndex(index).isFlipped;
 
@@ -100,3 +106,5 @@ export const getCardAIndex = (): number => getBoard().indexCardFlipA;
 export const getCardBIndex = (): number => getBoard().indexCardFlipB;
 
 export const getStatusGame = (): StatusGame => getBoard().statusGame;
+
+export const getMoves = (): number => getBoard().moves;

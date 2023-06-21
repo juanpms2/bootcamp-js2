@@ -3,9 +3,7 @@ import { CardComponent, TooltipComponent } from "../components";
 import {
 	checkMatch,
 	startGame,
-	// resetToContinue,
 	getBoard,
-	// resetGame,
 	flipCard,
 	isGameFinished,
 	resetSelectedPairCardsEngine,
@@ -19,9 +17,10 @@ import {
 	canBeFlippedByIndex,
 	isCardFlippedByIndex,
 	getCardBIndex,
+	getMoves,
+	resetGame,
 } from "./motor";
 import { defaultScoreboard, textCardTooltip, textScoreboard } from "./constans";
-import { Board } from "./model";
 
 const startGameButtonElement = elementReady("start-game");
 const resetGameButtonElement = elementReady("reset-game");
@@ -34,16 +33,12 @@ export const loadApp = () => {
 		const cardAIndex = getCardAIndex();
 		const cardBIndex = getCardBIndex();
 
-		setTimeout(() => {
-			document
-				.querySelector(`[data-index-array="${cardAIndex}"]`)
-				?.classList.remove("flip");
-			document
-				.querySelector(`[data-index-array="${cardBIndex}"]`)
-				?.classList.remove("flip");
-			resetFlippedCards();
-			updateStatusGame(cardBIndex);
-		}, 1000);
+		document
+			.querySelector(`[data-index-array="${cardAIndex}"]`)
+			?.classList.remove("flip");
+		document
+			.querySelector(`[data-index-array="${cardBIndex}"]`)
+			?.classList.remove("flip");
 	};
 
 	const displayCardTooltip = (cardIndex: number): void => {
@@ -61,7 +56,8 @@ export const loadApp = () => {
 		}
 	};
 
-	const displayGameResultTooltip = (moves: number): void => {
+	const displayGameResultTooltip = (): void => {
+		const moves = getMoves();
 		const txt = `<h1>¡Has ganado!</h1> <p>Has completado el juego en ${moves.toString()} movimientos</p>`;
 		const tooltip = TooltipComponent(txt);
 		tooltip.classList.add("tooltip-win");
@@ -76,36 +72,37 @@ export const loadApp = () => {
 		tooltipResult && boardContainerElement?.removeChild(tooltipResult);
 	};
 
-	const checkGameFinished = (board: Board) => {
-		const isFinished = isGameFinished(board.cardList);
+	const checkGameFinished = () => {
+		const isFinished = isGameFinished();
 
 		if (isFinished) {
 			markGameToFinished();
-			displayGameResultTooltip(board.moves);
+			displayGameResultTooltip();
 		}
 	};
 
-	const handleUpdateMoves = (board: Board): void => {
-		if (board.statusGame === "UnaCartaLevantada") {
-			scoreboardElement.innerHTML = board.moves + textScoreboard;
-		}
+	const displayCurrentScore = (): void => {
+		scoreboardElement.innerHTML = getMoves() + textScoreboard;
 	};
 
 	const handleCheckMatch = (): void => {
 		const isMatch = checkMatch();
-		const board = getBoard();
-		const cardBindex = getCardBIndex();
+		const cardBIndex = getCardBIndex();
 
+		updateMoves();
 		if (isMatch) {
 			markSelectedPairCardAsMatched();
-			updateMoves();
-			updateStatusGame(cardBindex);
-			checkGameFinished(board);
+			updateStatusGame(cardBIndex);
+			checkGameFinished();
 		} else {
-			restoreToCardNotFlipped();
+			setTimeout(() => {
+				restoreToCardNotFlipped();
+				updateStatusGame(cardBIndex);
+				resetFlippedCards();
+			}, 1000);
 			resetSelectedPairCardsEngine();
 		}
-		handleUpdateMoves(board);
+		displayCurrentScore();
 	};
 
 	const handleFlip = (cardIndex: number): void => {
@@ -167,7 +164,7 @@ export const loadApp = () => {
 
 	resetGameButtonElement?.addEventListener("click", () => {
 		removeGameResultTooltip();
-		// resetGame();
+		resetGame();
 		onStartGame();
 	});
 };
