@@ -1,16 +1,16 @@
 interface Props {
 	imageUrl: string;
-	index: number;
+	indexCard: number;
 }
 
 export const CardComponent = (props: Props): HTMLDivElement => {
-	const { imageUrl, index } = props;
-	const id = `card-${index}`;
+	const { imageUrl, indexCard } = props;
+	const id = `card-${indexCard}`;
 
 	const flipContainer: HTMLDivElement = document.createElement("div");
 	flipContainer.setAttribute("class", "flip-container");
 	flipContainer.setAttribute("id", id);
-	flipContainer.setAttribute("data-index-array", index.toString());
+	flipContainer.setAttribute("data-index-array", indexCard.toString());
 
 	const flipper: HTMLDivElement = document.createElement("div");
 	flipper.setAttribute("class", "flipper");
@@ -26,7 +26,7 @@ export const CardComponent = (props: Props): HTMLDivElement => {
 
 	const backImage: HTMLImageElement = document.createElement("img");
 	backImage.setAttribute("src", imageUrl);
-	backImage.setAttribute("data-index-img", index.toString());
+	backImage.setAttribute("data-index-img", indexCard.toString());
 	back.appendChild(backImage);
 
 	return flipContainer;

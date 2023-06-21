@@ -4,12 +4,20 @@ import {
 	canBeFlipped,
 	checkMatch,
 	startGame,
-	resetToContinue,
+	// resetToContinue,
 	getBoard,
-	resetGame,
-	setBoard,
+	// resetGame,
+	flipCard,
+	isGameFinished,
+	resetSelectedPairCardsEngine,
+	markSelectedPairCardAsMatched,
+	markGameToFinished,
+	updateStatusGame,
+	updateMoves,
+	resetFlippedCards,
 } from "./motor";
 import { defaultScoreboard, textCardTooltip, textScoreboard } from "./constans";
+import { Board } from "./model";
 
 const startGameButtonElement = elementReady("start-game");
 const resetGameButtonElement = elementReady("reset-game");
@@ -18,44 +26,32 @@ const gridContainerElement = elementReady("grid-container");
 const scoreboardElement = elementReady("scoreboard");
 
 export const loadApp = () => {
-	const restoreToCardNotFlipped = () => {
-		const board = getBoard();
-
+	const restoreToCardNotFlipped = (
+		indexCardFlipA: number,
+		indexCardFlipB: number
+	) => {
 		setTimeout(() => {
 			document
-				.querySelector(`[data-index-array="${board.indexCardFlipA}"]`)
+				.querySelector(`[data-index-array="${indexCardFlipA}"]`)
 				?.classList.remove("flip");
 			document
-				.querySelector(`[data-index-array="${board.indexCardFlipB}"]`)
+				.querySelector(`[data-index-array="${indexCardFlipB}"]`)
 				?.classList.remove("flip");
-			resetToContinue();
 		}, 1000);
 	};
-	const handleCheckMatch = (index: number) => {
-		const isMatch = checkMatch(index);
 
-		if (!isMatch) {
-			restoreToCardNotFlipped();
-		}
-	};
-
-	const displayCardTooltip = (index: number): void => {
+	const displayCardTooltip = (cardIndex: number): void => {
 		const tooltip = TooltipComponent(textCardTooltip);
-		const card = document.querySelector(`[data-index-array="${index}"]`);
+		const card = document.querySelector(`[data-index-array="${cardIndex}"]`);
 		card?.appendChild(tooltip);
 		setTimeout(() => {
 			card?.removeChild(tooltip);
 		}, 2000);
 	};
 
-	const cardIsFlipped = (index: number): void => {
-		const board = getBoard();
-
-		if (
-			board.cardList[index]?.isFlipped &&
-			board.statusGame !== "PartidaCompleta"
-		) {
-			displayCardTooltip(index);
+	const cardIsFlipped = (cardIndex: number, isFlipped: boolean): void => {
+		if (isFlipped) {
+			displayCardTooltip(cardIndex);
 		}
 	};
 
@@ -71,51 +67,74 @@ export const loadApp = () => {
 
 	const removeGameResultTooltip = (): void => {
 		const tooltipResult = document.querySelector(".tooltip-win");
-		boardContainerElement?.removeChild(tooltipResult);
+		tooltipResult && boardContainerElement?.removeChild(tooltipResult);
 	};
 
-	const gameIsFinished = () => {
-		const board = getBoard();
+	const checkGameFinished = (board: Board) => {
+		const isFinished = isGameFinished(board.cardList);
 
-		if (board.statusGame === "PartidaCompleta") {
+		if (isFinished) {
+			markGameToFinished(board);
 			displayGameResultTooltip(board.moves);
 		}
 	};
 
-	const isSecondCard = (index: number): void => {
-		const board = getBoard();
-
-		if (board.statusGame === "DosCartasLevantadas") {
-			setBoard({ moves: board.moves + 1 });
-			scoreboardElement.innerHTML = board.moves + 1 + textScoreboard;
-			handleCheckMatch(index);
+	const handleUpdateMoves = (board: Board): void => {
+		if (board.statusGame === "UnaCartaLevantada") {
+			scoreboardElement.innerHTML = board.moves + textScoreboard;
 		}
 	};
 
-	const handleFlip = (index: number): void => {
-		const flip = canBeFlipped(index);
+	const handleCheckMatch = (indexCardB: number, board: Board): void => {
+		const isMatch = checkMatch(indexCardB, board);
+
+		if (isMatch) {
+			console.log("es match");
+			markSelectedPairCardAsMatched(indexCardB, board);
+			updateMoves(board);
+			checkGameFinished(board);
+		} else {
+			console.log("no es match");
+			resetSelectedPairCardsEngine(indexCardB, board);
+			restoreToCardNotFlipped(board.indexCardFlipA, indexCardB);
+			resetFlippedCards(board);
+		}
+		handleUpdateMoves(board);
+	};
+
+	const handleSecondFlip = (cardIndex: number, board: Board): void => {
+		console.log("handleSecondFlip", board);
+		if (board.statusGame === "UnaCartaLevantada") {
+			handleCheckMatch(cardIndex, board);
+		}
+	};
+
+	const handleFlip = (cardIndex: number, board: Board): void => {
+		const flip = canBeFlipped(board.cardList[cardIndex], board.statusGame);
 
 		if (flip) {
+			flipCard(cardIndex, board);
 			document
-				.querySelector(`[data-index-array="${index}"]`)
+				.querySelector(`[data-index-array="${cardIndex}"]`)
 				?.classList.add("flip");
-			isSecondCard(index);
+
+			updateStatusGame(cardIndex, board);
+			handleSecondFlip(cardIndex, board);
 		} else {
-			cardIsFlipped(index);
+			cardIsFlipped(cardIndex, board.cardList[cardIndex].isFlipped);
 		}
-		gameIsFinished();
 	};
 
 	const createCardList = (): void => {
 		const board = getBoard();
 
 		board.cardList?.map((item) => {
-			const index = board.cardList?.indexOf(item);
-			const imageUrl = board.cardList[index].card?.imageUrl;
-			const cardElement = CardComponent({ imageUrl, index });
+			const cardIndex = board.cardList?.indexOf(item);
+			const imageUrl = board.cardList[cardIndex].card?.imageUrl;
+			const cardElement = CardComponent({ imageUrl, indexCard: cardIndex });
 
 			cardElement.addEventListener("click", () => {
-				handleFlip(index);
+				handleFlip(cardIndex, board);
 			});
 
 			gridContainerElement?.appendChild(cardElement);
@@ -146,7 +165,7 @@ export const loadApp = () => {
 
 	resetGameButtonElement?.addEventListener("click", () => {
 		removeGameResultTooltip();
-		resetGame();
+		// resetGame();
 		onStartGame();
 	});
 };

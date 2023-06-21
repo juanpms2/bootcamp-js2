@@ -1,4 +1,4 @@
-import { elementReady, gameStateManagement } from "./helpers";
+import { elementReady } from "./helpers";
 
 describe("helpers specs", () => {
 	describe("elementReady specs", () => {
@@ -28,32 +28,6 @@ describe("helpers specs", () => {
 			// Assert
 			expect(result).toBeInstanceOf(HTMLElement);
 			expect(result).toEqual(element);
-		});
-	});
-	describe("gameStateManagement specs", () => {
-		it("Should return a function that returns the initial state", () => {
-			// Arrange
-			const initialState = { a: 1, b: 2 };
-
-			// Act
-			const [getState] = gameStateManagement(initialState);
-
-			// Assert
-			expect(getState()).toEqual(initialState);
-		});
-		it("Should return a function that returns the new state", () => {
-			// Arrange
-			const initialState = { a: 1, b: 2 };
-			const newState = { a: 2 };
-			const expectedResult = { a: 2, b: 2 };
-
-			// Act
-			const [getState, setState] = gameStateManagement(initialState);
-			setState(newState);
-			const result = getState();
-
-			// Assert
-			expect(expectedResult).toEqual(result);
 		});
 	});
 });

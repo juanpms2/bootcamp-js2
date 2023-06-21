@@ -20,7 +20,7 @@ export const createDefaultCardList = (cardList: CardInfo[]): Card[] => {
 	return [...listOne, ...listTwo];
 };
 
-type statusGame =
+export type statusGame =
 	| "PartidaNoIniciada"
 	| "CeroCartasLevantadas"
 	| "UnaCartaLevantada"
