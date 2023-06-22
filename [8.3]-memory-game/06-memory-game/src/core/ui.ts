@@ -11,7 +11,6 @@ import {
 	markGameToFinished,
 	updateStatusGame,
 	updateMoves,
-	// resetFlippedCards,
 	getCardAIndex,
 	getStatusGame,
 	canBeFlippedByIndex,

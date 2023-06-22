@@ -83,14 +83,6 @@ export const updateStatusGame = (cardIndex: number) => {
 	setBoard(updateStatusGameHelper(cardIndex, getBoard()));
 };
 
-export const resetFlippedCards = (): void => {
-	setBoard({
-		...getBoard(),
-		indexCardFlipA: null,
-		indexCardFlipB: null,
-	});
-};
-
 export const resetGame = (): void => {
 	setBoard(createDefaultBoard(cardListData));
 };
