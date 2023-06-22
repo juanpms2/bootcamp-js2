@@ -9,18 +9,6 @@ export const elementReady = (id: string) => {
 	return null;
 };
 
-type SetState<T> = (newState: Partial<T>) => T;
-type GetState<T> = () => T;
-
-export const gameStateManagement = <T>(
-	initialState: T
-): [GetState<T>, SetState<T>] => {
-	let state: T = initialState;
-
-	const getState = (): T => state;
-
-	const setState = (newState: Partial<T>): T =>
-		(state = { ...state, ...newState });
-
-	return [getState, setState];
+export const removeElement = (element: Element, child: Element) => {
+	element?.removeChild(child);
 };

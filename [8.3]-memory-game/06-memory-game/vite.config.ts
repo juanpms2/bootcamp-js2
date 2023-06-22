@@ -3,13 +3,14 @@ import checker from "vite-plugin-checker";
 import type { UserConfig as VitestUserConfigInterface } from "vitest/config";
 
 const vitestConfig: VitestUserConfigInterface = {
-  test: {
-    globals: true,
-    restoreMocks: true,
-  },
+	test: {
+		globals: true,
+		restoreMocks: true,
+		environment: "jsdom",
+	},
 };
 
 export default defineConfig({
-  plugins: [checker({ typescript: true })],
-  test: vitestConfig.test,
+	plugins: [checker({ typescript: true })],
+	test: vitestConfig.test,
 });
