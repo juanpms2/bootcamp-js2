@@ -1,4 +1,4 @@
-import { elementReady } from "./helpers";
+import { elementReady, removeElement } from "./helpers";
 import { CardComponent, TooltipComponent } from "../components";
 import {
 	checkMatch,
@@ -15,7 +15,6 @@ import {
 	getCardAIndex,
 	getStatusGame,
 	canBeFlippedByIndex,
-	isCardFlippedByIndex,
 	getCardBIndex,
 	getMoves,
 	resetGame,
@@ -32,13 +31,19 @@ export const loadApp = () => {
 	const restoreToCardNotFlipped = () => {
 		const cardAIndex = getCardAIndex();
 		const cardBIndex = getCardBIndex();
+		const cardA = document.querySelector(`[data-index-array="${cardAIndex}"]`);
+		const cardB = document.querySelector(`[data-index-array="${cardBIndex}"]`);
 
-		document
-			.querySelector(`[data-index-array="${cardAIndex}"]`)
-			?.classList.remove("flip");
-		document
-			.querySelector(`[data-index-array="${cardBIndex}"]`)
-			?.classList.remove("flip");
+		cardA?.classList.remove("flip");
+		cardB?.classList.remove("flip");
+
+		if (cardA?.querySelector(".tooltip")) {
+			removeElement(cardA, cardA?.querySelector(".tooltip"));
+		}
+
+		if (cardB?.querySelector(".tooltip")) {
+			removeElement(cardB, cardB?.querySelector(".tooltip"));
+		}
 	};
 
 	const displayCardTooltip = (cardIndex: number): void => {
@@ -46,14 +51,8 @@ export const loadApp = () => {
 		const card = document.querySelector(`[data-index-array="${cardIndex}"]`);
 		card?.appendChild(tooltip);
 		setTimeout(() => {
-			card?.removeChild(tooltip);
+			removeElement(card, tooltip);
 		}, 2000);
-	};
-
-	const cardIsFlipped = (cardIndex: number, isFlipped: boolean): void => {
-		if (isFlipped) {
-			displayCardTooltip(cardIndex);
-		}
 	};
 
 	const displayGameResultTooltip = (): void => {
@@ -63,7 +62,7 @@ export const loadApp = () => {
 		tooltip.classList.add("tooltip-win");
 		boardContainerElement?.appendChild(tooltip);
 		setTimeout(() => {
-			boardContainerElement?.removeChild(tooltip);
+			removeElement(boardContainerElement, tooltip);
 		}, 5000);
 	};
 
@@ -120,7 +119,7 @@ export const loadApp = () => {
 				handleCheckMatch();
 			}
 		} else {
-			cardIsFlipped(cardIndex, isCardFlippedByIndex(cardIndex));
+			displayCardTooltip(cardIndex);
 		}
 	};
 

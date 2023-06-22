@@ -8,3 +8,7 @@ export const elementReady = (id: string) => {
 	console.log(new Error(`Element with id ${id} not found in DOM`));
 	return null;
 };
+
+export const removeElement = (element: Element, child: Element) => {
+	element?.removeChild(child);
+};
