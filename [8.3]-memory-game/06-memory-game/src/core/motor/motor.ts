@@ -7,10 +7,10 @@ import {
 	resetSelectedPairCardsEngineHelper,
 	updateMovesHelper,
 	updateStatusGameHelper,
-} from "./motor.helper";
+} from "./motor.helpers";
 
 let board: Board = createDefaultBoard(cardListData);
-export const getBoard = (): Board => board;
+export const getBoard = (): Board => board || createDefaultBoard(cardListData);
 export const setBoard = (newBoard: Board): Board => (board = newBoard);
 
 export const shuffleCards = (cards: Card[]): Card[] => {
@@ -43,8 +43,8 @@ export const flipCard = (index: number): void => {
 export const checkMatch = (): boolean => {
 	const board = getBoard();
 
-	return board.cardList[board.indexCardFlipA].card?.id ===
-		board.cardList[board.indexCardFlipB].card?.id
+	return board.cardList[board.indexCardFlipA]?.card.id ===
+		board.cardList[board.indexCardFlipB]?.card.id
 		? true
 		: false;
 };

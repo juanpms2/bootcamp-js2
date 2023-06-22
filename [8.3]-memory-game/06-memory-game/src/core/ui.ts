@@ -11,13 +11,14 @@ import {
 	markGameToFinished,
 	updateStatusGame,
 	updateMoves,
-	resetFlippedCards,
+	// resetFlippedCards,
 	getCardAIndex,
 	getStatusGame,
 	canBeFlippedByIndex,
 	getCardBIndex,
 	getMoves,
 	resetGame,
+	isCardFlippedByIndex,
 } from "./motor";
 import { defaultScoreboard, textCardTooltip, textScoreboard } from "./constans";
 
@@ -50,6 +51,7 @@ export const loadApp = () => {
 		const tooltip = TooltipComponent(textCardTooltip);
 		const card = document.querySelector(`[data-index-array="${cardIndex}"]`);
 		card?.appendChild(tooltip);
+
 		setTimeout(() => {
 			removeElement(card, tooltip);
 		}, 2000);
@@ -86,20 +88,16 @@ export const loadApp = () => {
 
 	const handleCheckMatch = (): void => {
 		const isMatch = checkMatch();
-		const cardBIndex = getCardBIndex();
 
 		updateMoves();
 		if (isMatch) {
 			markSelectedPairCardAsMatched();
-			updateStatusGame(cardBIndex);
 			checkGameFinished();
 		} else {
 			setTimeout(() => {
 				restoreToCardNotFlipped();
-				updateStatusGame(cardBIndex);
-				resetFlippedCards();
+				resetSelectedPairCardsEngine();
 			}, 1000);
-			resetSelectedPairCardsEngine();
 		}
 		displayCurrentScore();
 	};
@@ -119,7 +117,10 @@ export const loadApp = () => {
 				handleCheckMatch();
 			}
 		} else {
-			displayCardTooltip(cardIndex);
+			const isFlipped = isCardFlippedByIndex(cardIndex);
+			if (isFlipped) {
+				displayCardTooltip(cardIndex);
+			}
 		}
 	};
 

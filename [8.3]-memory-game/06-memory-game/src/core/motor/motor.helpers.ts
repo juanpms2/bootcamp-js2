@@ -4,7 +4,7 @@ export const updateStatusGameHelper = (
 	cardIndex: number,
 	board: Board
 ): Board => {
-	switch (board.statusGame) {
+	switch (board?.statusGame) {
 		case "CeroCartasLevantadas":
 			return {
 				...board,
@@ -43,14 +43,16 @@ export const flipCardHelper = (index: number, board: Board): Board => {
 		i === index ? { ...card, isFlipped: true } : card
 	);
 
-	return {
-		...board,
-		cardList,
-	};
+	return cardList
+		? {
+				...board,
+				cardList,
+		  }
+		: board;
 };
 
 export const markSelectedPairCardAsMatchedHelper = (board: Board): Board => {
-	const list = board.cardList.map((card, i) =>
+	const cardList = board.cardList?.map((card, i) =>
 		i === board.indexCardFlipA || i === board.indexCardFlipB
 			? { ...card, isFound: true }
 			: card
@@ -58,17 +60,26 @@ export const markSelectedPairCardAsMatchedHelper = (board: Board): Board => {
 
 	return {
 		...board,
-		cardList: list,
+		cardList,
+		statusGame: "CeroCartasLevantadas",
+		indexCardFlipA: null,
+		indexCardFlipB: null,
 	};
 };
 
 export const resetSelectedPairCardsEngineHelper = (board: Board): Board => {
-	const list = board.cardList.map((card, i) =>
+	const cardList = board.cardList?.map((card, i) =>
 		i === board.indexCardFlipA || i === board.indexCardFlipB
 			? { ...card, isFlipped: false }
 			: card
 	);
-	return { ...board, cardList: list };
+	return {
+		...board,
+		cardList,
+		statusGame: "CeroCartasLevantadas",
+		indexCardFlipA: null,
+		indexCardFlipB: null,
+	};
 };
 
 export const updateMovesHelper = (board: Board): Board => {
