@@ -1,4 +1,4 @@
-type TipoIVA =
+export type TipoIVA =
 	| "general"
 	| "reducido"
 	| "superreducidoA"
