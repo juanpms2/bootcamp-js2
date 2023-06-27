@@ -15,7 +15,7 @@ export const productos: LineaTicket[] = [
 			precio: 15,
 			tipoIva: "reducido",
 		},
-		cantidad: 1,
+		cantidad: 6,
 	},
 	{
 		producto: {
@@ -31,7 +31,7 @@ export const productos: LineaTicket[] = [
 			precio: 8,
 			tipoIva: "general",
 		},
-		cantidad: 1,
+		cantidad: 3,
 	},
 	{
 		producto: {
@@ -47,7 +47,7 @@ export const productos: LineaTicket[] = [
 			precio: 25,
 			tipoIva: "superreducidoB",
 		},
-		cantidad: 1,
+		cantidad: 8,
 	},
 	{
 		producto: {
@@ -71,7 +71,7 @@ export const productos: LineaTicket[] = [
 			precio: 30,
 			tipoIva: "reducido",
 		},
-		cantidad: 1,
+		cantidad: 7,
 	},
 	{
 		producto: {
@@ -87,7 +87,7 @@ export const productos: LineaTicket[] = [
 			precio: 9,
 			tipoIva: "general",
 		},
-		cantidad: 1,
+		cantidad: 2,
 	},
 	{
 		producto: {
@@ -111,7 +111,7 @@ export const productos: LineaTicket[] = [
 			precio: 5,
 			tipoIva: "sinIva",
 		},
-		cantidad: 1,
+		cantidad: 5,
 	},
 	{
 		producto: {
@@ -135,7 +135,7 @@ export const productos: LineaTicket[] = [
 			precio: 24,
 			tipoIva: "superreducidoB",
 		},
-		cantidad: 1,
+		cantidad: 9,
 	},
 	{
 		producto: {
@@ -151,7 +151,7 @@ export const productos: LineaTicket[] = [
 			precio: 21,
 			tipoIva: "general",
 		},
-		cantidad: 1,
+		cantidad: 27,
 	},
 	{
 		producto: {
