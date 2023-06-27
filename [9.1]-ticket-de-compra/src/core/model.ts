@@ -6,6 +6,15 @@ type TipoIVA =
 	| "superreducidoC"
 	| "sinIva";
 
+export enum TipoIVAEnum {
+	general = 21,
+	reducido = 10,
+	superreducidoA = 5,
+	superreducidoB = 4,
+	superreducidoC = 0,
+	sinIva = 0,
+}
+
 export interface Producto {
 	nombre: string;
 	precio: number;
@@ -20,9 +29,10 @@ export interface LineaTicket {
 export interface ResultadoLineaTicket {
 	nombre: string;
 	cantidad: number;
-	precionSinIva: number;
+	precioSinIva: number;
 	tipoIva: TipoIVA;
 	precioConIva: number;
+	total: number;
 }
 
 export interface ResultadoTotalTicket {
