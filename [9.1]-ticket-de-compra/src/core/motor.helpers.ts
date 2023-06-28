@@ -1,105 +1,112 @@
 import {
 	TicketFinal,
-	Producto,
 	TipoIVAEnum,
-	TipoIVA,
-	LineaTicket,
 	TotalPorTipoIva,
+	ResultadoLineaTicket,
 } from "./model";
 
-export const mapTipoIvaATipoIvaEnum = (tipoIva: string): TipoIVAEnum => {
-	switch (tipoIva) {
-		case "general":
-			return TipoIVAEnum.general;
-		case "reducido":
-			return TipoIVAEnum.reducido;
-		case "superreducidoA":
-			return TipoIVAEnum.superreducidoA;
-		case "superreducidoB":
-			return TipoIVAEnum.superreducidoB;
-		case "superreducidoC":
-			return TipoIVAEnum.superreducidoC;
-		case "sinIva":
-		default:
-			return TipoIVAEnum.sinIva;
-	}
-};
-
-export const calculaIva = (precio: number, tipoIva: TipoIVA): number => {
-	if (!precio || precio <= 0 || !tipoIva) {
+export const calculaIva = (precio: number, iva: TipoIVAEnum): number => {
+	if (!precio || precio <= 0 || !iva) {
 		return 0;
 	}
 
-	const iva = precio * (mapTipoIvaATipoIvaEnum(tipoIva) / 100);
-	return parseFloat(iva.toFixed(2));
+	const totalIva = (precio * iva) / 100;
+	return parseFloat(totalIva.toFixed(2));
 };
 
-export const calculaTotalDeProductoSinIva = (
-	precio: number,
-	cantidad: number
+// export const calculaTotalDeProductoSinIva = (
+// 	precio: number,
+// 	cantidad: number
+// ): number => {
+// 	if (!precio || precio <= 0) {
+// 		return 0;
+// 	}
+// 	if (!cantidad || cantidad <= 0) {
+// 		return 0;
+// 	}
+// 	return precio * cantidad;
+// };
+
+// export const calculaTotalDeProductoConIva = (
+// 	precio: number,
+// 	cantidad: number,
+// 	tipoIva: TipoIVA
+// ): number => {
+// 	if (!precio || precio <= 0) {
+// 		return 0;
+// 	}
+// 	if (!cantidad || cantidad <= 0) {
+// 		return 0;
+// 	}
+// 	if (!tipoIva) {
+// 		return 0;
+// 	}
+// 	const totalSinIva = precio * cantidad;
+// 	const totalIva = calculaIva(totalSinIva, tipoIva);
+
+// 	return totalSinIva + totalIva;
+// };
+
+export const calculaTotalCompraSinIva = (
+	listadoCompra: ResultadoLineaTicket[]
 ): number => {
-	if (!precio || precio <= 0) {
+	if (!listadoCompra || listadoCompra.length === 0) {
 		return 0;
 	}
-	if (!cantidad || cantidad <= 0) {
-		return 0;
-	}
-	return precio * cantidad;
-};
 
-export const calculaTotalDeProductoConIva = (
-	precio: number,
-	cantidad: number,
-	tipoIva: TipoIVA
-): number => {
-	if (!precio || precio <= 0) {
-		return 0;
-	}
-	if (!cantidad || cantidad <= 0) {
-		return 0;
-	}
-	if (!tipoIva) {
-		return 0;
-	}
-	const totalSinIva = calculaTotalDeProductoSinIva(precio, cantidad);
-	const totalIva = calculaIva(totalSinIva, tipoIva);
-
-	return totalSinIva + totalIva;
-};
-
-export const calculaTotalCompraSinIva = (productos: LineaTicket[]): number => {
-	if (!productos || productos.length === 0) {
-		return 0;
-	}
-	return productos.reduce((acc, item) => {
-		const { producto, cantidad } = item;
-		const { precio } = producto;
-		const totalProductoSinIva = calculaTotalDeProductoSinIva(precio, cantidad);
+	return listadoCompra.reduce((acc, item) => {
+		const totalProductoSinIva = item.precioSinIva * item.cantidad;
 		return acc + totalProductoSinIva;
 	}, 0);
 };
 
-export const calculaTotalCompraConIva = (productos: LineaTicket[]): number => {
-	if (!productos || productos.length === 0) {
+export const calculaTotalCompraConIva = (
+	listadoCompra: ResultadoLineaTicket[]
+): number => {
+	if (!listadoCompra || listadoCompra.length === 0) {
 		return 0;
 	}
-	return productos.reduce((acc, item) => {
-		const { producto, cantidad } = item;
-		const { precio, tipoIva } = producto;
-		const totalProductoConIva = calculaTotalDeProductoConIva(
-			precio,
-			cantidad,
-			tipoIva
-		);
-		return acc + totalProductoConIva;
+	return listadoCompra.reduce((acc, item) => {
+		const { total } = item;
+
+		return acc + total;
 	}, 0);
 };
 
-export const desgloseIva = (productos: LineaTicket[]): TotalPorTipoIva[] => {
-	return [];
+export const calculaDesgloseIva = (
+	listadoCompra: ResultadoLineaTicket[]
+): TotalPorTipoIva[] => {
+	if (!listadoCompra || listadoCompra.length === 0) {
+		return [];
+	}
+
+	const totalesPorProducto: TotalPorTipoIva[] = listadoCompra.map((item) => {
+		const { cantidad, precioConIva, precioSinIva, tipoIva } = item;
+		const cuantia = (precioConIva - precioSinIva) * cantidad;
+
+		return {
+			tipoIva,
+			cuantia: parseFloat(cuantia.toFixed(2)),
+		};
+	});
+
+	const totalesPorTipoIva: TotalPorTipoIva[] = totalesPorProducto.reduce(
+		(acc, item) => {
+			const { tipoIva, cuantia } = item;
+			const index = acc.findIndex((i) => i.tipoIva === tipoIva);
+			if (index === -1) {
+				return [...acc, { tipoIva, cuantia }];
+			}
+			acc[index].cuantia += cuantia;
+			return acc;
+		},
+		[]
+	);
+
+	return totalesPorTipoIva;
 };
 
-export const formatTicket = (ticket: TicketFinal): string => {
+export const generaTicket = (ticket: TicketFinal): string => {
 	const { lineas, total } = ticket;
 	const { totalSinIva, totalConIva, totalIva } = total;
 

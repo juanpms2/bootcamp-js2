@@ -1,6 +1,6 @@
 import { LineaTicket } from "./model";
 
-export const productos: LineaTicket[] = [
+export const listadoCompra: LineaTicket[] = [
 	{
 		producto: {
 			nombre: "Producto 1",
