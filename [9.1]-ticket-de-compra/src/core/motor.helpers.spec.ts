@@ -4,6 +4,7 @@ import {
 	calculaTotalCompraSinIva,
 	calculaTotalCompraConIva,
 	calculaDesgloseIva,
+	calculaTotalIva,
 } from "./motor.helpers";
 
 describe("motor.helpers specs", () => {
@@ -57,96 +58,6 @@ describe("motor.helpers specs", () => {
 			expect(result).toEqual(17.92);
 		});
 	});
-
-	// describe("calculaTotalDeProductoSinIva specs", () => {
-	// 	it.each([
-	// 		[0, undefined, undefined],
-	// 		[0, null, null],
-	// 		[0, 0, 0],
-	// 		[0, undefined, 0],
-	// 		[0, undefined, null],
-	// 		[0, null, 0],
-	// 		[0, null, undefined],
-	// 		[0, 0, undefined],
-	// 		[0, 0, null],
-	// 	])(
-	// 		`Should return %s if precio equal to %s and cantidad equal to %s`,
-	// 		(expected, precio, cantidad) => {
-	// 			//Arrange
-	// 			//Act
-	// 			const result = calculaTotalDeProductoSinIva(precio, cantidad);
-
-	// 			//Assert
-	// 			expect(result).toEqual(expected);
-	// 		}
-	// 	);
-
-	// 	it("Should return 20 if precio is 10 and cantidad is 2", () => {
-	// 		//Arrange
-	// 		const precio = 10;
-	// 		const cantidad = 2;
-
-	// 		//Act
-	// 		const result = calculaTotalDeProductoSinIva(precio, cantidad);
-
-	// 		//Assert
-	// 		expect(result).toEqual(20);
-	// 	});
-	// });
-
-	// describe("calculaTotalDeProductoConIva specs", () => {
-	// 	it.each([
-	// 		[0, undefined, undefined, undefined],
-	// 		[0, null, null, undefined],
-	// 		[0, 0, 0, undefined],
-	// 		[0, undefined, 0, undefined],
-	// 		[0, undefined, null, undefined],
-	// 		[0, null, 0, undefined],
-	// 		[0, null, undefined, undefined],
-	// 		[0, 0, undefined, undefined],
-	// 		[0, 0, null, undefined],
-	// 	])(
-	// 		`Should return %s if precio equal to %s, cantidad equal to %s and tipoIva equal to %s`,
-	// 		(expected, precio, cantidad, tipoIva) => {
-	// 			//Arrange
-	// 			//Act
-	// 			const result = calculaTotalDeProductoConIva(
-	// 				precio,
-	// 				cantidad,
-	// 				tipoIva as TipoIVA
-	// 			);
-
-	// 			//Assert
-	// 			expect(result).toEqual(expected);
-	// 		}
-	// 	);
-
-	// 	it("Should return 20 if precio is 10, cantidad is 2 and tipoIva is sinIva", () => {
-	// 		//Arrange
-	// 		const precio = 10;
-	// 		const cantidad = 2;
-	// 		const tipoIva = "sinIva";
-
-	// 		//Act
-	// 		const result = calculaTotalDeProductoConIva(precio, cantidad, tipoIva);
-
-	// 		//Assert
-	// 		expect(result).toEqual(20);
-	// 	});
-
-	// 	it("Should return 24,2 if precio is 10, cantidad is 2 and tipoIva is general", () => {
-	// 		//Arrange
-	// 		const precio = 10;
-	// 		const cantidad = 2;
-	// 		const tipoIva = "general";
-
-	// 		//Act
-	// 		const result = calculaTotalDeProductoConIva(precio, cantidad, tipoIva);
-
-	// 		//Assert
-	// 		expect(result).toEqual(24.2);
-	// 	});
-	// });
 
 	describe("calculaTotalCompraSinIva specs", () => {
 		it.each([
@@ -271,6 +182,69 @@ describe("motor.helpers specs", () => {
 
 			//Assert
 			expect(result).toEqual(30.1);
+		});
+	});
+
+	describe("calculaTotalIva specs", () => {
+		it.each([
+			[0, undefined],
+			[0, null],
+			[0, []],
+		])(`Should return %s if productos equal to %s`, (expected, productos) => {
+			//Arrange
+			//Act
+			const result = calculaTotalIva(productos);
+
+			//Assert
+			expect(result).toEqual(expected);
+		});
+
+		it("Should return 2.1", () => {
+			//Arrange
+			const productos: ResultadoLineaTicket[] = [
+				{
+					nombre: "Producto 1",
+					cantidad: 1,
+					precioSinIva: 10,
+					tipoIva: "general",
+					precioConIva: 12.1,
+					total: 12.1,
+				},
+			];
+
+			//Act
+			const result = calculaTotalIva(productos);
+
+			//Assert
+			expect(result).toEqual(2.1);
+		});
+
+		it("Should return 5.1", () => {
+			//Arrange
+			const productos: ResultadoLineaTicket[] = [
+				{
+					nombre: "Producto 1",
+					cantidad: 1,
+					precioSinIva: 10,
+					tipoIva: "general",
+					precioConIva: 12.1,
+					total: 12.1,
+				},
+				{
+					nombre: "Producto 2",
+					cantidad: 2,
+					precioSinIva: 15,
+					tipoIva: "reducido",
+					precioConIva: 16.5,
+					total: 33,
+				},
+			];
+
+			//Act
+			const result = calculaTotalIva(productos);
+
+			//Assert
+			expect(result).toEqual(5.1);
 		});
 	});
 

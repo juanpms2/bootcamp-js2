@@ -4,7 +4,7 @@ export const listadoCompra: LineaTicket[] = [
 	{
 		producto: {
 			nombre: "Producto 1",
-			precio: 10,
+			precio: 10.3,
 			tipoIva: "general",
 		},
 		cantidad: 1,

@@ -1,4 +1,3 @@
-import * as motor from "./motor";
-import { listadoCompra } from "./mock-data";
+import { loadApp } from "./ui";
 
-motor.calculaTicket(listadoCompra);
+document.addEventListener("DOMContentLoaded", () => loadApp());

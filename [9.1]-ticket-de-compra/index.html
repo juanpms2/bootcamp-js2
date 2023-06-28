@@ -8,7 +8,36 @@
 	</head>
 	<body>
 		<div id="app">
-			<h1>Ticket de compra</h1>
-		<script type="module" src="/src/main.ts"></script>
+			<div class="ticket">
+				<div class="header">
+					<h2>Ticket de Compra</h2>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Cantidad</th>
+							<th>Precio sin IVA (ud.)</th>
+							<th>Tipo de IVA</th>
+							<th>Precio con IVA (ud.)</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody id="tbody">
+						<!-- Aquí se generan las filas dinámicamente -->
+					</tbody>
+				</table>
+				<div class="footer">
+					<p>Total sin IVA: <span id="total-sin-iva"></span></p>
+					<p>IVA: <span id="total-iva"></span></p>
+					<p>Desglose IVA:</p>
+					<ul id="desglose-iva">
+						<!-- Aquí se generan los elementos de lista dinámicamente -->
+					</ul>
+					<p>Total: <span id="total"></span></p>
+				</div>
+			</div>
+			<script type="module" src="/src/main.ts"></script>
+		</div>
 	</body>
 </html>

@@ -97,3 +97,52 @@ button:disabled {
 	width: 100%;
 	padding: 2rem;
 }
+
+.ticket {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+}
+
+.header {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+th, td {
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ccc;
+}
+
+th {
+	font-weight: bold;
+}
+
+.footer {
+	font-weight: bold;
+}
+
+.footer p {
+	margin: 5px 0;
+}
+
+.footer ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.footer li {
+	margin-bottom: 5px;
+}
+
+.footer :last-child {
+	text-align: right;
+}

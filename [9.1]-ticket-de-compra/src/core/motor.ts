@@ -2,28 +2,31 @@ import {
 	LineaTicket,
 	ResultadoLineaTicket,
 	ResultadoTotalTicket,
+	TicketFinal,
 	TotalPorTipoIva,
 } from "./model";
 import {
 	calculaTotalCompraConIva,
 	calculaTotalCompraSinIva,
 	calculaDesgloseIva,
-	generaTicket,
+	calculaTotalIva,
 } from "./motor.helpers";
 import { mapLineaTicketAResultadoLineaTicket } from "./motor.mappers";
 
-export const calculaTicket = (listadoCompra: LineaTicket[]): void => {
+export const calculaTicket = (listadoCompra: LineaTicket[]): TicketFinal => {
 	const lineas: ResultadoLineaTicket[] = listadoCompra.map((item) =>
 		mapLineaTicketAResultadoLineaTicket(item)
 	);
 	const total: ResultadoTotalTicket = {
 		totalSinIva: calculaTotalCompraSinIva(lineas),
 		totalConIva: calculaTotalCompraConIva(lineas),
-		totalIva: calculaTotalCompraSinIva(lineas),
+		totalIva: calculaTotalIva(lineas),
 	};
 	const desgloseIva: TotalPorTipoIva[] = calculaDesgloseIva(lineas);
 
-	const ticket = generaTicket({ lineas, total, desgloseIva });
-
-	console.log(ticket);
+	return {
+		lineas,
+		total,
+		desgloseIva,
+	};
 };
