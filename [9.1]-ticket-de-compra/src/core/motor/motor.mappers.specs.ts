@@ -1,4 +1,4 @@
-import { TipoIVAEnum } from "./model";
+import { TipoIVAEnum } from "../model";
 import { mapTipoIvaATipoIvaEnum } from "./motor.mappers";
 
 describe("mapTipoIvaATipoIvaEnum", () => {

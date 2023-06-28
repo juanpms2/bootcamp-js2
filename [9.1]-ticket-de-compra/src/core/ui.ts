@@ -1,11 +1,12 @@
 import { listadoCompra } from "./mock-data";
 import { calculaTicket } from "./motor";
+import { elementReady } from "./helpers";
 
-const tbodyElement = document.querySelector("tbody");
-const totalSinIvaElement = document.querySelector("#total-sin-iva");
-const totalIvaElement = document.querySelector("#total-iva");
-const totalElement = document.querySelector("#total");
-const desgloseIvaElement = document.querySelector("#desglose-iva");
+const tbodyElement = elementReady("tbody");
+const totalSinIvaElement = elementReady("total-sin-iva");
+const totalIvaElement = elementReady("total-iva");
+const totalElement = elementReady("total");
+const desgloseIvaElement = elementReady("desglose-iva");
 
 export const loadApp = () => {
 	const ticket = calculaTicket(listadoCompra);
