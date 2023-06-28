@@ -3,7 +3,7 @@ import {
 	ResultadoLineaTicket,
 	TipoIVAEnum,
 	TotalPorTipoIva,
-} from "./model";
+} from "../model";
 import { calculaIva } from "./motor.helpers";
 
 export const mapTipoIvaATipoIvaEnum = (tipoIva: string): TipoIVAEnum => {

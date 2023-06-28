@@ -4,7 +4,7 @@ import {
 	ResultadoTotalTicket,
 	TicketFinal,
 	TotalPorTipoIva,
-} from "./model";
+} from "../model";
 import {
 	calculaTotalCompraConIva,
 	calculaTotalCompraSinIva,

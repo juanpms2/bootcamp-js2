@@ -1,16 +1,5 @@
-import { TipoIVAEnum, TotalPorTipoIva, ResultadoLineaTicket } from "./model";
+import { TipoIVAEnum, TotalPorTipoIva, ResultadoLineaTicket } from "../model";
 import { mapResultadoLineaTicketATotalPorTipoIva } from "./motor.mappers";
-
-const elementInDOM = (id: string) => document.getElementById(id);
-
-export const elementReady = (id: string) => {
-	const element = elementInDOM(id);
-	if (element && element instanceof HTMLElement) {
-		return element;
-	}
-	console.log(new Error(`Element with id ${id} not found in DOM`));
-	return null;
-};
 
 export const calculaIva = (precio: number, iva: TipoIVAEnum): number => {
 	if (!precio || precio <= 0 || !iva) {
@@ -24,55 +13,52 @@ export const calculaIva = (precio: number, iva: TipoIVAEnum): number => {
 export const calculaTotalCompraSinIva = (
 	listadoCompra: ResultadoLineaTicket[]
 ): number => {
-	if (!listadoCompra) {
-		return 0;
-	}
-
-	return listadoCompra.reduce((acc, item) => {
+	const totalCompraSinIva = listadoCompra?.reduce((acc, item) => {
 		const totalProductoSinIva = item.precioSinIva * item.cantidad;
 		return parseFloat((acc + totalProductoSinIva).toFixed(2));
 	}, 0);
+
+	return listadoCompra ? totalCompraSinIva : 0;
 };
 
 export const calculaTotalCompraConIva = (
 	listadoCompra: ResultadoLineaTicket[]
 ): number => {
-	if (!listadoCompra) {
-		return 0;
-	}
-	return listadoCompra.reduce((acc, item) => {
+	const totalCompraConIva = listadoCompra?.reduce((acc, item) => {
 		const { total } = item;
 
 		return parseFloat((acc + total).toFixed(2));
 	}, 0);
+
+	return listadoCompra ? totalCompraConIva : 0;
 };
 
 export const calculaTotalIva = (
 	listadoCompra: ResultadoLineaTicket[]
 ): number => {
-	if (!listadoCompra) {
-		return 0;
-	}
-
-	return listadoCompra.reduce((acc, item) => {
+	const totalIva = listadoCompra?.reduce((acc, item) => {
 		const { tipoIva, precioSinIva, cantidad } = item;
 		const totalIva = calculaIva(precioSinIva * cantidad, TipoIVAEnum[tipoIva]);
 		return parseFloat((acc + totalIva).toFixed(2));
 	}, 0);
+
+	return listadoCompra ? totalIva : 0;
 };
 
-export const calculaDesgloseIva = (
+const obtenerTotalesPorProducto = (
 	listadoCompra: ResultadoLineaTicket[]
 ): TotalPorTipoIva[] => {
-	if (!listadoCompra) {
-		return [];
-	}
-
-	const totalesPorProducto: TotalPorTipoIva[] = listadoCompra.map(
-		(lineaTicket) => mapResultadoLineaTicketATotalPorTipoIva(lineaTicket)
+	const totalesPorProducto = listadoCompra?.map((lineaTicket) =>
+		mapResultadoLineaTicketATotalPorTipoIva(lineaTicket)
 	);
 
-	const totalesPorTipoIva: TotalPorTipoIva[] = totalesPorProducto.reduce(
+	return totalesPorProducto;
+};
+
+const obtenerTotalesPorTipoIva = (
+	totalesPorProducto: TotalPorTipoIva[]
+): TotalPorTipoIva[] =>
+	totalesPorProducto?.reduce(
 		(acc: TotalPorTipoIva[], item: TotalPorTipoIva) => {
 			const { tipoIva, cuantia } = item;
 			const index = acc.findIndex((i) => i.tipoIva === tipoIva);
@@ -85,5 +71,11 @@ export const calculaDesgloseIva = (
 		[]
 	);
 
-	return totalesPorTipoIva;
+export const calculaDesgloseIva = (
+	listadoCompra: ResultadoLineaTicket[]
+): TotalPorTipoIva[] => {
+	const totalesPorProducto = obtenerTotalesPorProducto(listadoCompra);
+	const totalesPorTipoIva = obtenerTotalesPorTipoIva(totalesPorProducto);
+
+	return !listadoCompra ? [] : totalesPorTipoIva;
 };
