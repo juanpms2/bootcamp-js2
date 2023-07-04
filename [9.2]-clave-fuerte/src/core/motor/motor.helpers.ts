@@ -1,62 +1,24 @@
-import { ValidacionClave } from "../model";
+export const tieneMayusculasYMinusculas = (clave: string): boolean =>
+	/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(clave);
 
-export const tieneMayusculasYMinusculas = (clave: string): ValidacionClave => {
-	const regex = /^(?=.*[a-z])(?=.*[A-Z]).+$/;
+export const tieneNumeros = (clave: string): boolean => /[0-9]/.test(clave);
 
-	return {
-		esValida: regex.test(clave),
-		error: regex.test(clave)
-			? ""
-			: "La clave debe tener al menos una mayúscula y una minúscula.",
-	};
-};
+export const tieneCaracteresEspeciales = (clave: string): boolean =>
+	/[!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?`~]/.test(clave);
 
-export const tieneNumeros = (clave: string): ValidacionClave => {
-	const regex = /[0-9]/;
-
-	return {
-		esValida: regex.test(clave),
-		error: regex.test(clave) ? "" : "La clave debe tener al menos un número.",
-	};
-};
-
-export const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
-	const regex = /[!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?`~]/;
-
-	return {
-		esValida: regex.test(clave),
-		error: regex.test(clave)
-			? ""
-			: "La clave debe tener al menos un caracter especial.",
-	};
-};
-
-export const tieneLongitudMinima = (clave: string): ValidacionClave => ({
-	esValida: clave.length >= 8,
-	error: clave.length >= 8 ? "" : "La clave debe tener al menos 8 caracteres.",
-});
+export const tieneLongitudMinima = (clave: string): boolean =>
+	clave.length >= 8;
 
 export const tieneNombreUsuario = (
 	nombreUsuario: string,
 	clave: string
-): ValidacionClave => ({
-	esValida: clave.includes(nombreUsuario),
-	error: clave.includes(nombreUsuario)
-		? "La clave no puede contener el nombre de usuario."
-		: "",
-});
+): boolean =>
+	clave.toLocaleLowerCase().includes(nombreUsuario.toLocaleLowerCase());
 
 export const tienePalabrasComunes = (
 	clave: string,
 	commonPasswords: string[]
-): ValidacionClave => {
-	const isValid = !commonPasswords.find(
+): boolean =>
+	!commonPasswords.find(
 		(word) => clave.toLocaleLowerCase() === word.toLocaleLowerCase()
 	);
-	return {
-		esValida: isValid,
-		error: isValid
-			? ""
-			: `${clave} es una clave muy común., ${commonPasswords}`,
-	};
-};
