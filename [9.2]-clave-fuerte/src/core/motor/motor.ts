@@ -39,7 +39,7 @@ export const validarClave = (
 				esValida: false,
 				error: "La clave debe tener una longitud mínima de 8 caracteres",
 			};
-		case !tieneNombreUsuario(nombreUsuario, clave):
+		case tieneNombreUsuario(nombreUsuario, clave):
 			return {
 				esValida: false,
 				error: "La clave no puede contener el nombre de usuario",

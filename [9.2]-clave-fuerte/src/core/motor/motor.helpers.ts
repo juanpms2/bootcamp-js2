@@ -13,7 +13,7 @@ export const tieneNombreUsuario = (
 	nombreUsuario: string,
 	clave: string
 ): boolean =>
-	clave.toLocaleLowerCase().includes(nombreUsuario.toLocaleLowerCase());
+	!clave.toLocaleLowerCase().includes(nombreUsuario.toLocaleLowerCase());
 
 export const tienePalabrasComunes = (
 	clave: string,

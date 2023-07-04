@@ -116,7 +116,7 @@ describe("motor.helpers specs", () => {
 	});
 
 	describe("tieneNombreUsuario specs", () => {
-		it("Should return true if nombreUsuario is 'test' and clave is 'test'", () => {
+		it("Should return false if nombreUsuario is 'test' and clave is 'test'", () => {
 			//Arrange
 			const nombreUsuario = "test";
 			const clave = "test";
@@ -125,10 +125,10 @@ describe("motor.helpers specs", () => {
 			const result = tieneNombreUsuario(nombreUsuario, clave);
 
 			//Assert
-			expect(result).toEqual(true);
+			expect(result).toEqual(false);
 		});
 
-		it("Should return true if clave include nombreUsuario", () => {
+		it("Should return false if clave include nombreUsuario", () => {
 			//Arrange
 			const nombreUsuario = "test";
 			const clave = "claveTest";
@@ -137,10 +137,10 @@ describe("motor.helpers specs", () => {
 			const result = tieneNombreUsuario(nombreUsuario, clave);
 
 			//Assert
-			expect(result).toEqual(true);
+			expect(result).toEqual(false);
 		});
 
-		it("Should return false if nombreUsuario is 'test' and clave is 'clave'", () => {
+		it("Should return true if nombreUsuario is 'test' and clave is 'clave'", () => {
 			//Arrange
 			const nombreUsuario = "test";
 			const clave = "clave";
@@ -148,7 +148,7 @@ describe("motor.helpers specs", () => {
 			const result = tieneNombreUsuario(nombreUsuario, clave);
 
 			//Assert
-			expect(result).toEqual(false);
+			expect(result).toEqual(true);
 		});
 	});
 
