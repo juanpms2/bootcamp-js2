@@ -97,3 +97,29 @@ button:disabled {
 	width: 100%;
 	padding: 2rem;
 }
+
+#form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+#form input {
+	background-color: #464d55;
+	border: 1px solid #464d55;
+	border-radius: 8px;
+	color: #fff;
+	font-size: 18px;
+	height: 52px;
+	padding: 0 16px;
+}
+
+#form input:focus {
+	border-color: #fff;
+	outline: none;
+}
+
+.message {
+	display: none;
+	color: red;
+}
