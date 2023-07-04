@@ -14,15 +14,10 @@ export const validarClave = (
 	commonPasswords: string[]
 ): ValidacionClave => {
 	switch (false) {
-		case !!clave:
+		case !!clave && !!nombreUsuario:
 			return {
 				esValida: false,
-				error: "Clave vacía",
-			};
-		case !!nombreUsuario:
-			return {
-				esValida: false,
-				error: "Necestias proporcionar un nombre de usuario",
+				error: "El usuario y la clave son obligatorios",
 			};
 		case tieneMayusculasYMinusculas(clave):
 			return {
@@ -44,7 +39,7 @@ export const validarClave = (
 				esValida: false,
 				error: "La clave debe tener una longitud mínima de 8 caracteres",
 			};
-		case tieneNombreUsuario(nombreUsuario, clave):
+		case !tieneNombreUsuario(nombreUsuario, clave):
 			return {
 				esValida: false,
 				error: "La clave no puede contener el nombre de usuario",
@@ -57,7 +52,7 @@ export const validarClave = (
 		default:
 			return {
 				esValida: true,
-				error: "",
+				error: "Enhorabuena, la clave es segura",
 			};
 	}
 };

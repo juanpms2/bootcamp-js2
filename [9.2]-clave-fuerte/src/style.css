@@ -123,3 +123,7 @@ button:disabled {
 	display: none;
 	color: red;
 }
+
+.display {
+	display: block;
+}

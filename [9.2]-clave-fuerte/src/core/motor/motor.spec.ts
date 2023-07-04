@@ -2,9 +2,15 @@ import { validarClave } from "./motor";
 
 describe("validarClave specs", () => {
 	it.each([
-		[undefined, { esValida: false, error: "Clave vacía" }],
-		[null, { esValida: false, error: "Clave vacía" }],
-		["", { esValida: false, error: "Clave vacía" }],
+		[
+			undefined,
+			{ esValida: false, error: "El usuario y la clave son obligatorios" },
+		],
+		[
+			null,
+			{ esValida: false, error: "El usuario y la clave son obligatorios" },
+		],
+		["", { esValida: false, error: "El usuario y la clave son obligatorios" }],
 	])(`Should return %s when clave is %s`, (clave, expected) => {
 		//Arrange
 		//Act
@@ -13,19 +19,16 @@ describe("validarClave specs", () => {
 		//Assert
 		expect(result).toEqual(expected);
 	});
-	it.only.each([
+	it.each([
 		[
 			undefined,
-			{ esValida: false, error: "Necestias proporcionar un nombre de usuario" },
+			{ esValida: false, error: "El usuario y la clave son obligatorios" },
 		],
 		[
 			null,
-			{ esValida: false, error: "Necestias proporcionar un nombre de usuario" },
+			{ esValida: false, error: "El usuario y la clave son obligatorios" },
 		],
-		[
-			"",
-			{ esValida: false, error: "Necestias proporcionar un nombre de usuario" },
-		],
+		["", { esValida: false, error: "El usuario y la clave son obligatorios" }],
 	])(`Should return %s when nombreUsuario is %s`, (nombreUsuario, expected) => {
 		//Arrange
 		//Act
