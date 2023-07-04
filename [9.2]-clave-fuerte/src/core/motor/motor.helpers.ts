@@ -31,10 +31,28 @@ export const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
 	};
 };
 
-export const tieneLongitudMinima = (clave: string): ValidacionClave => {
+export const tieneLongitudMinima = (clave: string): ValidacionClave => ({
+	esValida: clave.length >= 8,
+	error: clave.length >= 8 ? "" : "La clave debe tener al menos 8 caracteres.",
+});
+
+export const tieneNombreUsuario = (
+	nombreUsuario: string,
+	clave: string
+): ValidacionClave => ({
+	esValida: clave.includes(nombreUsuario),
+	error: clave.includes(nombreUsuario)
+		? "La clave no puede contener el nombre de usuario."
+		: "",
+});
+
+export const tienePalabrasComunes = (
+	clave: string,
+	commonPasswords: string[]
+): ValidacionClave => {
+	//TODO
 	return {
-		esValida: clave.length >= 8,
-		error:
-			clave.length >= 8 ? "" : "La clave debe tener al menos 8 caracteres.",
+		esValida: false,
+		error: `${clave} es una clave muy común., ${commonPasswords}`,
 	};
 };

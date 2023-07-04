@@ -3,11 +3,12 @@ import {
 	tieneNumeros,
 	tieneCaracteresEspeciales,
 	tieneLongitudMinima,
+	tieneNombreUsuario,
 } from "./motor.helpers";
 
 describe("motor.helpers specs", () => {
 	describe("tieneMayusculasYMinusculas specs", () => {
-		it("Should return esValidad equal to false and error equal to 'La clave debe tener al menos una mayúscula y una minúscula.' if clave is 'test'", () => {
+		it("Should return esValida equal to false and error equal to 'La clave debe tener al menos una mayúscula y una minúscula.' if clave is 'test'", () => {
 			//Arrange
 			const clave = "test";
 			const expected = {
@@ -22,7 +23,7 @@ describe("motor.helpers specs", () => {
 			expect(result).toEqual(expected);
 		});
 
-		it("Should return esValidad equal to false and error equal to 'La clave debe tener al menos una mayúscula y una minúscula.' if clave is 'TEST'", () => {
+		it("Should return esValida equal to false and error equal to 'La clave debe tener al menos una mayúscula y una minúscula.' if clave is 'TEST'", () => {
 			//Arrange
 			const clave = "TEST";
 			const expected = {
@@ -37,7 +38,7 @@ describe("motor.helpers specs", () => {
 			expect(result).toEqual(expected);
 		});
 
-		it("Should return esValidad equal to true and error equal to '' if clave is 'Test'", () => {
+		it("Should return esValida equal to true and error equal to '' if clave is 'Test'", () => {
 			//Arrange
 			const clave = "Test";
 			const expected = {
@@ -54,7 +55,7 @@ describe("motor.helpers specs", () => {
 	});
 
 	describe("tieneNumeros specs", () => {
-		it("Should return esValidad equal to false and error equal to 'La clave debe tener al menos un número.' if clave is 'test'", () => {
+		it("Should return esValida equal to false and error equal to 'La clave debe tener al menos un número.' if clave is 'test'", () => {
 			//Arrange
 			const clave = "test";
 			const expected = {
@@ -69,7 +70,7 @@ describe("motor.helpers specs", () => {
 			expect(result).toEqual(expected);
 		});
 
-		it("Should return esValidad equal to true and error equal to '' if clave is 'Test1'", () => {
+		it("Should return esValida equal to true and error equal to '' if clave is 'Test1'", () => {
 			//Arrange
 			const clave = "Test1";
 			const expected = {
@@ -86,7 +87,7 @@ describe("motor.helpers specs", () => {
 	});
 
 	describe("tieneCaracteresEspeciales specs", () => {
-		it("Should return esValidad equal to false and error equal to 'La clave debe tener al menos un caracter especial.' if clave is 'test'", () => {
+		it("Should return esValida equal to false and error equal to 'La clave debe tener al menos un caracter especial.' if clave is 'test'", () => {
 			//Arrange
 			const clave = "test";
 			const expected = {
@@ -101,7 +102,7 @@ describe("motor.helpers specs", () => {
 			expect(result).toEqual(expected);
 		});
 
-		it("Should return esValidad equal to true and error equal to '' if clave is 'Test1!'", () => {
+		it("Should return esValida equal to true and error equal to '' if clave is 'Test1!'", () => {
 			//Arrange
 			const clave = "Test1!";
 			const expected = {
@@ -118,7 +119,7 @@ describe("motor.helpers specs", () => {
 	});
 
 	describe("tieneLongitudMinima specs", () => {
-		it("Should return esValidad equal to false and error equal to 'La clave debe tener al menos 8 caracteres.' if clave is 'test'", () => {
+		it("Should return esValida equal to false and error equal to 'La clave debe tener al menos 8 caracteres.' if clave is 'test'", () => {
 			//Arrange
 			const clave = "test";
 			const expected = {
@@ -133,7 +134,7 @@ describe("motor.helpers specs", () => {
 			expect(result).toEqual(expected);
 		});
 
-		it("Should return esValidad equal to true and error equal to '' if clave is 'Test-longer-than-8'", () => {
+		it("Should return esValida equal to true and error equal to '' if clave is 'Test-longer-than-8'", () => {
 			//Arrange
 			const clave = "Test-longer-than-8";
 			const expected = {
@@ -143,6 +144,40 @@ describe("motor.helpers specs", () => {
 
 			//Act
 			const result = tieneLongitudMinima(clave);
+
+			//Assert
+			expect(result).toEqual(expected);
+		});
+	});
+
+	describe("tieneNombreUsuario specs", () => {
+		it("Should return esValida equal to false and error equal to 'El nombre de usuario no puede estar en la clave.' if nombreUsuario is 'test' and clave is 'clave'", () => {
+			//Arrange
+			const nombreUsuario = "test";
+			const clave = "clave";
+			const expected = {
+				esValida: false,
+				error: "",
+			};
+
+			//Act
+			const result = tieneNombreUsuario(nombreUsuario, clave);
+
+			//Assert
+			expect(result).toEqual(expected);
+		});
+
+		it("Should return esValida equal to true and error equal to '' if nombreUsuario is 'test' and clave is 'clavetest'", () => {
+			//Arrange
+			const nombreUsuario = "test";
+			const clave = "clavetest";
+			const expected = {
+				esValida: true,
+				error: "La clave no puede contener el nombre de usuario.",
+			};
+
+			//Act
+			const result = tieneNombreUsuario(nombreUsuario, clave);
 
 			//Assert
 			expect(result).toEqual(expected);
