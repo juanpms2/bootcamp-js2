@@ -50,9 +50,13 @@ export const tienePalabrasComunes = (
 	clave: string,
 	commonPasswords: string[]
 ): ValidacionClave => {
-	//TODO
+	const isValid = !commonPasswords.find(
+		(word) => clave.toLocaleLowerCase() === word.toLocaleLowerCase()
+	);
 	return {
-		esValida: false,
-		error: `${clave} es una clave muy común., ${commonPasswords}`,
+		esValida: isValid,
+		error: isValid
+			? ""
+			: `${clave} es una clave muy común., ${commonPasswords}`,
 	};
 };

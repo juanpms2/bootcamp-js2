@@ -4,6 +4,7 @@ import {
 	tieneCaracteresEspeciales,
 	tieneLongitudMinima,
 	tieneNombreUsuario,
+	tienePalabrasComunes,
 } from "./motor.helpers";
 
 describe("motor.helpers specs", () => {
@@ -178,6 +179,40 @@ describe("motor.helpers specs", () => {
 
 			//Act
 			const result = tieneNombreUsuario(nombreUsuario, clave);
+
+			//Assert
+			expect(result).toEqual(expected);
+		});
+	});
+
+	describe("tienePalabrasComunes specs", () => {
+		it("Should return esValida equal to false and error equal to 'test es una clave muy común.' if clave is 'test'", () => {
+			//Arrange
+			const clave = "test";
+			const commonPasswords = ["test", "test1", "test2"];
+			const expected = {
+				esValida: false,
+				error: `${clave} es una clave muy común., ${commonPasswords}`,
+			};
+
+			//Act
+			const result = tienePalabrasComunes(clave, commonPasswords);
+
+			//Assert
+			expect(result).toEqual(expected);
+		});
+
+		it("Should return esValida equal to true and error equal to '' if clave is 'Test1!'", () => {
+			//Arrange
+			const clave = "Test1!";
+			const commonPasswords = ["test", "test1", "test2"];
+			const expected = {
+				esValida: true,
+				error: "",
+			};
+
+			//Act
+			const result = tienePalabrasComunes(clave, commonPasswords);
 
 			//Assert
 			expect(result).toEqual(expected);
