@@ -14,12 +14,12 @@ export const validarClave = (
 	commonPasswords: string[]
 ): ValidacionClave => {
 	switch (false) {
-		case !clave:
+		case !!clave:
 			return {
 				esValida: false,
 				error: "Clave vacía",
 			};
-		case !nombreUsuario:
+		case !!nombreUsuario:
 			return {
 				esValida: false,
 				error: "Necestias proporcionar un nombre de usuario",
