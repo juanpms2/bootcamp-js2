@@ -45,7 +45,7 @@ export const commonPasswords: string[] = [
 	"flower",
 	"qwertyuiop",
 	"admin123",
-	"iloveyou123",
+	"iloveyou123@",
 	"welcome1",
 	"monkey123",
 	"sunshine1",

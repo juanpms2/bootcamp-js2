@@ -1,16 +1,20 @@
 import { validarClave } from "./motor";
+import { errorMessageUserNameAndPasswordAreRequired } from "../constants";
 
 describe("validarClave specs", () => {
 	it.each([
 		[
 			undefined,
-			{ esValida: false, error: "El usuario y la clave son obligatorios" },
+			{ esValida: false, message: errorMessageUserNameAndPasswordAreRequired },
 		],
 		[
 			null,
-			{ esValida: false, error: "El usuario y la clave son obligatorios" },
+			{ esValida: false, message: errorMessageUserNameAndPasswordAreRequired },
 		],
-		["", { esValida: false, error: "El usuario y la clave son obligatorios" }],
+		[
+			"",
+			{ esValida: false, message: errorMessageUserNameAndPasswordAreRequired },
+		],
 	])(`Should return %s when clave is %s`, (clave, expected) => {
 		//Arrange
 		//Act
@@ -22,13 +26,16 @@ describe("validarClave specs", () => {
 	it.each([
 		[
 			undefined,
-			{ esValida: false, error: "El usuario y la clave son obligatorios" },
+			{ esValida: false, message: errorMessageUserNameAndPasswordAreRequired },
 		],
 		[
 			null,
-			{ esValida: false, error: "El usuario y la clave son obligatorios" },
+			{ esValida: false, message: errorMessageUserNameAndPasswordAreRequired },
 		],
-		["", { esValida: false, error: "El usuario y la clave son obligatorios" }],
+		[
+			"",
+			{ esValida: false, message: errorMessageUserNameAndPasswordAreRequired },
+		],
 	])(`Should return %s when nombreUsuario is %s`, (nombreUsuario, expected) => {
 		//Arrange
 		//Act

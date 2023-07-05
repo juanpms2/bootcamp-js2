@@ -121,9 +121,14 @@ button:disabled {
 
 .message {
 	display: none;
+}
+
+.error {
+	display: block;
 	color: red;
 }
 
-.display {
+.success {
 	display: block;
+	color: rgb(31, 240, 31);
 }

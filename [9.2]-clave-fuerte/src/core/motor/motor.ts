@@ -1,5 +1,15 @@
 import { ValidacionClave } from "../model";
 import {
+	errorMessageMustHaveEightCharacters,
+	errorMessageMustHaveOneNumber,
+	errorMessageMustHaveOneSpecialCharacter,
+	errorMessageMustHaveOneUpperCaseAndOneLowerCase,
+	errorMessageMustNotBeCommonPassword,
+	errorMessageMustNotHaveUserName,
+	errorMessageUserNameAndPasswordAreRequired,
+	successMessage,
+} from "../constants";
+import {
 	tieneMayusculasYMinusculas,
 	tieneNumeros,
 	tieneCaracteresEspeciales,
@@ -17,42 +27,42 @@ export const validarClave = (
 		case !!clave && !!nombreUsuario:
 			return {
 				esValida: false,
-				error: "El usuario y la clave son obligatorios",
+				message: errorMessageUserNameAndPasswordAreRequired,
 			};
 		case tieneMayusculasYMinusculas(clave):
 			return {
 				esValida: false,
-				error: "La clave debe tener al menos una mayúscula y una minúscula.",
+				message: errorMessageMustHaveOneUpperCaseAndOneLowerCase,
 			};
 		case tieneNumeros(clave):
 			return {
 				esValida: false,
-				error: "La clave debe tener al menos un número",
+				message: errorMessageMustHaveOneNumber,
 			};
 		case tieneCaracteresEspeciales(clave):
 			return {
 				esValida: false,
-				error: "La clave debe contener al menos un caracter especial",
+				message: errorMessageMustHaveOneSpecialCharacter,
 			};
 		case tieneLongitudMinima(clave):
 			return {
 				esValida: false,
-				error: "La clave debe tener una longitud mínima de 8 caracteres",
+				message: errorMessageMustHaveEightCharacters,
 			};
 		case tieneNombreUsuario(nombreUsuario, clave):
 			return {
 				esValida: false,
-				error: "La clave no puede contener el nombre de usuario",
+				message: errorMessageMustNotHaveUserName,
 			};
 		case tienePalabrasComunes(clave, commonPasswords):
 			return {
 				esValida: false,
-				error: "La clave es demasiado común",
+				message: errorMessageMustNotBeCommonPassword,
 			};
 		default:
 			return {
 				esValida: true,
-				error: "Enhorabuena, la clave es segura",
+				message: successMessage,
 			};
 	}
 };
