@@ -116,7 +116,7 @@ describe("motor.helpers specs", () => {
 	});
 
 	describe("tieneNombreUsuario specs", () => {
-		it("Should return false if nombreUsuario is 'test' and clave is 'test'", () => {
+		it("Should return true if nombreUsuario is 'test' and clave is 'test'", () => {
 			//Arrange
 			const nombreUsuario = "test";
 			const clave = "test";
@@ -125,10 +125,10 @@ describe("motor.helpers specs", () => {
 			const result = tieneNombreUsuario(nombreUsuario, clave);
 
 			//Assert
-			expect(result).toEqual(false);
+			expect(result).toEqual(true);
 		});
 
-		it("Should return false if clave include nombreUsuario", () => {
+		it("Should return true if clave include nombreUsuario", () => {
 			//Arrange
 			const nombreUsuario = "test";
 			const clave = "claveTest";
@@ -137,10 +137,10 @@ describe("motor.helpers specs", () => {
 			const result = tieneNombreUsuario(nombreUsuario, clave);
 
 			//Assert
-			expect(result).toEqual(false);
+			expect(result).toEqual(true);
 		});
 
-		it("Should return true if nombreUsuario is 'test' and clave is 'clave'", () => {
+		it("Should return false if nombreUsuario is 'test' and clave is 'clave'", () => {
 			//Arrange
 			const nombreUsuario = "test";
 			const clave = "clave";
@@ -148,12 +148,12 @@ describe("motor.helpers specs", () => {
 			const result = tieneNombreUsuario(nombreUsuario, clave);
 
 			//Assert
-			expect(result).toEqual(true);
+			expect(result).toEqual(false);
 		});
 	});
 
 	describe("tienePalabrasComunes specs", () => {
-		it("Should return false if clave is include in commonPasswords", () => {
+		it("Should return true if clave is include in commonPasswords", () => {
 			//Arrange
 			const clave = "test";
 			const commonPasswords = ["test", "test1", "test2"];
@@ -162,19 +162,19 @@ describe("motor.helpers specs", () => {
 			const result = tienePalabrasComunes(clave, commonPasswords);
 
 			//Assert
-			expect(result).toEqual(false);
+			expect(result).toEqual(true);
 		});
 
 		it("Should return false  if clave is not include in commonPasswords", () => {
 			//Arrange
-			const clave = "Test1!";
+			const clave = "Test@1234";
 			const commonPasswords = ["test", "test1", "test2"];
 
 			//Act
 			const result = tienePalabrasComunes(clave, commonPasswords);
 
 			//Assert
-			expect(result).toEqual(true);
+			expect(result).toEqual(false);
 		});
 	});
 });
