@@ -139,4 +139,18 @@ describe("validarClave specs", () => {
 			message: errorMessageMustNotBeCommonPassword,
 		});
 	});
+
+	it("Should return esValida: true and message: successMessage when clave is valid", () => {
+		//Arrange
+		const clave = "P@5sword";
+
+		//Act
+		const result = validarClave("nombreUsuario", clave, []);
+
+		//Assert
+		expect(result).toEqual({
+			esValida: true,
+			message: successMessage,
+		});
+	});
 });
