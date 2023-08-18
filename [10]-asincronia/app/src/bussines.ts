@@ -2,12 +2,16 @@ import { getCharacters } from "./api";
 import { CHARACTERS_URL } from "./constants";
 import { createCardList } from "./helpers";
 import { mapCharactersListFromApiToCardListProps } from "./mappers";
-import { CharacterApiModel, CharacterVm } from "./model";
+import { CharacterVm } from "./model";
 
 let charactersList: CharacterVm[] = [];
 
 export const loadCharacters = async (): Promise<CharacterVm[]> => {
-    const list: CharacterApiModel[] = await getCharacters(CHARACTERS_URL);
+    const list = await getCharacters(CHARACTERS_URL)
+        .then((response) => response)
+        .catch((error) => {
+            throw new Error(error);
+        });
     charactersList = mapCharactersListFromApiToCardListProps(list);
     return charactersList;
 };
