@@ -9,7 +9,7 @@ export const CardComponent = (props: CharacterVm) => {
     image.setAttribute("src", imagen);
     image.setAttribute("alt", nombre);
     const nameItem: HTMLDivElement = document.createElement("div");
-    nameItem.innerHTML = `<b>Nombre:</b> ${name}`;
+    nameItem.innerHTML = `<b>Nombre:</b> ${nombre}`;
     const specialityItem: HTMLDivElement = document.createElement("div");
     specialityItem.innerHTML = `<b>Especialidad:</b> ${especialidad}`;
     const skillsItem: HTMLDivElement = document.createElement("div");

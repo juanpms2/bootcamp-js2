@@ -7,13 +7,13 @@ export const FilterComponent = () => {
     input.setAttribute("class", "filter__input");
     input.setAttribute("type", "text");
     input.setAttribute("placeholder", "Search");
-    const button: HTMLButtonElement = document.createElement("button");
-    button.setAttribute("class", "filter__button");
-    button.addEventListener("click", () => filterByName(input.value));
-    button.innerHTML = "Search";
-    input.appendChild(button);
+    const filterButton: HTMLButtonElement = document.createElement("button");
+    filterButton.setAttribute("class", "filter__button");
+    filterButton.addEventListener("click", () => filterByName(input.value));
+    filterButton.innerHTML = "Search";
+    input.appendChild(filterButton);
 
     container.appendChild(input);
-    container.appendChild(button);
+    container.appendChild(filterButton);
     return container;
 };
