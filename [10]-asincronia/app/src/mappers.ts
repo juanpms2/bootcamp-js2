@@ -1,16 +1,17 @@
-import { Character } from "./model";
-import { CardProps } from "./components";
+import { CharacterApiModel, CharacterVm } from "./model";
 import { API_URL } from "./constants";
 
-const mapCharacterFromApiToCardProps = (character: Character): CardProps => ({
-    name: character.nombre,
-    speciality: character.especialidad,
-    skills: character.habilidades,
-    imageUrl: `${API_URL}/${character.imagen}`,
+const mapCharacterFromApiToCardProps = (
+    character: CharacterApiModel
+): CharacterVm => ({
+    nombre: character?.nombre || "",
+    especialidad: character?.especialidad || "",
+    habilidades: character?.habilidades || [],
+    imagen: `${API_URL}/${character?.imagen}`,
 });
 
 export const mapCharactersListFromApiToCardListProps = (
-    characters: Character[]
-): CardProps[] => {
+    characters: CharacterApiModel[]
+): CharacterVm[] => {
     return characters.map(mapCharacterFromApiToCardProps);
 };

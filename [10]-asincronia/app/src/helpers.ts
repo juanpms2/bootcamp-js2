@@ -1,6 +1,5 @@
-import { getCharacters } from "./api";
-import { Character } from "./model";
-import { CHARACTERS_URL } from "./constants";
+import { CharacterVm } from "./model";
+import { CardComponent } from "./components";
 
 const elementInDOM = (id: string) => document.getElementById(id);
 
@@ -17,8 +16,13 @@ export const removeElement = (element: Element, child: Element) => {
     element?.removeChild(child);
 };
 
-export const loadCharacters = async (): Promise<Character[]> => {
-    const characters = await getCharacters(CHARACTERS_URL);
-
-    return characters;
+export const createCardList = (cardList: CharacterVm[]) => {
+    const mainContainer = elementReady("main-container");
+    const cardContainerInDom = elementReady("card-container");
+    if (!mainContainer || !cardContainerInDom) return;
+    removeElement(mainContainer, cardContainerInDom);
+    const cardContainer: HTMLDivElement = document.createElement("div");
+    cardContainer.setAttribute("id", "card-container");
+    mainContainer?.appendChild(cardContainer);
+    cardList?.map((card) => cardContainer?.appendChild(CardComponent(card)));
 };

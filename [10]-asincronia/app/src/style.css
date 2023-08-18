@@ -102,7 +102,7 @@ button:focus-visible {
   gap: 2rem;
 }
 
-.card-container {
+#card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

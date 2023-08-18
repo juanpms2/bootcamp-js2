@@ -1,3 +1,5 @@
+import { filterByName } from "../../bussines";
+
 export const FilterComponent = () => {
     const container: HTMLDivElement = document.createElement("div");
     container.setAttribute("class", "filter-container");
@@ -7,6 +9,7 @@ export const FilterComponent = () => {
     input.setAttribute("placeholder", "Search");
     const button: HTMLButtonElement = document.createElement("button");
     button.setAttribute("class", "filter__button");
+    button.addEventListener("click", () => filterByName(input.value));
     button.innerHTML = "Search";
     input.appendChild(button);
 

@@ -30,6 +30,5 @@
 .card__footer > div {
     font-size: 14px;
     width: 100%;
-    align-self: flex-start;
     text-align: left;
 }
