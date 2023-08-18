@@ -1,4 +1,9 @@
-// import {CardComponentProps} from './card.model';
+// interface Props {
+//     name: string;
+//     speciality: string;
+//     skills: string[];
+//     imageUrl: string;
+// }
 
 export const CardComponent = () => {
     // const {name, speciality, skills, imageUrl} = props;
