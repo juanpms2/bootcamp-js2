@@ -5,28 +5,20 @@ import { mapCharactersListFromApiToCardListProps } from "./mappers";
 import { CharacterApiModel, CharacterVm } from "./model";
 
 let charactersList: CharacterVm[] = [];
-export const getCharactersList = (): CharacterVm[] => charactersList;
-const setCharactersList = (newCharactersList: CharacterVm[]): CharacterVm[] =>
-    (charactersList = newCharactersList);
 
-export const loadCharacters = async () => {
+export const loadCharacters = async (): Promise<CharacterVm[]> => {
     const list: CharacterApiModel[] = await getCharacters(CHARACTERS_URL);
-    setCharactersList(mapCharactersListFromApiToCardListProps(list));
+    charactersList = mapCharactersListFromApiToCardListProps(list);
+    return charactersList;
 };
 
 export const filterByName = (name: string) => {
     if (!name) {
-        restartFilter();
+        createCardList(charactersList);
         return;
     }
     const filteredList = charactersList.filter((character) =>
         character.nombre.toLowerCase().includes(name.toLowerCase())
     );
-    setCharactersList(filteredList);
     createCardList(filteredList);
-};
-
-export const restartFilter = async () => {
-    await loadCharacters();
-    createCardList(charactersList);
 };

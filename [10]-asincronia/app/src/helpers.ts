@@ -17,12 +17,12 @@ export const removeElement = (element: Element, child: Element) => {
 };
 
 export const createCardList = (cardList: CharacterVm[]) => {
-    const mainContainer = elementReady("main-container");
+    const mainContainerInDom = elementReady("main-container");
     const cardContainerInDom = elementReady("card-container");
-    if (!mainContainer || !cardContainerInDom) return;
-    removeElement(mainContainer, cardContainerInDom);
+    if (!mainContainerInDom || !cardContainerInDom) return;
+    removeElement(mainContainerInDom, cardContainerInDom);
     const cardContainer: HTMLDivElement = document.createElement("div");
     cardContainer.setAttribute("id", "card-container");
-    mainContainer?.appendChild(cardContainer);
+    mainContainerInDom?.appendChild(cardContainer);
     cardList?.map((card) => cardContainer?.appendChild(CardComponent(card)));
 };
