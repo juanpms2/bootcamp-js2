@@ -1,6 +1,7 @@
 import { filterByName } from "../../bussines";
+import { CharacterVm } from "../../model";
 
-export const FilterComponent = () => {
+export const FilterComponent = (charactersList: CharacterVm[]) => {
     const container: HTMLDivElement = document.createElement("div");
     container.setAttribute("class", "filter-container");
     const input: HTMLInputElement = document.createElement("input");
@@ -9,7 +10,9 @@ export const FilterComponent = () => {
     input.setAttribute("placeholder", "Search");
     const filterButton: HTMLButtonElement = document.createElement("button");
     filterButton.setAttribute("class", "filter__button");
-    filterButton.addEventListener("click", () => filterByName(input.value));
+    filterButton.addEventListener("click", () =>
+        filterByName(charactersList, input.value)
+    );
     filterButton.innerHTML = "Search";
     input.appendChild(filterButton);
 

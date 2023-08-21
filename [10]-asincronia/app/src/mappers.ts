@@ -7,7 +7,7 @@ const mapCharacterFromApiToCardProps = (
     nombre: character?.nombre || "",
     especialidad: character?.especialidad || "",
     habilidades: character?.habilidades || [],
-    imagen: `${API_URL}/${character?.imagen}`,
+    imagen: `${API_URL}/${character?.imagen || ""}`,
 });
 
 export const mapCharactersListFromApiToCardListProps = (
