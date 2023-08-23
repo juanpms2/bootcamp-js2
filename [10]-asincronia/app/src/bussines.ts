@@ -1,25 +1,21 @@
-import { getCharacters } from "./api";
-import { CHARACTERS_URL } from "./constants";
+import { getCharacters, getFilteredCharacters } from "./api";
 import { createCardList } from "./helpers";
-import { mapCharactersListFromApiToCardListProps } from "./mappers";
-import { CharacterVm } from "./model";
+import { CharacterModel } from "./model";
 
-export const loadCharacters = async (): Promise<CharacterVm[]> => {
-    const list = await getCharacters(CHARACTERS_URL)
+export const loadCharacters = async (): Promise<CharacterModel[]> => {
+    const list = await getCharacters()
         .then((response) => response)
         .catch((error) => {
             throw new Error(error);
         });
-    return mapCharactersListFromApiToCardListProps(list);
+    return list;
 };
 
-export const filterByName = (charactersList: CharacterVm[], filter: string) => {
-    if (!filter) {
-        createCardList(charactersList);
-        return;
-    }
-    const filteredList = charactersList.filter((character) =>
-        character.nombre.toLowerCase().includes(filter.toLowerCase())
-    );
+export const filterByName = async (filter: string) => {
+    const filteredList = await getFilteredCharacters(filter)
+        .then((response) => response)
+        .catch((error) => {
+            throw new Error(error);
+        });
     createCardList(filteredList);
 };
