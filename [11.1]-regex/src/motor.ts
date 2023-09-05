@@ -1,6 +1,8 @@
 import { validateIBAN } from "ibantools";
+import { mockData } from "./mock-data";
 
 interface IBANProps {
+    nombre: string;
     codigoIban: string;
     codigoEntidad: string;
     codigoOficina: string;
@@ -24,8 +26,13 @@ export const loadIbanFields = (iban: string): IBANProps => {
         digitosControl,
         numeroCuenta,
     } = coincidencia?.groups as unknown as IBANProps;
+    const nombre =
+        mockData
+            .find((item) => item.includes(codigoEntidad))
+            ?.replace(/\d/g, "") || "";
 
     return {
+        nombre,
         codigoIban,
         codigoEntidad,
         codigoOficina,

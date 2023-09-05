@@ -5,6 +5,7 @@ const checkButton = elementReady("checkButton", HTMLButtonElement);
 const input = elementReady("input", HTMLInputElement);
 const result = elementReady("result", HTMLParagraphElement);
 const ibanElement = elementReady("iban", HTMLParagraphElement);
+const bancoElement = elementReady("banco", HTMLParagraphElement);
 const entidadElement = elementReady("entidad", HTMLParagraphElement);
 const oficinaElement = elementReady("oficina", HTMLParagraphElement);
 const controlElement = elementReady("control", HTMLParagraphElement);
@@ -16,6 +17,7 @@ export const loadApp = () => {
 
         if (isIbanCorrect(ibanValue)) {
             const {
+                nombre,
                 codigoIban,
                 codigoEntidad,
                 codigoOficina,
@@ -26,6 +28,7 @@ export const loadApp = () => {
             result.className = "success";
             result.textContent = "IBAN correcto";
             ibanElement.textContent = `Codigo IBAN: ${codigoIban}`;
+            bancoElement.textContent = `Nombre Banco: ${nombre}`;
             entidadElement.textContent = `Codigo Entidad: ${codigoEntidad}`;
             oficinaElement.textContent = `Codigo Oficina: ${codigoOficina}`;
             controlElement.textContent = `Digitos Control: ${digitosControl}`;
@@ -35,6 +38,7 @@ export const loadApp = () => {
             result.className = "error";
             result.textContent = "IBAN incorrecto";
             ibanElement.textContent = "";
+            bancoElement.textContent = "";
             entidadElement.textContent = "";
             oficinaElement.textContent = "";
             controlElement.textContent = "";
