@@ -8,15 +8,19 @@
     </head>
     <body>
         <div id="app">
-            <label>Introduzca un IBAN</label>
-            <input id="input" type="text" />
-            <button id="checkButton">Comprobar</button>
-            <p id="result"></p>
-            <p id="iban"></p>
-            <p id="entidad"></p>
-            <p id="oficina"></p>
-            <p id="control"></p>
-            <p id="cuenta"></p>
+            <div class="form">
+                <label>Introduzca un IBAN</label>
+                <input id="input" type="text" />
+                <button id="checkButton">Comprobar</button>
+            </div>
+            <div class="info">
+                <p id="result"></p>
+                <p id="iban"></p>
+                <p id="entidad"></p>
+                <p id="oficina"></p>
+                <p id="control"></p>
+                <p id="cuenta"></p>
+            </div>
         </div>
         <script type="module" src="/src/main.ts"></script>
     </body>
