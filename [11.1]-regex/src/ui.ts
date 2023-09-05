@@ -1,4 +1,4 @@
-import { isIbanCorrect, loadIbanFields } from "./motor";
+import { isIbanCorrect, loadIbanFields } from "./business";
 import { elementReady } from "./helpers";
 
 const checkButton = elementReady("checkButton", HTMLButtonElement);
