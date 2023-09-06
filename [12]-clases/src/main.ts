@@ -1,2 +1,3 @@
 import "./style.css";
-import "./business";
+import "./client.component";
+import "./tour-operador.component";
