@@ -13,9 +13,8 @@ export const MovementListPage: React.FC = () => {
 
     React.useEffect(() => {
         getMovementList(account.id).then((apiMovementList) => {
-            const vmMovementList = mapMovementListFromApiToVm(apiMovementList);
-            setMovementList(vmMovementList);
-            console.log(movementList);
+            const list = mapMovementListFromApiToVm(apiMovementList);
+            setMovementList(list);
         });
     }, [account.id]);
 
