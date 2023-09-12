@@ -22,3 +22,7 @@
 .is-negative {
     color: var(--error_color);
 }
+
+.icon::after {
+    content: "€";
+}

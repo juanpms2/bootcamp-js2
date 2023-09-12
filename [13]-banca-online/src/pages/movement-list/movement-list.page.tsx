@@ -25,7 +25,7 @@ export const MovementListPage: React.FC = () => {
                     <h1>Saldos y Últimos movimientos</h1>
                     <div className={classes.balanceContainer}>
                         SALDO DISPONIBLE
-                        <span>{account.balance} €</span>
+                        <span>{account.balance}</span>
                     </div>
                 </div>
                 <div

@@ -31,6 +31,10 @@
     color: var(--primary_color);
 }
 
+.balance-container > span::after {
+    content: "€";
+}
+
 .movement-info {
     border-bottom: none;
     font-weight: bold;

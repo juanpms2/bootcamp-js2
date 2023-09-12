@@ -22,17 +22,17 @@ export const MovementListItemComponent: React.FC<Props> = (props) => {
             <span className={classes.dataCell}>{movementItem.description}</span>
             <span
                 className={`${classes.dataCell} ${classes.alignRight} ${
-                    amountNegative && classes.isNegative
-                }`}
+                    classes.icon
+                } ${amountNegative && classes.isNegative}`}
             >
-                {movementItem.amount} €
+                {movementItem.amount}
             </span>
             <span
                 className={`${classes.dataCell} ${classes.alignRight} ${
-                    balanceNegative && classes.isNegative
-                }`}
+                    classes.icon
+                } ${balanceNegative && classes.isNegative}`}
             >
-                {movementItem.balance} €
+                {movementItem.balance}
             </span>
         </div>
     );
