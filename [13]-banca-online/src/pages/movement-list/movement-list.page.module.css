@@ -18,6 +18,19 @@
     font-weight: 300;
 }
 
+.balance-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 12px;
+    font-weight: var(--table-header-font-weight);
+}
+.balance-container > span {
+    font-size: 24px;
+    color: var(--primary_color);
+}
+
 .movement-info {
     border-bottom: none;
     font-weight: bold;
