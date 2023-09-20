@@ -8,8 +8,6 @@ interface Props {
 
 export const MovementListItemComponent: React.FC<Props> = (props) => {
     const { movementItem } = props;
-    const amountNegative = Number(movementItem.amount) < 0;
-    const balanceNegative = Number(movementItem.balance) < 0;
 
     return (
         <div className={classes.row}>
@@ -23,16 +21,16 @@ export const MovementListItemComponent: React.FC<Props> = (props) => {
             <span
                 className={`${classes.dataCell} ${classes.alignRight} ${
                     classes.icon
-                } ${amountNegative && classes.isNegative}`}
+                } ${movementItem.amount < 0 && classes.isNegative}`}
             >
-                {movementItem.amount}
+                {movementItem.amount.toFixed(2)}
             </span>
             <span
                 className={`${classes.dataCell} ${classes.alignRight} ${
                     classes.icon
-                } ${balanceNegative && classes.isNegative}`}
+                } ${movementItem.balance < 0 && classes.isNegative}`}
             >
-                {movementItem.balance}
+                {movementItem.balance.toFixed(2)}
             </span>
         </div>
     );

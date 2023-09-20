@@ -1,8 +1,8 @@
 export interface MovementVm {
     id: string;
     description: string;
-    amount: string;
-    balance: string;
+    amount: number;
+    balance: number;
     transaction: Date;
     realTransaction: Date;
     accountId: string;
