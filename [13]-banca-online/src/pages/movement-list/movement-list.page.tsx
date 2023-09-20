@@ -12,10 +12,14 @@ export const MovementListPage: React.FC = () => {
     const [movementList, setMovementList] = React.useState<MovementVm[]>([]);
 
     React.useEffect(() => {
-        getMovementList(account.id).then((apiMovementList) => {
-            const list = mapMovementListFromApiToVm(apiMovementList);
-            setMovementList(list);
-        });
+        try {
+            getMovementList(account.id).then((apiMovementList) => {
+                const list = mapMovementListFromApiToVm(apiMovementList);
+                setMovementList(list);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }, [account.id]);
 
     return (
