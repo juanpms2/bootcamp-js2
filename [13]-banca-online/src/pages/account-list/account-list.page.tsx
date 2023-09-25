@@ -1,6 +1,6 @@
 import React from "react";
 import { AppLayout } from "@/layouts";
-import { AccountVm } from "@/core/model";
+import { AccountVm } from "./account-list.vm";
 import classes from "./account-list.page.module.css";
 import { AccountListTableComponent } from "./components/account-list-table.component";
 import { getAccountList } from "./api";

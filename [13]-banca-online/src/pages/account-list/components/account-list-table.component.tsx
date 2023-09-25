@@ -1,5 +1,5 @@
 import React from "react";
-import { AccountVm } from "@/core/model";
+import { AccountVm } from "../account-list.vm";
 import classes from "./account-list-table.component.module.css";
 import { AccountListItemComponent } from "./account-list-item.component";
 

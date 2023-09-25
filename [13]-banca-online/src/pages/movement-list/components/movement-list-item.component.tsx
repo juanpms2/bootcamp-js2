@@ -1,9 +1,9 @@
 import React from "react";
-import { MovementVm } from "../movement-list.vm";
+import { Movement } from "../movement-list.vm";
 import classes from "./movement-list-item.component.module.css";
 
 interface Props {
-    movementItem: MovementVm;
+    movementItem: Movement;
 }
 
 export const MovementListItemComponent: React.FC<Props> = (props) => {
