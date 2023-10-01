@@ -1,1 +1,1 @@
-export * from "./add-account.page";
+export * from "./create-account.page";
