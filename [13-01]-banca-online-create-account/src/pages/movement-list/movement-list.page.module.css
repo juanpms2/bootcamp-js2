@@ -1,0 +1,42 @@
+.root {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 5px solid #232c3b;
+}
+
+.header-container h1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+}
+
+.balance-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 12px;
+    font-weight: var(--table-header-font-weight);
+}
+.balance-container > span {
+    font-size: 24px;
+    color: var(--primary_color);
+}
+
+.balance-container > span::after {
+    content: "€";
+}
+
+.movement-info {
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 18px;
+}
