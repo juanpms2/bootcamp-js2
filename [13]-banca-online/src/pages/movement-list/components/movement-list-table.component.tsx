@@ -1,10 +1,10 @@
 import React from "react";
-import { MovementVm } from "../movement-list.vm";
-import classes from "./movement-list-table.component.module.css";
 import { MovementListItemComponent } from "./movement-list-item.component";
+import { Movement } from "../movement-list.vm";
+import classes from "./movement-list-table.component.module.css";
 
 interface Props {
-    movementList: MovementVm[];
+    movementList: Movement[];
 }
 
 export const MovementListTableComponent: React.FC<Props> = (props) => {

@@ -1,4 +1,5 @@
 export const routesPrefixes = {
+    account: "/account-list/:id",
     accountList: "/account-list",
     transfer: "/transfer",
     movements: "/movements",

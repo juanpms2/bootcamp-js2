@@ -1,4 +1,4 @@
-import * as viewModel from "@/core/model/";
+import * as viewModel from "./account-list.vm";
 import * as apiModel from "./api/account-list.api-model";
 
 export const mapAccountListFromApiToVm = (
