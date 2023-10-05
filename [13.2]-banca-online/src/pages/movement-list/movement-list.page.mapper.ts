@@ -3,12 +3,18 @@ import * as viewModel from "./movement-list.vm";
 
 const mapMovementFromApiToVm = (
     movement: apiModel.Movement
-): viewModel.MovementVm => ({
+): viewModel.Movement => ({
     ...movement,
     transaction: new Date(movement.transaction),
     realTransaction: new Date(movement.realTransaction),
 });
 
-export const mapMovementListFromApiToVm = (
-    movementList: apiModel.Movement[]
-): viewModel.MovementVm[] => movementList.map(mapMovementFromApiToVm);
+export const mapListAccountMovementFromApiToVm = (
+    movementList: apiModel.Movement[],
+    account: apiModel.Account
+): viewModel.ListAccountMovementsVm => ({
+    accountName: account.name,
+    iban: account.iban,
+    balance: account.balance,
+    movementList: movementList.map(movement => mapMovementFromApiToVm(movement))
+});

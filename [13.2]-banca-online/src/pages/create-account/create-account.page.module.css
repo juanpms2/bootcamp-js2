@@ -23,19 +23,19 @@
     flex-direction: column;
     gap: 24px;
     padding: 32px;
-    max-width: 450px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
 .item-container {
     display: flex;
-    justify-content: center;
     align-items: center;
+    width: 100%;
     gap: 16px;
 }
 
 .item-container > label {
-    width: 20%;
+    width: 120px;
     text-align: right;
 }
 

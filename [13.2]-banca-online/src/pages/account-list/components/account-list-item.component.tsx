@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, generatePath, useNavigate } from "react-router-dom";
-import { AccountVm } from "@/core/model";
+import { AccountVm } from "../account-list.vm";
 import { appRoutes } from "@/core/router";
-import { useAccountContext } from "@/core/profile/account.context";
 import classes from "./account-list-item.component.module.css";
 
 const ACTION_NONE = "";
@@ -15,13 +14,11 @@ interface Props {
 
 export const AccountListItemComponent: React.FC<Props> = (props) => {
     const { accountItem } = props;
-    const { setAccount } = useAccountContext();
     const navigate = useNavigate();
 
     const handleSelectedOptionChange = (
         e: React.ChangeEvent<HTMLSelectElement>
     ): void => {
-        setAccount(accountItem);
         switch (e.target.value) {
             case ACTION_TRANSFER:
                 navigate(

@@ -1,26 +1,43 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { AppLayout } from "@/layouts";
-import { useAccountContext } from "@/core/profile/account.context";
-import { getMovementList } from "./api";
+import { getAccount, getMovementList } from "./api";
 import { MovementListTableComponent } from "./components/movement-list-table.component";
-import { mapMovementListFromApiToVm } from "./movement-list.page.mapper";
-import { MovementVm } from "./movement-list.vm";
+import { mapListAccountMovementFromApiToVm } from "./movement-list.page.mapper";
+import {
+    ListAccountMovementsVm,
+    createEmptyListAccountMovementsVm,
+} from "./movement-list.vm";
 import classes from "./movement-list.page.module.css";
 
 export const MovementListPage: React.FC = () => {
-    const { account } = useAccountContext();
-    const [movementList, setMovementList] = React.useState<MovementVm[]>([]);
+    const [listAccountMovements, setListAccountMovements] =
+        React.useState<ListAccountMovementsVm>(
+            createEmptyListAccountMovementsVm()
+        );
+    const { id } = useParams();
 
-    React.useEffect(() => {
+    const loadlistAccountMovements = async (id: string) => {
         try {
-            getMovementList(account.id).then((apiMovementList) => {
-                const list = mapMovementListFromApiToVm(apiMovementList);
-                setMovementList(list);
-            });
+            const apiMovementList = await getMovementList(id);
+            const apiAccount = await getAccount(id);
+            const list = mapListAccountMovementFromApiToVm(
+                apiMovementList,
+                apiAccount
+            );
+            setListAccountMovements(list);
         } catch (error) {
             console.log(error);
         }
-    }, [account.id]);
+    };
+
+    React.useEffect(() => {
+        if (id) {
+            loadlistAccountMovements(id);
+        }
+    }, []);
+
+    console.log(listAccountMovements);
 
     return (
         <AppLayout>
@@ -29,16 +46,18 @@ export const MovementListPage: React.FC = () => {
                     <h1>Saldos y Últimos movimientos</h1>
                     <div className={classes.balanceContainer}>
                         SALDO DISPONIBLE
-                        <span>{account.balance}</span>
+                        <span>{listAccountMovements.balance.toFixed(2)}</span>
                     </div>
                 </div>
                 <div
                     className={`${classes.headerContainer} ${classes.movementInfo}`}
                 >
-                    <div>Alias: {account.name}</div>
-                    <div>IBAN: {account.iban}</div>
+                    <div>Alias: {listAccountMovements.accountName}</div>
+                    <div>IBAN: {listAccountMovements.iban}</div>
                 </div>
-                <MovementListTableComponent movementList={movementList} />
+                <MovementListTableComponent
+                    movementList={listAccountMovements.movementList}
+                />
             </div>
         </AppLayout>
     );
